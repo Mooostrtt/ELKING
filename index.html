@@ -29,7 +29,6 @@
         button.btn-main { width: 100%; padding: 15px; background: linear-gradient(90deg, #c5a059 0%, #e5c158 100%); color: #000; border: none; font-weight: 800; border-radius: 12px; cursor: pointer; font-size: 16px; box-shadow: 0 5px 15px rgba(229,193,88,0.4); }
         .btn-back { width: 100%; background-color: transparent; color: #aaa; margin-top: 10px; padding: 10px; font-size: 14px; border: 1px solid #444; border-radius: 12px; cursor: pointer; }
 
-        /* جريد الشركات */
         .grid-networks { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .net-card { 
             background: linear-gradient(145deg, #1f2833, #151b23); border-radius: 20px; padding: 25px 15px; 
@@ -45,6 +44,8 @@
         .or:hover, .or:active { border-color: var(--orange); box-shadow: 0 0 20px rgba(255,102,0,0.4); }
         .et:hover, .et:active { border-color: var(--etisalat); box-shadow: 0 0 20px rgba(115,150,0,0.4); }
 
+        .cash-box { background: #0b0c10; padding: 15px; border-radius: 12px; border: 1px solid #c5a059; text-align: center; margin-bottom: 20px; }
+        .cash-num { font-size: 22px; color: var(--gold-glow); font-weight: bold; cursor: pointer; text-decoration: underline; display: inline-block; margin-top: 5px; letter-spacing: 1px; }
         .p-item { background: #0b0c10; padding: 10px; margin-bottom: 8px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #333; }
         .btn-del { background: #ff0000; color: #fff; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 12px; }
 
@@ -61,23 +62,23 @@
 
     <div class="container">
         
-        <!-- خطوة 0: شبه تسجيل الدخول (الاسم والرقم) -->
+        <!-- خطوة 0: تسجيل الدخول -->
         <div id="step-login">
-            <div class="section-title">تسجيل دخول سريع للمنصة:</div>
+            <div class="section-title">تسجيل دخول للمنصة:</div>
             <div class="box">
-                <label>الاسم بالكامل:</label>
+                <label>الاسم بالكامل / حساب الآدمن:</label>
                 <input type="text" id="login-name" placeholder="اكتب اسمك هنا">
                 
-                <label>رقم الموبايل:</label>
+                <label>رقم الموبايل / كلمة السر:</label>
                 <input type="text" id="login-phone" placeholder="01xxxxxxxxx">
                 
                 <button class="btn-main" onclick="handleLogin()">دخول المنصة <i class="fa-solid fa-right-to-bracket"></i></button>
             </div>
         </div>
 
-        <!-- خطوة 1: اختيار الشبكة (تظهر بعد الدخول) -->
+        <!-- خطوة 1: اختيار الشبكة -->
         <div id="step-networks" class="hidden">
-            <div class="section-title">أهلاً بك، اختر شبكة الشحن[span_2](start_span)[span_2](end_span):</div>
+            <div class="section-title">أهلاً بك، اختر شبكة الشحن:</div>
             <div class="grid-networks">
                 <div class="net-card vf" onclick="chooseNetwork('فودافون')"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Vodafone_icon.svg" class="logo-img"><span>فودافون</span></div>
                 <div class="net-card we" onclick="chooseNetwork('وي WE')"><img src="https://upload.wikimedia.org/wikipedia/commons/e/e4/Telecom_Egypt_Logo.svg" class="logo-img"><span>المصرية وي</span></div>
@@ -87,17 +88,25 @@
             <button class="btn-back" onclick="logout()">خروج</button>
         </div>
 
-        <!-- خطوة 2: اختيار الباقة والرفع للزبون -->
+        <!-- خطوة 2: تفاصيل طلب الزبون ورقم الكاش القابل للنسخ -->
         <div id="step-details" class="hidden">
             <div class="section-title">إتمام عملية الشحن لـ (<span id="selected-net" style="color:var(--gold-glow)"></span>)</div>
             <div class="box">
-                <label><i class="fa-solid fa-list-check"></i> اختر الباقة المطلوبة[span_3](start_span)[span_3](end_span):</label>
+                
+                <!-- صندوق الكاش الذكي -->
+                <div class="cash-box">
+                    <label style="color: #fff;"><i class="fa-solid fa-money-bill-transfer"></i> ابعت على رقم الكاش وارفع الاسكرين:</label>
+                    <div class="cash-num" onclick="copyCashNumber('01030982295')">01030982295</div>
+                    <div style="font-size: 11px; color: #86c232; margin-top: 5px;">(اضغط على الرقم لنسخه تلقائياً)</div>
+                </div>
+
+                <label><i class="fa-solid fa-list-check"></i> اختر الباقة المطلوبة:</label>
                 <select id="package-select"></select>
 
-                <label><i class="fa-solid fa-phone"></i> رقم الموبايل المراد شحنه[span_4](start_span)[span_4](end_span):</label>
+                <label><i class="fa-solid fa-phone"></i> رقم الموبايل المراد شحنه:</label>
                 <input type="text" id="user-phone" placeholder="01xxxxxxxxx">
 
-                <label><i class="fa-solid fa-cloud-arrow-up"></i> ارفع لقطة شاشة تأكيد الدفع[span_5](start_span)[span_5](end_span):</label>
+                <label><i class="fa-solid fa-cloud-arrow-up"></i> ارفع لقطة شاشة تأكيد الدفع:</label>
                 <input type="file" id="payment-img" accept="image/*">
 
                 <button class="btn-main" onclick="sendOrder()">تأكيد وإرسال الطلب الملكي 👑</button>
@@ -105,11 +114,11 @@
             </div>
         </div>
 
-        <!-- بوابة الآدمن السرية (تفتح لك أنت فقط) -->
+        <!-- بوابة الآدمن السرية -->
         <div id="step-admin" class="hidden">
-            <div class="section-title" style="color: red;">👑 لوحة تحكم الآدمن الملكية (EL KING)</div>
+            <div class="section-title" style="color: var(--gold-glow);">👑 لوحة تحكم الآدمن (EL KING)</div>
             <div class="box">
-                <h3 style="margin-bottom: 15px; color: var(--gold-glow);">إضافة باقة جديدة:</h3>
+                <h3 style="margin-bottom: 15px; color: #fff;">إضافة باقة جديدة للمنصة:</h3>
                 <label>اختر الشركة:</label>
                 <select id="admin-net-select">
                     <option value="وي WE">وي WE</option>
@@ -118,12 +127,12 @@
                     <option value="اتصالات">اتصالات</option>
                 </select>
                 
-                <label>اسم الباقة والسعر:</label>
-                <input type="text" id="admin-pkg-name" placeholder="مثال: وي جولد 50 جنيه">
+                <label>اسم الباقة والتفاصيل:</label>
+                <input type="text" id="admin-pkg-name" placeholder="مثال: 10جيجا & 2000دقيقة بــ250">
                 
                 <button class="btn-main" onclick="addCustomPackage()">إضافة الباقة فوراً +</button>
                 
-                <h3 style="margin-top:25px; margin-bottom:15px; color: var(--gold-glow);">الباقات الحالية (اضغط لحذف أي باقة):</h3>
+                <h3 style="margin-top:25px; margin-bottom:15px; color: var(--gold-glow);">الباقات الحالية في السيرفر (اضغط لحذف أي باقة):</h3>
                 <div id="admin-packages-list"></div>
                 
                 <button class="btn-back" onclick="logout()" style="border-color: red; color: red;">تسجيل خروج الآدمن</button>
@@ -137,17 +146,37 @@
     </footer>
 
     <script>
-        // الباقات الافتراضية السيستم هيبدأ بيها، وأي تعديل منك هيتحفظ في المتصفح علطول
-        let defaultPackages = {
-            'وي WE': ['باقة WE Gold السنوية', 'باقة WE Gold الشهرية'],
-            'فودافون': ['فليكس 30 للشهر', 'فليكس 70 للشهر'],
-            'أورانج': ['باقة جو نت 50'],
-            'اتصالات': ['حكاية الـ 45']
+        // الباقات الملكية الرسمية بناءً على طلبك
+        const currentCodePackages = {
+            'وي WE': [
+                '🔹 20 جيجا + 1000 دقيقة — 270 جنيه 🔥 (صالحة لمدة شهر - تفعيل يوم 1 و 16)',
+                '🔹 30 جيجا + 1500 دقيقة — 335 جنيه 🔥 (صالحة لمدة شهر - تفعيل يوم 1 و 16)',
+                '🔹 40 جيجا + 2000 دقيقة — 410 جنيه 🔥 (صالحة لمدة شهر - تفعيل يوم 1 و 16)',
+                '🔹 50 جيجا + 2000 دقيقة — 490 جنيه 🔥 (صالحة لمدة شهر - تفعيل يوم 1 و 16)',
+                '🔹 60 جيجا + 2000 دقيقة — 570 جنيه 🔥 (صالحة لمدة شهر - تفعيل يوم 1 و 16)',
+                '🔹 80 جيجا + 2000 دقيقة — 730 جنيه 🔥 (صالحة لمدة شهر - تفعيل يوم 1 و 16)'
+            ],
+            'فودافون': [
+                'فليكس 30 للشهر', 
+                'فليكس 70 للشهر'
+            ],
+            'أورانج': [
+                '🍊 10جيجا & 2000دقيقة بــ250💥 (صالحة شهر - تفعيل يوم 1)',
+                '🍊 14جيجا & 2000دقيقة بــ300💥 (صالحة شهر - تفعيل يوم 1)',
+                '🍊 20جيجا & 2000دقيقة بــ380💥 (صالحة شهر - تفعيل يوم 1)',
+                '🍊 30جيجا & 2000دقيقة بــ500💥 (صالحة شهر - تفعيل يوم 1)',
+                '🍊 2000دقيقة بــ140💥 (صالحة شهر - تفعيل يوم 1)'
+            ],
+            'اتصالات': [
+                'متاح 3750ميكس اتصالات بـ95 جنيه فلوس (ينفع لو مستلف شهر كامل)',
+                'متاح 5100ميكس اتصالات بـ140ج فلوس (ينفع لو مستلف شهر كامل)',
+                'متاح 10300ميكس اتصالات بـ220 جنيه (ينفع لو مستلف شهر كامل)',
+                'متاح 15400ميكس اتصالات بـ295 جنيه (ينفع لو مستلف شهر كامل)'
+            ]
         };
 
-        if(!localStorage.getItem('king_packages')) {
-            localStorage.setItem('king_packages', JSON.stringify(defaultPackages));
-        }
+        // تحديث وتصفير دائم لضمان ظهور الباقات وتحديثها فوراً
+        localStorage.setItem('king_packages', JSON.stringify(currentCodePackages));
 
         let currentNet = '';
         let clientName = '';
@@ -156,14 +185,21 @@
         const TELEGRAM_TOKEN = '8981096815:AAGla-W1OHp38pcMP9rLxrQ5tPNAhG5BTug';
         const CHAT_ID = '6539479322';
 
+        function copyCashNumber(num) {
+            navigator.clipboard.writeText(num).then(() => {
+                alert('👑 تم نسخ رقم كاش EL KING بنجاح: ' + num);
+            }).catch(err => {
+                alert('اضغط ضغطة مطولة على الرقم لنسخه');
+            });
+        }
+
         function handleLogin() {
             const name = document.getElementById('login-name').value.trim();
             const phone = document.getElementById('login-phone').value.trim();
 
-            if(!name || !phone) { alert('من فضلك ادخل الاسم والرقم لدخول التطبيق!'); return; }
+            if(!name || !phone) { alert('من فضلك ادخل الاسم والرقم لدخول المنصة!'); return; }
 
-            // التحقق السري للآدمن (لو كتبت اسم admin والباسورد 1234)
-            if(name.toLowerCase() === 'admin' && phone === '1234') {
+            if(name === '01030982295' && phone === 'ELKING015+012+011+010') {
                 showAdminPanel();
                 return;
             }
@@ -191,7 +227,7 @@
                 });
             } else {
                 let opt = document.createElement('option');
-                opt.innerText = 'لا توجد باقات متاح حالياً';
+                opt.innerText = 'لا توجد باقات متاحة حالياً';
                 select.appendChild(opt);
             }
 
@@ -208,7 +244,6 @@
             location.reload();
         }
 
-        /* كود تشغيل لوحة الآدمن الخاصة بك */
         function showAdminPanel() {
             document.getElementById('step-login').classList.add('hidden');
             document.getElementById('step-admin').classList.remove('hidden');
@@ -241,7 +276,7 @@
             
             document.getElementById('admin-pkg-name').value = '';
             renderAdminPackages();
-            alert('تم إضافة الباقة بنجاح وستظهر للعملاء فوراً!');
+            alert('تم إضافة الباقة بنجاح وستظهر فوراً!');
         }
 
         function deletePackage(net, index) {
@@ -256,12 +291,11 @@
             const phone = document.getElementById('user-phone').value;
             const imgFile = document.getElementById('payment-img').files[0];
 
-            if(!phone) { alert('من فضلك اكتب رقم الموبايل!'); return; }
+            if(!phone) { alert('من فضلك اكتب رقم الموبايل المراد شحنه!'); return; }
             if(!imgFile) { alert('من فضلك ارفع صورة تأكيد الدفع!'); return; }
 
             alert('جاري إرسال طلبك الفخم لـ EL KING...');
 
-            // الرسالة هتوصلك ببيانات العميل اللي دخل بيها في الأول + رقمه اللي عايز يشحنه
             const message = `👑 طلب شحن من تطبيق EL KING 👑\n\n👤 اسم العميل: ${clientName}\n📱 رقم حساب العميل: ${clientPhone}\n\n⚙️ تفاصيل الشحن:\n🔹 الشركة: ${currentNet}\n🔹 الباقة: ${pkg}\n🔹 الرقم المراد شحنه: ${phone}`;
 
             const formData = new FormData();
