@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EL KING - منصة الشحن الملكية</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --vodafone: #ff0000; --we: #510474; --orange: #ff6600; --etisalat: #739600;
+            --vodafone: #ff0000; --we: #bc00dd; --orange: #ff6600; --etisalat: #739600;
             --bg-dark: #0b0c10; --card-dark: #1f2833; --gold: #c5a059; --gold-glow: #e5c158;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
@@ -30,28 +31,30 @@
 
         .grid-networks { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .net-card { 
-            background: linear-gradient(145deg, #1f2833, #151b23); border-radius: 20px; padding: 25px 15px; 
+            background: linear-gradient(145deg, #1f2833, #151b23); border-radius: 20px; padding: 35px 15px; 
             text-align: center; cursor: pointer; transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.05);
             display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
         .net-card:active { transform: scale(0.92); }
         
-        .company-logo { width: 70px; height: 70px; margin-bottom: 12px; border-radius: 50%; object-fit: contain; background: transparent; padding: 5px; }
-        .net-card span { font-weight: 700; font-size: 16px; color: #e0e0e0; }
+        /* تصميم الأيقونات النيون الجديدة اللامعة والثابتة */
+        .company-icon { font-size: 50px; margin-bottom: 15px; transition: 0.3s; }
+        .net-card span { font-weight: 700; font-size: 17px; color: #e0e0e0; }
+
+        .vf i { color: var(--vodafone); text-shadow: 0 0 10px rgba(255,0,0,0.5); }
+        .we i { color: var(--we); text-shadow: 0 0 10px rgba(188,0,221,0.5); }
+        .or i { color: var(--orange); text-shadow: 0 0 10px rgba(255,102,0,0.5); }
+        .et i { color: var(--etisalat); text-shadow: 0 0 10px rgba(115,150,0,0.5); }
 
         .vf:hover, .vf:active { border-color: var(--vodafone); box-shadow: 0 0 20px rgba(255,0,0,0.4); }
-        .we:hover, .we:active { border-color: #bc00dd; box-shadow: 0 0 20px rgba(188,0,221,0.4); }
+        .we:hover, .we:active { border-color: var(--we); box-shadow: 0 0 20px rgba(188,0,221,0.4); }
         .or:hover, .or:active { border-color: var(--orange); box-shadow: 0 0 20px rgba(255,102,0,0.4); }
         .et:hover, .et:active { border-color: var(--etisalat); box-shadow: 0 0 20px rgba(115,150,0,0.4); }
 
         .cash-box { background: #0b0c10; padding: 15px; border-radius: 12px; border: 1px solid #c5a059; text-align: center; margin-bottom: 20px; }
         .cash-num { font-size: 22px; color: var(--gold-glow); font-weight: bold; cursor: pointer; text-decoration: underline; display: inline-block; margin-top: 5px; letter-spacing: 1px; }
         
-        /* صندوق الملاحظات الثابتة والشروط */
         .notes-box { background: rgba(229,193,88,0.1); border: 1px dashed var(--gold); padding: 12px; border-radius: 10px; margin-bottom: 20px; font-size: 13px; color: #e5c158; line-height: 1.5; }
-        
-        .p-item { background: #0b0c10; padding: 10px; margin-bottom: 8px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #333; }
-        .btn-del { background: #ff0000; color: #fff; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 12px; }
 
         footer { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(11, 12, 16, 0.95); backdrop-filter: blur(10px); padding: 18px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); font-size: 14px; z-index: 100; }
         footer a { color: var(--gold-glow); text-decoration: none; font-weight: 700; }
@@ -66,15 +69,15 @@
 
     <div class="container">
         
-        <!-- خطوة 0: تسجيل الدخول (يدعم الزبائن ودخول الآدمن) -->
+        <!-- خطوة 0: تسجيل الدخول السريع للزبون -->
         <div id="step-login">
             <div class="section-title">تسجيل دخول للمنصة:</div>
             <div class="box">
-                <label>الاسم بالكامل / رقم آدمن EL KING:</label>
-                <input type="text" id="login-name" placeholder="اكتب الاسم أو رقم الآدمن هنا">
+                <label>الاسم بالكامل:</label>
+                <input type="text" id="login-name" placeholder="اكتب اسمك هنا">
                 
-                <label>رقم الموبايل / كلمة سر الآدمن:</label>
-                <input type="text" id="login-phone" placeholder="اكتب رقمك أو الباسورد هنا">
+                <label>رقم الموبايل:</label>
+                <input type="text" id="login-phone" placeholder="01xxxxxxxxx">
                 
                 <button class="btn-main" onclick="handleLogin()">دخول المنصة</button>
             </div>
@@ -86,32 +89,32 @@
             <div class="grid-networks">
                 <!-- فودافون -->
                 <div class="net-card vf" onclick="chooseNetwork('فودافون')">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Vodafone_icon.svg" class="company-logo">
+                    <i class="fa-solid fa-square-phone company-icon"></i>
                     <span>فودافون</span>
                 </div>
                 <!-- وي -->
                 <div class="net-card we" onclick="chooseNetwork('وي WE')">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/e/e4/Telecom_Egypt_Logo.svg" class="company-logo">
+                    <i class="fa-solid fa-circle-nodes company-icon"></i>
                     <span>المصرية وي</span>
                 </div>
                 <!-- أورانج -->
                 <div class="net-card or" onclick="chooseNetwork('أورانج')">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c8/Orange_logo.svg" class="company-logo">
+                    <i class="fa-solid fa-cube company-icon"></i>
                     <span>أورانج</span>
                 </div>
                 <!-- اتصالات -->
                 <div class="net-card et" onclick="chooseNetwork('اتصالات')">
-                    <img src="https://i.imgur.com/vHGoWWh.png" class="company-logo">
+                    <i class="fa-solid fa-tower-broadcast company-icon"></i>
                     <span>اتصالات</span>
                 </div>
             </div>
             <button class="btn-back" onclick="logout()">خروج</button>
         </div>
 
-        <!-- خطوة 2: تفاصيل الطلب -->
+        <!-- خطوة 2: تفاصيل الطلب والملاحظات المنفصلة -->
         <div id="step-details" class="hidden">
             <div class="section-title">إتمام عملية الشحن لـ (<span id="selected-net" style="color:var(--gold-glow)"></span>)</div>
-            <div class="box" id="user-booking-box">
+            <div class="box">
                 
                 <div class="cash-box">
                     <label style="color: #fff;">ابعت على رقم الكاش وارفع الاسكرين:</label>
@@ -119,7 +122,7 @@
                     <div style="font-size: 11px; color: #86c232; margin-top: 5px;">(اضغط على الرقم لنسخه تلقائياً)</div>
                 </div>
 
-                <!-- الملاحظات الثابتة والشروط لكل شركة تظهر هنا ومنفصلة تماماً عن الاختيارات -->
+                <!-- الملاحظات والشروط الثابتة تظهر هنا بشكل منفصل وشيك -->
                 <div id="company-notes" class="notes-box hidden"></div>
 
                 <div id="package-container">
@@ -144,31 +147,6 @@
             </div>
         </div>
 
-        <!-- بوابة الآدمن السرية -->
-        <div id="step-admin" class="hidden">
-            <div class="section-title" style="color: var(--gold-glow);">👑 لوحة تحكم الآدمن (EL KING)</div>
-            <div class="box">
-                <h3 style="margin-bottom: 15px; color: #fff;">إضافة باقة جديدة للمنصة:</h3>
-                <label>اختر الشركة:</label>
-                <select id="admin-net-select">
-                    <option value="وي WE">وي WE</option>
-                    <option value="فودافون">فودافون</option>
-                    <option value="أورانج">أورانج</option>
-                    <option value="اتصالات">اتصالات</option>
-                </select>
-                
-                <label>اسم الباقة والتفاصيل:</label>
-                <input type="text" id="admin-pkg-name" placeholder="اكتب اسم الباقة هنا">
-                
-                <button class="btn-main" onclick="addCustomPackage()">إضافة الباقة فوراً +</button>
-                
-                <h3 style="margin-top:25px; margin-bottom:15px; color: var(--gold-glow);">الباقات المضافة حالياً (اضغط لحذف أي باقة):</h3>
-                <div id="admin-packages-list"></div>
-                
-                <button class="btn-back" onclick="logout()" style="border-color: red; color: red;">تسجيل خروج الآدمن</button>
-            </div>
-        </div>
-
     </div>
 
     <footer>
@@ -176,7 +154,8 @@
     </footer>
 
     <script>
-        // الباقات الرسمية الثابتة والملاحظات المنفصلة عنها
+        // 👑 [تعديل الباقات الدائم هنا] 👑 
+        // تقدر تضيف أو تعديل أي باقة هنا مباشرة وهتتغير لكل الناس بشكل دائم
         const currentCodePackages = {
             'وي WE': [
                 '🔹 20 جيجا + 1000 دقيقة — 270 جنيه 🔥',
@@ -186,7 +165,7 @@
                 '🔹 60 جيجا + 2000 دقيقة — 570 جنيه 🔥',
                 '🔹 80 جيجا + 2000 دقيقة — 730 جنيه 🔥'
             ],
-            'فودافون': [],
+            'فودافون': [], // فاضية عشان يظهر (قريباً...)
             'أورانج': [
                 '🍊 10جيجا & 2000دقيقة بــ250💥',
                 '🍊 14جيجا & 2000دقيقة بــ300💥',
@@ -202,14 +181,12 @@
             ]
         };
 
-        // الشروط والملاحظات الثابتة اللي هتظهر تحت رقم الكاش لكل شركة بشكل منفصل
+        // الملاحظات الثابتة والشروط لكل شركة
         const companyNotesData = {
             'وي WE': '📅 شروط الباقة: صالحة لمدة شهر (التفعيل يوم 1 ويوم 16)<br>📞 نظام المحاسبة: الدقيقة بدقيقة لكل الشبكات 🌐 الميجا بميجا لكل المواقع',
             'أورانج': '🚧 شروط الباقة: صالحة لمدة شهر، التفعيل يوم 1💥<br>🤩 نظام المحاسبة: الدقيقة بدقيقة لكل الشبكات & والميجا بميجا لكل المواقع💎',
             'اتصالات': '💡 ملحوظة: كل الباقات السابقة تنفع لو مستلف شهر كامل.'
         };
-
-        localStorage.setItem('king_packages', JSON.stringify(currentCodePackages));
 
         let currentNet = '';
         let clientName = '';
@@ -228,13 +205,7 @@
             const name = document.getElementById('login-name').value.trim();
             const phone = document.getElementById('login-phone').value.trim();
 
-            if(!name || !phone) { alert('من فضلك ادخل البيانات المطلوبة لدخول المنصة!'); return; }
-
-            // التوثيق الرسمي لـ EL KING
-            if(name === '01030982295' && phone === 'ELKING015+012+011+010') {
-                showAdminPanel();
-                return;
-            }
+            if(!name || !phone) { alert('من فضلك ادخل الاسم والرقم لدخول المنصة!'); return; }
 
             clientName = name;
             clientPhone = phone;
@@ -266,8 +237,7 @@
                 let select = document.getElementById('package-select');
                 select.innerHTML = '';
                 
-                let allPkgs = JSON.parse(localStorage.getItem('king_packages'));
-                allPkgs[net].forEach(p => {
+                currentCodePackages[net].forEach(p => {
                     let opt = document.createElement('option');
                     opt.value = p; opt.innerText = p;
                     select.appendChild(opt);
@@ -285,48 +255,6 @@
 
         function logout() {
             location.reload();
-        }
-
-        function showAdminPanel() {
-            document.getElementById('step-login').classList.add('hidden');
-            document.getElementById('step-admin').classList.remove('hidden');
-            renderAdminPackages();
-        }
-
-        function renderAdminPackages() {
-            let listDiv = document.getElementById('admin-packages-list');
-            listDiv.innerHTML = '';
-            let allPkgs = JSON.parse(localStorage.getItem('king_packages'));
-            
-            for(let net in allPkgs) {
-                allPkgs[net].forEach((pkg, index) => {
-                    let item = document.createElement('div');
-                    item.className = 'p-item';
-                    item.innerHTML = `<span>[${net}] ${pkg}</span> <button class="btn-del" onclick="deletePackage('${net}', ${index})">حذف</button>`;
-                    listDiv.appendChild(item);
-                });
-            }
-        }
-
-        function addCustomPackage() {
-            const net = document.getElementById('admin-net-select').value;
-            const name = document.getElementById('admin-pkg-name').value.trim();
-            if(!name) { alert('اكتب اسم الباقة أولاً!'); return; }
-
-            let allPkgs = JSON.parse(localStorage.getItem('king_packages'));
-            allPkgs[net].push(name);
-            localStorage.setItem('king_packages', JSON.stringify(allPkgs));
-            
-            document.getElementById('admin-pkg-name').value = '';
-            renderAdminPackages();
-            alert('تم إضافة الباقة بنجاح!');
-        }
-
-        function deletePackage(net, index) {
-            let allPkgs = JSON.parse(localStorage.getItem('king_packages'));
-            allPkgs[net].splice(index, 1);
-            localStorage.setItem('king_packages', JSON.stringify(allPkgs));
-            renderAdminPackages();
         }
 
         function sendOrder() {
@@ -360,3 +288,4 @@
     </script>
 </body>
 </html>
+
