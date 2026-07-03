@@ -3,156 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EL KING - منصة الشحن الاحترافية</title>
+    <title>EL KING - منصة الشحن الملكية</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --vodafone: #ff0000;
-            --we: #4a0066;
-            --orange: #ff6600;
-            --etisalat: #739600;
-            --bg-dark: #0b0c10;
-            --card-dark: #1f2833;
-            --gold: #c5a059;
-            --gold-glow: #e5c158;
-            --text-main: #c5a059;
+            --vodafone: #ff0000; --we: #510474; --orange: #ff6600; --etisalat: #739600;
+            --bg-dark: #0b0c10; --card-dark: #1f2833; --gold: #c5a059; --gold-glow: #e5c158;
         }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; }
-        
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
         body { 
-            background-color: var(--bg-dark); 
-            color: #ffffff; 
-            padding-bottom: 90px;
-            background-image: radial-gradient(circle at 50% 20%, #1f2833 0%, var(--bg-dark) 70%);
-            min-height: 100vh;
+            background-color: var(--bg-dark); color: #ffffff; padding-bottom: 90px;
+            background-image: radial-gradient(circle at 50% 20%, #1f2833 0%, var(--bg-dark) 70%); min-height: 100vh;
         }
-
-        /* هيدر سينمائي احترافي */
-        header { 
-            background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, rgba(11,12,16,0) 100%);
-            padding: 40px 20px 20px 20px; 
-            text-align: center; 
-            position: relative;
-        }
-        
-        header h1 { 
-            font-size: 42px; 
-            color: #fff;
-            font-weight: 900; 
-            text-transform: uppercase; 
-            letter-spacing: 3px;
-            text-shadow: 0 0 10px var(--gold-glow), 0 0 30px var(--gold);
-            animation: glow 2s ease-in-out infinite alternate;
-        }
-
-        header p { 
-            font-size: 13px; 
-            color: #86c232; 
-            margin-top: 8px; 
-            font-weight: 600;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
+        header { background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, rgba(11,12,16,0) 100%); padding: 35px 20px; text-align: center; }
+        header h1 { font-size: 42px; color: #fff; font-weight: 900; text-transform: uppercase; letter-spacing: 3px; text-shadow: 0 0 15px var(--gold-glow); }
+        header p { font-size: 13px; color: #86c232; margin-top: 8px; font-weight: 600; }
         .container { padding: 20px; max-width: 480px; margin: 0 auto; }
+        .section-title { font-size: 18px; margin: 20px 0 15px 0; color: #fff; font-weight: bold; border-right: 4px solid var(--gold); padding-right: 10px; }
         
-        .section-title { 
-            font-size: 18px; 
-            margin: 25px 0 15px 0; 
-            color: #fff; 
-            font-weight: bold;
-            border-right: 4px solid var(--gold); 
-            padding-right: 10px; 
-        }
-        
-        /* جريد الشركات الاحترافي بنظام النيون */
-        .grid-networks { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        
-        .net-card { 
-            background: linear-gradient(145deg, #1f2833, #151b23);
-            border-radius: 20px; 
-            padding: 30px 15px; 
-            text-align: center; 
-            cursor: pointer; 
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            border: 1px solid rgba(255,255,255,0.05);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .net-card::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%);
-            opacity: 1; transition: 0.3s;
-        }
-
-        .net-card:active { transform: scale(0.92); }
-        
-        /* شعارات الشركات بالألوان الرسمية والتأثيرات وثلاثية الأبعاد */
-        .net-card i { font-size: 45px; margin-bottom: 15px; display: block; transition: 0.3s; }
-        .net-card span { font-weight: 700; font-size: 17px; display: block; color: #e0e0e0; transition: 0.3s; }
-
-        /* تأثيرات النيون المنفصلة لكل شركة عند الضغط أو اللمس */
-        .vf:hover, .vf:active { border: 1px solid var(--vodafone); box-shadow: 0 0 20px rgba(255,0,0,0.4); }
-        .vf:hover i, .vf:active i { color: var(--vodafone); text-shadow: 0 0 15px var(--vodafone); }
-        
-        .we:hover, .we:active { border: 1px solid #bc00dd; box-shadow: 0 0 20px rgba(188,0,221,0.4); }
-        .we:hover i, .we:active i { color: #bc00dd; text-shadow: 0 0 15px #bc00dd; }
-        
-        .or:hover, .or:active { border: 1px solid var(--orange); box-shadow: 0 0 20px rgba(255,102,0,0.4); }
-        .or:hover i, .or:active i { color: var(--orange); text-shadow: 0 0 15px var(--orange); }
-        
-        .et:hover, .et:active { border: 1px solid var(--etisalat); box-shadow: 0 0 20px rgba(115,150,0,0.4); }
-        .et:hover i, .et:active i { color: var(--etisalat); text-shadow: 0 0 15px var(--etisalat); }
-
-        /* واجهة الطلب والدفع الفخمة */
-        .hidden { display: none; }
-        .box { 
-            background: linear-gradient(145deg, #1f2833, #151b23);
-            padding: 25px; 
-            border-radius: 25px; 
-            border: 1px solid rgba(255,255,255,0.05); 
-            margin-top: 15px;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
-        }
-        
+        .hidden { display: none !important; }
+        .box { background: linear-gradient(145deg, #1f2833, #151b23); padding: 25px; border-radius: 25px; border: 1px solid rgba(255,255,255,0.05); margin-top: 15px; box-shadow: 0 15px 30px rgba(0,0,0,0.5); }
         label { display: block; font-size: 14px; color: #999; margin-bottom: 8px; font-weight: 600; }
+        select, input[type="text"], input[type="password"], input[type="file"] { width: 100%; padding: 14px; margin-bottom: 20px; border-radius: 12px; border: 1px solid #333; background: #0b0c10; color: #fff; font-size: 15px; }
         
-        select, input[type="text"], input[type="file"] { 
-            width: 100%; padding: 14px; margin-bottom: 20px; border-radius: 12px; 
-            border: 1px solid #333; background: #0b0c10; color: #fff; font-size: 15px;
-            transition: 0.3s; font-weight: 500;
-        }
-        select:focus, input[type="text"]:focus { border-color: var(--gold); outline: none; box-shadow: 0 0 10px rgba(197,160,89,0.2); }
-        
-        /* زر الإرسال الملكي */
-        button.btn-main { 
-            width: 100%; padding: 15px; 
-            background: linear-gradient(90deg, #c5a059 0%, #e5c158 100%);
-            color: #000; border: none; font-weight: 800; border-radius: 12px; 
-            cursor: pointer; font-size: 16px; text-transform: uppercase; letter-spacing: 1px;
-            box-shadow: 0 5px 15px rgba(229,193,88,0.4); transition: 0.3s;
-        }
-        button.btn-main:active { transform: scale(0.95); box-shadow: 0 2px 5px rgba(229,193,88,0.2); }
-        
-        .btn-back { width: 100%; background-color: transparent; color: #aaa; margin-top: 10px; padding: 10px; font-size: 14px; border: 1px solid #444; border-radius: 12px; cursor: pointer; transition: 0.3s; }
-        .btn-back:hover { color: #fff; background: rgba(255,255,255,0.05); }
+        button.btn-main { width: 100%; padding: 15px; background: linear-gradient(90deg, #c5a059 0%, #e5c158 100%); color: #000; border: none; font-weight: 800; border-radius: 12px; cursor: pointer; font-size: 16px; box-shadow: 0 5px 15px rgba(229,193,88,0.4); }
+        .btn-back { width: 100%; background-color: transparent; color: #aaa; margin-top: 10px; padding: 10px; font-size: 14px; border: 1px solid #444; border-radius: 12px; cursor: pointer; }
 
-        /* فوتر ثابت شيك جدًا */
-        footer { 
-            position: fixed; bottom: 0; left: 0; right: 0; 
-            background: rgba(11, 12, 16, 0.95); backdrop-filter: blur(10px);
-            padding: 18px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); 
-            font-size: 14px; z-index: 100; color: #aaa;
+        /* جريد الشركات */
+        .grid-networks { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .net-card { 
+            background: linear-gradient(145deg, #1f2833, #151b23); border-radius: 20px; padding: 25px 15px; 
+            text-align: center; cursor: pointer; transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.05);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
-        footer a { color: var(--gold-glow); text-decoration: none; font-weight: 700; text-shadow: 0 0 5px rgba(229,193,88,0.3); }
+        .net-card:active { transform: scale(0.92); }
+        .logo-img { width: 65px; height: 65px; object-fit: contain; margin-bottom: 12px; }
+        .net-card span { font-weight: 700; font-size: 16px; color: #e0e0e0; }
 
-        @keyframes glow {
-            from { text-shadow: 0 0 10px var(--gold-glow), 0 0 20px var(--gold); }
-            to { text-shadow: 0 0 15px var(--gold-glow), 0 0 35px var(--gold), 0 0 40px #e5c158; }
-        }
+        .vf:hover, .vf:active { border-color: var(--vodafone); box-shadow: 0 0 20px rgba(255,0,0,0.4); }
+        .we:hover, .we:active { border-color: #bc00dd; box-shadow: 0 0 20px rgba(188,0,221,0.4); }
+        .or:hover, .or:active { border-color: var(--orange); box-shadow: 0 0 20px rgba(255,102,0,0.4); }
+        .et:hover, .et:active { border-color: var(--etisalat); box-shadow: 0 0 20px rgba(115,150,0,0.4); }
+
+        .p-item { background: #0b0c10; padding: 10px; margin-bottom: 8px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #333; }
+        .btn-del { background: #ff0000; color: #fff; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 12px; }
+
+        footer { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(11, 12, 16, 0.95); backdrop-filter: blur(10px); padding: 18px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); font-size: 14px; z-index: 100; }
+        footer a { color: var(--gold-glow); text-decoration: none; font-weight: 700; }
     </style>
 </head>
 <body>
@@ -163,34 +60,76 @@
     </header>
 
     <div class="container">
-        <!-- خطوة 1: اختيار الشبكة -->
-        <div id="step-networks">
-            <div class="section-title">اختر شبكة الشحن الاحترافية:</div>
-            <div class="grid-networks">
-                <div class="net-card vf" onclick="chooseNetwork('فودافون')"><i class="fa-solid fa-square-phone" style="color:#e60000"></i><span>فودافون</span></div>
-                <div class="net-card we" onclick="chooseNetwork('وي WE')"><i class="fa-solid fa-chart-network" style="color:#bc00dd"></i><span>المصرية وي</span></div>
-                <div class="net-card or" onclick="chooseNetwork('أورانج')"><i class="fa-solid fa-box-open" style="color:#ff6600"></i><span>أورانج</span></div>
-                <div class="net-card et" onclick="chooseNetwork('اتصالات')"><i class="fa-solid fa-tower-broadcast" style="color:#739600"></i><span>اتصالات</span></div>
+        
+        <!-- خطوة 0: شبه تسجيل الدخول (الاسم والرقم) -->
+        <div id="step-login">
+            <div class="section-title">تسجيل دخول سريع للمنصة:</div>
+            <div class="box">
+                <label>الاسم بالكامل:</label>
+                <input type="text" id="login-name" placeholder="اكتب اسمك هنا">
+                
+                <label>رقم الموبايل:</label>
+                <input type="text" id="login-phone" placeholder="01xxxxxxxxx">
+                
+                <button class="btn-main" onclick="handleLogin()">دخول المنصة <i class="fa-solid fa-right-to-bracket"></i></button>
             </div>
         </div>
 
-        <!-- خطوة 2: الباقات والرفع السري -->
+        <!-- خطوة 1: اختيار الشبكة (تظهر بعد الدخول) -->
+        <div id="step-networks" class="hidden">
+            <div class="section-title">أهلاً بك، اختر شبكة الشحن[span_2](start_span)[span_2](end_span):</div>
+            <div class="grid-networks">
+                <div class="net-card vf" onclick="chooseNetwork('فودافون')"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Vodafone_icon.svg" class="logo-img"><span>فودافون</span></div>
+                <div class="net-card we" onclick="chooseNetwork('وي WE')"><img src="https://upload.wikimedia.org/wikipedia/commons/e/e4/Telecom_Egypt_Logo.svg" class="logo-img"><span>المصرية وي</span></div>
+                <div class="net-card or" onclick="chooseNetwork('أورانج')"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c8/Orange_logo.svg" class="logo-img"><span>أورانج</span></div>
+                <div class="net-card et" onclick="chooseNetwork('اتصالات')"><img src="https://upload.wikimedia.org/wikipedia/commons/2/22/Etisalat_by_e%26_logo.svg" class="logo-img"><span>اتصالات</span></div>
+            </div>
+            <button class="btn-back" onclick="logout()">خروج</button>
+        </div>
+
+        <!-- خطوة 2: اختيار الباقة والرفع للزبون -->
         <div id="step-details" class="hidden">
             <div class="section-title">إتمام عملية الشحن لـ (<span id="selected-net" style="color:var(--gold-glow)"></span>)</div>
             <div class="box">
-                <label><i class="fa-solid fa-list-check"></i> اختر الباقة المطلوبة:</label>
+                <label><i class="fa-solid fa-list-check"></i> اختر الباقة المطلوبة[span_3](start_span)[span_3](end_span):</label>
                 <select id="package-select"></select>
 
-                <label><i class="fa-solid fa-phone"></i> رقم الموبايل المراد شحنه:</label>
+                <label><i class="fa-solid fa-phone"></i> رقم الموبايل المراد شحنه[span_4](start_span)[span_4](end_span):</label>
                 <input type="text" id="user-phone" placeholder="01xxxxxxxxx">
 
-                <label><i class="fa-solid fa-cloud-arrow-up"></i> ارفع لقطة شاشة تأكيد الدفع:</label>
+                <label><i class="fa-solid fa-cloud-arrow-up"></i> ارفع لقطة شاشة تأكيد الدفع[span_5](start_span)[span_5](end_span):</label>
                 <input type="file" id="payment-img" accept="image/*">
 
                 <button class="btn-main" onclick="sendOrder()">تأكيد وإرسال الطلب الملكي 👑</button>
-                <button class="btn-back" onclick="goBack()">إلغاء والعودة</button>
+                <button class="btn-back" onclick="goBackToNetworks()">تغيير الشركة</button>
             </div>
         </div>
+
+        <!-- بوابة الآدمن السرية (تفتح لك أنت فقط) -->
+        <div id="step-admin" class="hidden">
+            <div class="section-title" style="color: red;">👑 لوحة تحكم الآدمن الملكية (EL KING)</div>
+            <div class="box">
+                <h3 style="margin-bottom: 15px; color: var(--gold-glow);">إضافة باقة جديدة:</h3>
+                <label>اختر الشركة:</label>
+                <select id="admin-net-select">
+                    <option value="وي WE">وي WE</option>
+                    <option value="فودافون">فودافون</option>
+                    <option value="أورانج">أورانج</option>
+                    <option value="اتصالات">اتصالات</option>
+                </select>
+                
+                <label>اسم الباقة والسعر:</label>
+                <input type="text" id="admin-pkg-name" placeholder="مثال: وي جولد 50 جنيه">
+                
+                <button class="btn-main" onclick="addCustomPackage()">إضافة الباقة فوراً +</button>
+                
+                <h3 style="margin-top:25px; margin-bottom:15px; color: var(--gold-glow);">الباقات الحالية (اضغط لحذف أي باقة):</h3>
+                <div id="admin-packages-list"></div>
+                
+                <button class="btn-back" onclick="logout()" style="border-color: red; color: red;">تسجيل خروج الآدمن</button>
+            </div>
+        </div>
+
     </div>
 
     <footer>
@@ -198,19 +137,43 @@
     </footer>
 
     <script>
-        // داتا الباقات الفخمة
-        const packages = {
-            'وي WE': ['باقة WE Gold السنوية', 'باقة WE Gold الشهرية', 'وي جولد 50 جنيه', 'وي جولد 100 جنيه'],
-            'فودافون': ['فليكس 30 للشهر', 'فليكس 70 للشهر', 'باقة ميكسات الكينج 100'],
-            'أورانج': ['باقة جو نت 50', 'باقة فريmax 35 العائلية'],
-            'اتصالات': ['حكاية الـ 45', 'دماغ تانية سوبر 60']
+        // الباقات الافتراضية السيستم هيبدأ بيها، وأي تعديل منك هيتحفظ في المتصفح علطول
+        let defaultPackages = {
+            'وي WE': ['باقة WE Gold السنوية', 'باقة WE Gold الشهرية'],
+            'فودافون': ['فليكس 30 للشهر', 'فليكس 70 للشهر'],
+            'أورانج': ['باقة جو نت 50'],
+            'اتصالات': ['حكاية الـ 45']
         };
 
+        if(!localStorage.getItem('king_packages')) {
+            localStorage.setItem('king_packages', JSON.stringify(defaultPackages));
+        }
+
         let currentNet = '';
+        let clientName = '';
+        let clientPhone = '';
         
-        // تم دمج التوكن والـ ID الخاص بك بنجاح هنا
         const TELEGRAM_TOKEN = '8981096815:AAGla-W1OHp38pcMP9rLxrQ5tPNAhG5BTug';
         const CHAT_ID = '6539479322';
+
+        function handleLogin() {
+            const name = document.getElementById('login-name').value.trim();
+            const phone = document.getElementById('login-phone').value.trim();
+
+            if(!name || !phone) { alert('من فضلك ادخل الاسم والرقم لدخول التطبيق!'); return; }
+
+            // التحقق السري للآدمن (لو كتبت اسم admin والباسورد 1234)
+            if(name.toLowerCase() === 'admin' && phone === '1234') {
+                showAdminPanel();
+                return;
+            }
+
+            clientName = name;
+            clientPhone = phone;
+
+            document.getElementById('step-login').classList.add('hidden');
+            document.getElementById('step-networks').classList.remove('hidden');
+        }
 
         function chooseNetwork(net) {
             currentNet = net;
@@ -218,19 +181,74 @@
             
             let select = document.getElementById('package-select');
             select.innerHTML = '';
-            packages[net].forEach(p => {
+            
+            let allPkgs = JSON.parse(localStorage.getItem('king_packages'));
+            if(allPkgs[net] && allPkgs[net].length > 0) {
+                allPkgs[net].forEach(p => {
+                    let opt = document.createElement('option');
+                    opt.value = p; opt.innerText = p;
+                    select.appendChild(opt);
+                });
+            } else {
                 let opt = document.createElement('option');
-                opt.value = p; opt.innerText = p;
+                opt.innerText = 'لا توجد باقات متاح حالياً';
                 select.appendChild(opt);
-            });
+            }
 
             document.getElementById('step-networks').classList.add('hidden');
             document.getElementById('step-details').classList.remove('hidden');
         }
 
-        function goBack() {
+        function goBackToNetworks() {
             document.getElementById('step-details').classList.add('hidden');
             document.getElementById('step-networks').classList.remove('hidden');
+        }
+
+        function logout() {
+            location.reload();
+        }
+
+        /* كود تشغيل لوحة الآدمن الخاصة بك */
+        function showAdminPanel() {
+            document.getElementById('step-login').classList.add('hidden');
+            document.getElementById('step-admin').classList.remove('hidden');
+            renderAdminPackages();
+        }
+
+        function renderAdminPackages() {
+            let listDiv = document.getElementById('admin-packages-list');
+            listDiv.innerHTML = '';
+            let allPkgs = JSON.parse(localStorage.getItem('king_packages'));
+            
+            for(let net in allPkgs) {
+                allPkgs[net].forEach((pkg, index) => {
+                    let item = document.createElement('div');
+                    item.className = 'p-item';
+                    item.innerHTML = `<span>[${net}] ${pkg}</span> <button class="btn-del" onclick="deletePackage('${net}', ${index})">حذف</button>`;
+                    listDiv.appendChild(item);
+                });
+            }
+        }
+
+        function addCustomPackage() {
+            const net = document.getElementById('admin-net-select').value;
+            const name = document.getElementById('admin-pkg-name').value.trim();
+            if(!name) { alert('اكتب اسم الباقة أولاً!'); return; }
+
+            let allPkgs = JSON.parse(localStorage.getItem('king_packages'));
+            allPkgs[net].push(name);
+            localStorage.setItem('king_packages', JSON.stringify(allPkgs));
+            
+            document.getElementById('admin-pkg-name').value = '';
+            renderAdminPackages();
+            alert('تم إضافة الباقة بنجاح وستظهر للعملاء فوراً!');
+        }
+
+        function deletePackage(net, index) {
+            let allPkgs = JSON.parse(localStorage.getItem('king_packages'));
+            allPkgs[net].splice(index, 1);
+            localStorage.setItem('king_packages', JSON.stringify(allPkgs));
+            renderAdminPackages();
         }
 
         function sendOrder() {
@@ -241,29 +259,28 @@
             if(!phone) { alert('من فضلك اكتب رقم الموبايل!'); return; }
             if(!imgFile) { alert('من فضلك ارفع صورة تأكيد الدفع!'); return; }
 
-            alert('جاري تشفير البيانات وإرسال طلبك الفخم لـ EL KING...');
+            alert('جاري إرسال طلبك الفخم لـ EL KING...');
 
-            const message = `👑 طلب شحن ملكي جديد 👑\n\n🔹 الشبكة: ${currentNet}\n🔹 الباقة: ${pkg}\n🔹 رقم العميل: ${phone}`;
+            // الرسالة هتوصلك ببيانات العميل اللي دخل بيها في الأول + رقمه اللي عايز يشحنه
+            const message = `👑 طلب شحن من تطبيق EL KING 👑\n\n👤 اسم العميل: ${clientName}\n📱 رقم حساب العميل: ${clientPhone}\n\n⚙️ تفاصيل الشحن:\n🔹 الشركة: ${currentNet}\n🔹 الباقة: ${pkg}\n🔹 الرقم المراد شحنه: ${phone}`;
 
             const formData = new FormData();
             formData.append('chat_id', CHAT_ID);
             formData.append('photo', imgFile);
             formData.append('caption', message);
 
-            fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendPhoto`, {
-                method: 'POST',
-                body: formData
-            })
+            fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendPhoto`, { method: 'POST', body: formData })
             .then(res => res.json())
             .then(data => {
                 if(data.ok) {
                     alert('تم إرسال طلبك بنجاح! سيقوم EL KING بمراجعته وشحن الباقة فوراً.');
                     location.reload();
                 } else {
-                    alert('حدث خطأ في الإرسال، تواصل مع الدعم الفني.');
+                    alert('حدث خطأ في الإرسال، تواصل مع الآدمن.');
                 }
             }).catch(err => alert('خطأ في الاتصال بالإنترنت.'));
         }
     </script>
 </body>
 </html>
+
