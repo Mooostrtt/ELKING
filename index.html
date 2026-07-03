@@ -208,9 +208,9 @@
 
         let currentNet = '';
         
-        // ⚠️ مهم جداً: استبدل الكلام ده بالبيانات الحقيقية بتاعت التليجرام
-        const TELEGRAM_TOKEN = 'هنا_حط_التوكن_بتاع_البوت';
-        const CHAT_ID = 'هنا_حط_رقم_الـ_ID_بتاعك';
+        // تم دمج التوكن والـ ID الخاص بك بنجاح هنا
+        const TELEGRAM_TOKEN = '8981096815:AAGla-W1OHp38pcMP9rLxrQ5tPNAhG5BTug';
+        const CHAT_ID = '6539479322';
 
         function chooseNetwork(net) {
             currentNet = net;
@@ -260,11 +260,10 @@
                     alert('تم إرسال طلبك بنجاح! سيقوم EL KING بمراجعته وشحن الباقة فوراً.');
                     location.reload();
                 } else {
-                    alert('حدث خطأ، تأكد من كود التوكن والـ ID الخاص بالبوت.');
+                    alert('حدث خطأ في الإرسال، تواصل مع الدعم الفني.');
                 }
             }).catch(err => alert('خطأ في الاتصال بالإنترنت.'));
         }
     </script>
 </body>
 </html>
-
