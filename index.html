@@ -74,6 +74,7 @@
   }
 
   .status-pill {
+    width: fit-content;
     font-size: 12.5px;
     color: var(--success);
     background: rgba(63, 174, 107, 0.12);
@@ -101,7 +102,6 @@
   }
 
   /* ---------- AUTH SECTION ---------- */
-
   #auth-section {
     display: flex;
     justify-content: center;
@@ -174,9 +174,7 @@
     color: var(--navy-950);
   }
 
-  .field-group {
-    margin-bottom: 18px;
-  }
+  .field-group { margin-bottom: 18px; }
 
   .field-group label {
     display: block;
@@ -199,33 +197,18 @@
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
   }
 
-  .field-group input::placeholder {
-    color: rgba(159, 176, 195, 0.55);
-  }
-
+  .field-group input::placeholder { color: rgba(159, 176, 195, 0.55); }
   .field-group input:focus {
     border-color: var(--gold-500);
     box-shadow: 0 0 0 3px rgba(201, 162, 75, 0.18);
   }
-
   .field-group input.invalid {
     border-color: var(--danger);
     box-shadow: 0 0 0 3px rgba(226, 85, 90, 0.15);
   }
 
-  .field-hint {
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-top: 6px;
-  }
-
-  .field-error {
-    font-size: 12.5px;
-    color: var(--danger);
-    margin-top: 6px;
-    display: none;
-  }
-
+  .field-hint { font-size: 12px; color: var(--text-muted); margin-top: 6px; }
+  .field-error { font-size: 12.5px; color: var(--danger); margin-top: 6px; display: none; }
   .field-error.visible { display: block; }
 
   .form-alert {
@@ -235,19 +218,16 @@
     margin-bottom: 18px;
     display: none;
   }
-
   .form-alert.error {
     background: rgba(226, 85, 90, 0.12);
     border: 1px solid rgba(226, 85, 90, 0.35);
     color: #ff9a9d;
   }
-
   .form-alert.success {
     background: rgba(63, 174, 107, 0.12);
     border: 1px solid rgba(63, 174, 107, 0.35);
     color: #7fe0a5;
   }
-
   .form-alert.visible { display: block; }
 
   .submit-btn {
@@ -264,7 +244,6 @@
     transition: filter 0.2s ease, transform 0.15s ease;
     margin-top: 4px;
   }
-
   .submit-btn:hover { filter: brightness(1.06); }
   .submit-btn:active { transform: translateY(1px); }
 
@@ -272,14 +251,12 @@
   .auth-form.active { display: block; }
 
   /* ---------- DASHBOARD SECTION ---------- */
-
   #dashboard-section {
     display: none;
     opacity: 0;
     transform: translateY(14px);
     transition: opacity 0.5s ease, transform 0.5s ease;
   }
-
   #dashboard-section.revealed {
     display: block;
     opacity: 1;
@@ -294,18 +271,8 @@
     gap: 16px;
     margin-bottom: 36px;
   }
-
-  .dash-welcome h2 {
-    margin: 0 0 6px;
-    font-size: 24px;
-    font-weight: 800;
-  }
-
-  .dash-welcome p {
-    margin: 0;
-    color: var(--text-muted);
-    font-size: 14px;
-  }
+  .dash-welcome h2 { margin: 0 0 6px; font-size: 24px; font-weight: 800; }
+  .dash-welcome p { margin: 0; color: var(--text-muted); font-size: 14px; }
 
   .logout-btn {
     border: 1px solid rgba(255,255,255,0.15);
@@ -319,7 +286,6 @@
     cursor: pointer;
     transition: background 0.2s ease, border-color 0.2s ease;
   }
-
   .logout-btn:hover {
     background: rgba(226, 85, 90, 0.12);
     border-color: rgba(226, 85, 90, 0.4);
@@ -331,27 +297,16 @@
     justify-content: space-between;
     margin-bottom: 20px;
   }
-
-  .section-heading h3 {
-    font-size: 17px;
-    font-weight: 800;
-    margin: 0;
-  }
-
-  .section-heading span {
-    font-size: 12.5px;
-    color: var(--text-muted);
-  }
+  .section-heading h3 { font-size: 17px; font-weight: 800; margin: 0; }
+  .section-heading span { font-size: 12.5px; color: var(--text-muted); }
 
   /* ---------- TELECOM BRANDING GRID ---------- */
-
   .telecom-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 18px;
     margin-bottom: 46px;
   }
-
   .telecom-card {
     background: linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.015));
     border: 1px solid rgba(255,255,255,0.08);
@@ -364,20 +319,12 @@
     text-align: center;
     transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
   }
-
   .telecom-card:hover {
     transform: translateY(-4px);
     border-color: rgba(201, 162, 75, 0.4);
     box-shadow: 0 16px 32px rgba(0,0,0,0.3);
   }
 
-  /*
-    Logo container: fixed, responsive-friendly 120x120 box.
-    object-fit: cover ensures any uploaded logo (portrait, landscape,
-    square, high-res or low-res) fills the box perfectly without
-    stretching or distorting -- the admin can swap the image file at
-    any time and the layout will never break.
-  */
   .telecom-logo {
     width: 120px;
     height: 120px;
@@ -390,25 +337,9 @@
     justify-content: center;
     flex-shrink: 0;
   }
-
-  .telecom-logo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  .telecom-name {
-    font-weight: 800;
-    font-size: 15.5px;
-  }
-
-  .telecom-desc {
-    font-size: 12.5px;
-    color: var(--text-muted);
-    line-height: 1.6;
-  }
-
+  .telecom-logo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .telecom-name { font-weight: 800; font-size: 15.5px; }
+  .telecom-desc { font-size: 12.5px; color: var(--text-muted); line-height: 1.6; }
   .telecom-tag {
     font-size: 11.5px;
     font-weight: 700;
@@ -420,39 +351,21 @@
   }
 
   /* ---------- INFO CARDS ---------- */
-
   .info-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 18px;
   }
-
   .info-card {
     background: linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.015));
     border: 1px solid rgba(255,255,255,0.08);
     border-radius: var(--radius-lg);
     padding: 22px;
   }
+  .info-card h4 { margin: 0 0 10px; font-size: 14.5px; font-weight: 800; }
+  .info-card p { margin: 0; font-size: 13px; color: var(--text-muted); line-height: 1.8; }
 
-  .info-card h4 {
-    margin: 0 0 10px;
-    font-size: 14.5px;
-    font-weight: 800;
-  }
-
-  .info-card p {
-    margin: 0;
-    font-size: 13px;
-    color: var(--text-muted);
-    line-height: 1.8;
-  }
-
-  footer {
-    text-align: center;
-    padding: 26px 0 10px;
-    color: var(--text-muted);
-    font-size: 12.5px;
-  }
+  footer { text-align: center; padding: 26px 0 10px; color: var(--text-muted); font-size: 12.5px; }
 
   @media (max-width: 560px) {
     .auth-card { padding: 30px 22px 26px; }
@@ -477,7 +390,6 @@
 </div>
 
 <main>
-
   <!-- ================= AUTH SECTION ================= -->
   <section id="auth-section">
     <div class="auth-card">
@@ -494,46 +406,39 @@
       <!-- Login Form -->
       <form id="login-form" class="auth-form active" novalidate>
         <div id="login-alert" class="form-alert error"></div>
-
         <div class="field-group">
           <label for="login-phone">رقم الهاتف</label>
           <input type="text" id="login-phone" inputmode="numeric" placeholder="01xxxxxxxxx" autocomplete="off" />
           <div class="field-error" id="login-phone-error">يرجى إدخال رقم هاتف صحيح</div>
         </div>
-
         <div class="field-group">
           <label for="login-password">كلمة المرور</label>
           <input type="password" id="login-password" placeholder="••••••••" autocomplete="off" />
           <div class="field-error" id="login-password-error">كلمة المرور غير صحيحة</div>
         </div>
-
         <button type="submit" class="submit-btn">تسجيل الدخول</button>
       </form>
 
       <!-- Register Form -->
       <form id="register-form" class="auth-form" novalidate>
         <div id="register-alert" class="form-alert error"></div>
-
         <div class="field-group">
           <label for="register-phone">رقم الهاتف</label>
           <input type="text" id="register-phone" inputmode="numeric" placeholder="01xxxxxxxxx" autocomplete="off" />
           <div class="field-hint">لا يُسمح بالمسافات، ويجب أن يتكون الرقم من 11 رقمًا</div>
           <div class="field-error" id="register-phone-error">رقم الهاتف غير صالح</div>
         </div>
-
         <div class="field-group">
           <label for="register-password">كلمة المرور</label>
           <input type="password" id="register-password" placeholder="••••••••" autocomplete="off" />
           <div class="field-hint">8 أحرف على الأقل، تتضمن حروفًا وأرقامًا، بدون مسافات</div>
           <div class="field-error" id="register-password-error">كلمة المرور لا تحقق الشروط المطلوبة</div>
         </div>
-
         <div class="field-group">
           <label for="register-password-confirm">تأكيد كلمة المرور</label>
           <input type="password" id="register-password-confirm" placeholder="••••••••" autocomplete="off" />
           <div class="field-error" id="register-password-confirm-error">كلمتا المرور غير متطابقتين</div>
         </div>
-
         <button type="submit" class="submit-btn">إنشاء الحساب</button>
       </form>
     </div>
@@ -555,7 +460,6 @@
     </div>
 
     <div class="telecom-grid">
-
       <div class="telecom-card">
         <div class="telecom-logo">
           <img src="assets/logos/we.png" alt="شعار شركة WE" onerror="this.src='https://placehold.co/240x240/ffffff/0b1220?text=WE'" />
@@ -591,7 +495,6 @@
         <div class="telecom-desc">باقات إنترنت وشحن رصيد لعملاء شركة فودافون مصر</div>
         <div class="telecom-tag">متاح الآن</div>
       </div>
-
     </div>
 
     <div class="section-heading">
@@ -614,270 +517,14 @@
       </div>
     </div>
   </section>
-
 </main>
 
 <footer>
   &copy; <span id="year"></span> منصة الشحن الموحدة — جميع الحقوق محفوظة
 </footer>
 
-<script>
-  // ============================================================
-  // Configuration
-  // ============================================================
-  const STORAGE_USERS_KEY = "ek_platform_users";
-  const STORAGE_SESSION_KEY = "ek_platform_session";
-
-  // Egyptian mobile format: starts with 01, 11 digits total, digits only.
-  const PHONE_REGEX = /^01\d{9}$/;
-  // At least 8 characters, at least one letter, at least one digit, no whitespace.
-  const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)\S{8,}$/;
-
-  document.getElementById("year").textContent = new Date().getFullYear();
-
-  // ============================================================
-  // Storage helpers
-  // ============================================================
-  function getUsers() {
-    try {
-      return JSON.parse(localStorage.getItem(STORAGE_USERS_KEY)) || {};
-    } catch (e) {
-      return {};
-    }
-  }
-
-  function saveUsers(users) {
-    localStorage.setItem(STORAGE_USERS_KEY, JSON.stringify(users));
-  }
-
-  function setSession(phone) {
-    localStorage.setItem(STORAGE_SESSION_KEY, phone);
-  }
-
-  function clearSession() {
-    localStorage.removeItem(STORAGE_SESSION_KEY);
-  }
-
-  function getSession() {
-    return localStorage.getItem(STORAGE_SESSION_KEY);
-  }
-
-  // ============================================================
-  // Tab switching
-  // ============================================================
-  function switchTab(tab) {
-    const loginTab = document.getElementById("tab-login");
-    const registerTab = document.getElementById("tab-register");
-    const loginForm = document.getElementById("login-form");
-    const registerForm = document.getElementById("register-form");
-
-    if (tab === "login") {
-      loginTab.classList.add("active");
-      registerTab.classList.remove("active");
-      loginForm.classList.add("active");
-      registerForm.classList.remove("active");
-    } else {
-      registerTab.classList.add("active");
-      loginTab.classList.remove("active");
-      registerForm.classList.add("active");
-      loginForm.classList.remove("active");
-    }
-
-    hideAlert("login-alert");
-    hideAlert("register-alert");
-  }
-
-  // ============================================================
-  // Validation helpers
-  // ============================================================
-  function showFieldError(inputId, errorId) {
-    document.getElementById(inputId).classList.add("invalid");
-    document.getElementById(errorId).classList.add("visible");
-  }
-
-  function clearFieldError(inputId, errorId) {
-    document.getElementById(inputId).classList.remove("invalid");
-    document.getElementById(errorId).classList.remove("visible");
-  }
-
-  function showAlert(alertId, message, type) {
-    const el = document.getElementById(alertId);
-    el.textContent = message;
-    el.classList.remove("error", "success");
-    el.classList.add(type, "visible");
-  }
-
-  function hideAlert(alertId) {
-    const el = document.getElementById(alertId);
-    el.classList.remove("visible");
-    el.textContent = "";
-  }
-
-  function isPhoneValid(phone) {
-    return PHONE_REGEX.test(phone) && !/\s/.test(phone);
-  }
-
-  function isPasswordValid(password) {
-    return PASSWORD_REGEX.test(password) && !/\s/.test(password);
-  }
-
-  // ============================================================
-  // Register
-  // ============================================================
-  document.getElementById("register-form").addEventListener("submit", function (e) {
-    e.preventDefault();
-    hideAlert("register-alert");
-
-    const phoneInput = document.getElementById("register-phone");
-    const passwordInput = document.getElementById("register-password");
-    const confirmInput = document.getElementById("register-password-confirm");
-
-    const phone = phoneInput.value.trim();
-    const password = passwordInput.value;
-    const confirmPassword = confirmInput.value;
-
-    clearFieldError("register-phone", "register-phone-error");
-    clearFieldError("register-password", "register-password-error");
-    clearFieldError("register-password-confirm", "register-password-confirm-error");
-
-    let hasError = false;
-
-    if (/\s/.test(phone) || !isPhoneValid(phone)) {
-      showFieldError("register-phone", "register-phone-error");
-      hasError = true;
-    }
-
-    if (/\s/.test(password) || !isPasswordValid(password)) {
-      showFieldError("register-password", "register-password-error");
-      hasError = true;
-    }
-
-    if (password !== confirmPassword) {
-      showFieldError("register-password-confirm", "register-password-confirm-error");
-      hasError = true;
-    }
-
-    if (hasError) {
-      showAlert("register-alert", "يرجى تصحيح البيانات المدخلة قبل المتابعة", "error");
-      return;
-    }
-
-    const users = getUsers();
-
-    if (users[phone]) {
-      showAlert("register-alert", "يوجد حساب مسجل بالفعل بهذا الرقم", "error");
-      return;
-    }
-
-    users[phone] = { password: password };
-    saveUsers(users);
-    setSession(phone);
-
-    showAlert("register-alert", "تم إنشاء الحساب بنجاح، جارٍ تحويلك إلى لوحة الحساب...", "success");
-
-    setTimeout(function () {
-      revealDashboard(phone);
-    }, 700);
-  });
-
-  // ============================================================
-  // Login
-  // ============================================================
-  document.getElementById("login-form").addEventListener("submit", function (e) {
-    e.preventDefault();
-    hideAlert("login-alert");
-
-    const phoneInput = document.getElementById("login-phone");
-    const passwordInput = document.getElementById("login-password");
-
-    const phone = phoneInput.value.trim();
-    const password = passwordInput.value;
-
-    clearFieldError("login-phone", "login-phone-error");
-    clearFieldError("login-password", "login-password-error");
-
-    let hasError = false;
-
-    if (/\s/.test(phone) || !isPhoneValid(phone)) {
-      showFieldError("login-phone", "login-phone-error");
-      hasError = true;
-    }
-
-    if (/\s/.test(password) || password.length === 0) {
-      showFieldError("login-password", "login-password-error");
-      hasError = true;
-    }
-
-    if (hasError) {
-      showAlert("login-alert", "يرجى تصحيح البيانات المدخلة قبل المتابعة", "error");
-      return;
-    }
-
-    const users = getUsers();
-    const account = users[phone];
-
-    if (!account || account.password !== password) {
-      showAlert("login-alert", "رقم الهاتف أو كلمة المرور غير صحيحة", "error");
-      return;
-    }
-
-    setSession(phone);
-    revealDashboard(phone);
-  });
-
-  // ============================================================
-  // Dashboard reveal / logout
-  // ============================================================
-  function revealDashboard(phone) {
-    const authSection = document.getElementById("auth-section");
-    const dashboardSection = document.getElementById("dashboard-section");
-    const sessionPill = document.getElementById("session-pill");
-
-    authSection.classList.add("hidden-fade");
-
-    dashboardSection.style.display = "block";
-    requestAnimationFrame(function () {
-      dashboardSection.classList.add("revealed");
-    });
-
-    document.getElementById("dash-phone-display").textContent = "رقم الحساب: " + phone;
-    sessionPill.classList.add("visible");
-  }
-
-  function handleLogout() {
-    clearSession();
-
-    const authSection = document.getElementById("auth-section");
-    const dashboardSection = document.getElementById("dashboard-section");
-    const sessionPill = document.getElementById("session-pill");
-
-    dashboardSection.classList.remove("revealed");
-    sessionPill.classList.remove("visible");
-
-    setTimeout(function () {
-      dashboardSection.style.display = "none";
-      authSection.classList.remove("hidden-fade");
-
-      document.getElementById("login-form").reset();
-      document.getElementById("register-form").reset();
-      hideAlert("login-alert");
-      hideAlert("register-alert");
-      switchTab("login");
-    }, 350);
-  }
-
-  // ============================================================
-  // Restore existing session on page load
-  // ============================================================
-  (function initSession() {
-    const existingPhone = getSession();
-    const users = getUsers();
-
-    if (existingPhone && users[existingPhone]) {
-      revealDashboard(existingPhone);
-    }
-  })();
-</script>
-
+<!-- ربط الملف الخارجي الجديد الموصول بريبليت بكرة -->
+<script src="app.js"></script>
 </body>
 </html>
+
