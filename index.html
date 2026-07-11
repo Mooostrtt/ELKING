@@ -1,207 +1,883 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EL KING - منصة الشحن الملكية</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <style>
-        :root {
-            --vodafone: #ff0000; --we: #bc00dd; --orange: #ff6600; --etisalat: #739600;
-            --bg-dark: #0b0c10; --card-dark: #1f2833; --gold: #c5a059; --gold-glow: #e5c158;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
-        body { 
-            background-color: var(--bg-dark); color: #ffffff; padding-bottom: 90px;
-            background-image: radial-gradient(circle at 50% 20%, #1f2833 0%, var(--bg-dark) 70%); min-height: 100vh;
-        }
-        header { background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, rgba(11,12,16,0) 100%); padding: 35px 20px; text-align: center; }
-        header h1 { font-size: 42px; color: #fff; font-weight: 900; text-transform: uppercase; letter-spacing: 3px; text-shadow: 0 0 15px var(--gold-glow); }
-        header p { font-size: 13px; color: #86c232; margin-top: 8px; font-weight: 600; }
-        .container { padding: 20px; max-width: 480px; margin: 0 auto; }
-        .section-title { font-size: 18px; margin: 20px 0 15px 0; color: #fff; font-weight: bold; border-right: 4px solid var(--gold); padding-right: 10px; }
-        
-        .hidden { display: none !important; }
-        .box { background: linear-gradient(145deg, #1f2833, #151b23); padding: 25px; border-radius: 25px; border: 1px solid rgba(255,255,255,0.05); margin-top: 15px; box-shadow: 0 15px 30px rgba(0,0,0,0.5); }
-        label { display: block; font-size: 14px; color: #999; margin-bottom: 8px; font-weight: 600; }
-        select, input[type="text"], input[type="file"] { width: 100%; padding: 14px; margin-bottom: 20px; border-radius: 12px; border: 1px solid #333; background: #0b0c10; color: #fff; font-size: 15px; }
-        
-        button.btn-main { width: 100%; padding: 15px; background: linear-gradient(90deg, #c5a059 0%, #e5c158 100%); color: #000; border: none; font-weight: 800; border-radius: 12px; cursor: pointer; font-size: 16px; box-shadow: 0 5px 15px rgba(229,193,88,0.4); }
-        .btn-back { width: 100%; background-color: transparent; color: #aaa; margin-top: 10px; padding: 10px; font-size: 14px; border: 1px solid #444; border-radius: 12px; cursor: pointer; }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>منصة الشحن الموحدة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy-950: #0b1220;
+    --navy-900: #0f1b2e;
+    --navy-800: #16243b;
+    --navy-700: #1e3050;
+    --gold-500: #c9a24b;
+    --gold-400: #ddbd6f;
+    --text-primary: #eef2f7;
+    --text-muted: #9fb0c3;
+    --danger: #e2555a;
+    --success: #3fae6b;
+    --radius-lg: 18px;
+    --radius-md: 12px;
+    --shadow-elevated: 0 20px 45px rgba(0, 0, 0, 0.35);
+  }
 
-        .grid-networks { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .net-card { 
-            background: linear-gradient(145deg, #1f2833, #151b23); border-radius: 20px; padding: 35px 15px; 
-            text-align: center; cursor: pointer; transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.05);
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-        }
-        .net-card:active { transform: scale(0.92); }
-        
-        .company-icon { font-size: 50px; margin-bottom: 15px; transition: 0.3s; }
-        .net-card span { font-weight: 700; font-size: 17px; color: #e0e0e0; }
+  * { box-sizing: border-box; }
 
-        .vf i { color: var(--vodafone); text-shadow: 0 0 10px rgba(255,0,0,0.5); }
-        .we i { color: var(--we); text-shadow: 0 0 10px rgba(188,0,221,0.5); }
-        .or i { color: var(--orange); text-shadow: 0 0 10px rgba(255,102,0,0.5); }
-        .et i { color: var(--etisalat); text-shadow: 0 0 10px rgba(115,150,0,0.5); }
+  html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+    background: radial-gradient(circle at top, var(--navy-800), var(--navy-950) 65%);
+    color: var(--text-primary);
+  }
 
-        .cash-box { background: #0b0c10; padding: 15px; border-radius: 12px; border: 1px solid #c5a059; text-align: center; margin-bottom: 20px; }
-        .cash-num { font-size: 22px; color: var(--gold-glow); font-weight: bold; cursor: pointer; text-decoration: underline; display: inline-block; margin-top: 5px; letter-spacing: 1px; }
-        .notes-box { background: rgba(229,193,88,0.1); border: 1px dashed var(--gold); padding: 12px; border-radius: 10px; margin-bottom: 20px; font-size: 13px; color: #e5c158; line-height: 1.5; }
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 6vw;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
 
-        footer { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(11, 12, 16, 0.95); backdrop-filter: blur(10px); padding: 18px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); font-size: 14px; z-index: 100; }
-        footer a { color: var(--gold-glow); text-decoration: none; font-weight: 700; }
-    </style>
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .brand-mark {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--gold-500), var(--gold-400));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    color: var(--navy-950);
+    font-size: 18px;
+  }
+
+  .brand-title {
+    font-weight: 800;
+    font-size: 19px;
+    letter-spacing: 0.2px;
+  }
+
+  .brand-subtitle {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  .status-pill {
+    font-size: 12.5px;
+    color: var(--success);
+    background: rgba(63, 174, 107, 0.12);
+    border: 1px solid rgba(63, 174, 107, 0.35);
+    padding: 6px 14px;
+    border-radius: 999px;
+    display: none;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .status-pill.visible { display: inline-flex; }
+
+  .status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--success);
+  }
+
+  main {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 48px 6vw 90px;
+  }
+
+  /* ---------- AUTH SECTION ---------- */
+
+  #auth-section {
+    display: flex;
+    justify-content: center;
+    padding-top: 4vh;
+    transition: opacity 0.45s ease, transform 0.45s ease;
+  }
+
+  #auth-section.hidden-fade {
+    opacity: 0;
+    transform: translateY(-16px) scale(0.98);
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    height: 0;
+    overflow: hidden;
+  }
+
+  .auth-card {
+    width: 100%;
+    max-width: 440px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.015));
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius-lg);
+    padding: 38px 34px 32px;
+    box-shadow: var(--shadow-elevated);
+    backdrop-filter: blur(6px);
+  }
+
+  .auth-heading {
+    text-align: center;
+    margin-bottom: 26px;
+  }
+
+  .auth-heading h1 {
+    font-size: 21px;
+    margin: 0 0 6px;
+    font-weight: 800;
+  }
+
+  .auth-heading p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 13.5px;
+  }
+
+  .tab-switch {
+    display: flex;
+    background: rgba(255,255,255,0.05);
+    border-radius: 999px;
+    padding: 4px;
+    margin-bottom: 26px;
+  }
+
+  .tab-switch button {
+    flex: 1;
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 10px 0;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.25s ease, color 0.25s ease;
+  }
+
+  .tab-switch button.active {
+    background: linear-gradient(135deg, var(--gold-500), var(--gold-400));
+    color: var(--navy-950);
+  }
+
+  .field-group {
+    margin-bottom: 18px;
+  }
+
+  .field-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text-muted);
+  }
+
+  .field-group input {
+    width: 100%;
+    padding: 13px 15px;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(6, 12, 22, 0.55);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 14.5px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .field-group input::placeholder {
+    color: rgba(159, 176, 195, 0.55);
+  }
+
+  .field-group input:focus {
+    border-color: var(--gold-500);
+    box-shadow: 0 0 0 3px rgba(201, 162, 75, 0.18);
+  }
+
+  .field-group input.invalid {
+    border-color: var(--danger);
+    box-shadow: 0 0 0 3px rgba(226, 85, 90, 0.15);
+  }
+
+  .field-hint {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 6px;
+  }
+
+  .field-error {
+    font-size: 12.5px;
+    color: var(--danger);
+    margin-top: 6px;
+    display: none;
+  }
+
+  .field-error.visible { display: block; }
+
+  .form-alert {
+    font-size: 13px;
+    padding: 11px 14px;
+    border-radius: var(--radius-md);
+    margin-bottom: 18px;
+    display: none;
+  }
+
+  .form-alert.error {
+    background: rgba(226, 85, 90, 0.12);
+    border: 1px solid rgba(226, 85, 90, 0.35);
+    color: #ff9a9d;
+  }
+
+  .form-alert.success {
+    background: rgba(63, 174, 107, 0.12);
+    border: 1px solid rgba(63, 174, 107, 0.35);
+    color: #7fe0a5;
+  }
+
+  .form-alert.visible { display: block; }
+
+  .submit-btn {
+    width: 100%;
+    padding: 14px 0;
+    border: none;
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, var(--gold-500), var(--gold-400));
+    color: var(--navy-950);
+    font-family: inherit;
+    font-weight: 800;
+    font-size: 15px;
+    cursor: pointer;
+    transition: filter 0.2s ease, transform 0.15s ease;
+    margin-top: 4px;
+  }
+
+  .submit-btn:hover { filter: brightness(1.06); }
+  .submit-btn:active { transform: translateY(1px); }
+
+  .auth-form { display: none; }
+  .auth-form.active { display: block; }
+
+  /* ---------- DASHBOARD SECTION ---------- */
+
+  #dashboard-section {
+    display: none;
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  #dashboard-section.revealed {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .dash-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+
+  .dash-welcome h2 {
+    margin: 0 0 6px;
+    font-size: 24px;
+    font-weight: 800;
+  }
+
+  .dash-welcome p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+
+  .logout-btn {
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.04);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 13.5px;
+    padding: 10px 20px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease;
+  }
+
+  .logout-btn:hover {
+    background: rgba(226, 85, 90, 0.12);
+    border-color: rgba(226, 85, 90, 0.4);
+  }
+
+  .section-heading {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .section-heading h3 {
+    font-size: 17px;
+    font-weight: 800;
+    margin: 0;
+  }
+
+  .section-heading span {
+    font-size: 12.5px;
+    color: var(--text-muted);
+  }
+
+  /* ---------- TELECOM BRANDING GRID ---------- */
+
+  .telecom-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+    margin-bottom: 46px;
+  }
+
+  .telecom-card {
+    background: linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.015));
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius-lg);
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    text-align: center;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .telecom-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(201, 162, 75, 0.4);
+    box-shadow: 0 16px 32px rgba(0,0,0,0.3);
+  }
+
+  /*
+    Logo container: fixed, responsive-friendly 120x120 box.
+    object-fit: cover ensures any uploaded logo (portrait, landscape,
+    square, high-res or low-res) fills the box perfectly without
+    stretching or distorting -- the admin can swap the image file at
+    any time and the layout will never break.
+  */
+  .telecom-logo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #ffffff;
+    border: 3px solid rgba(201, 162, 75, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .telecom-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .telecom-name {
+    font-weight: 800;
+    font-size: 15.5px;
+  }
+
+  .telecom-desc {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .telecom-tag {
+    font-size: 11.5px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: rgba(201, 162, 75, 0.12);
+    color: var(--gold-400);
+    border: 1px solid rgba(201, 162, 75, 0.3);
+  }
+
+  /* ---------- INFO CARDS ---------- */
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+  }
+
+  .info-card {
+    background: linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.015));
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius-lg);
+    padding: 22px;
+  }
+
+  .info-card h4 {
+    margin: 0 0 10px;
+    font-size: 14.5px;
+    font-weight: 800;
+  }
+
+  .info-card p {
+    margin: 0;
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.8;
+  }
+
+  footer {
+    text-align: center;
+    padding: 26px 0 10px;
+    color: var(--text-muted);
+    font-size: 12.5px;
+  }
+
+  @media (max-width: 560px) {
+    .auth-card { padding: 30px 22px 26px; }
+    .top-bar { padding: 18px 5vw; }
+  }
+</style>
 </head>
 <body>
 
-    <header>
-        <h1>EL KING</h1>
-        <p>النظام الملكي الموحد لشحن الباقات</p>
-    </header>
+<div class="top-bar">
+  <div class="brand">
+    <div class="brand-mark">EK</div>
+    <div>
+      <div class="brand-title">منصة الشحن الموحدة</div>
+      <div class="brand-subtitle">EL KING Unified Recharge Platform</div>
+    </div>
+  </div>
+  <div id="session-pill" class="status-pill">
+    <span class="status-dot"></span>
+    <span id="session-pill-text">متصل الآن</span>
+  </div>
+</div>
 
-    <div class="container">
-        <div id="step-login">
-            <div class="section-title">تسجيل دخول للمنصة:</div>
-            <div class="box">
-                <label>الاسم بالكامل:</label>
-                <input type="text" id="login-name" placeholder="اكتب اسمك هنا">
-                <label>رقم الموبايل:</label>
-                <input type="text" id="login-phone" placeholder="01xxxxxxxxx">
-                <button class="btn-main" onclick="handleLogin()">دخول المنصة</button>
-            </div>
+<main>
+
+  <!-- ================= AUTH SECTION ================= -->
+  <section id="auth-section">
+    <div class="auth-card">
+      <div class="auth-heading">
+        <h1>الوصول إلى حسابك</h1>
+        <p>يرجى تسجيل الدخول أو إنشاء حساب جديد لمتابعة استخدام المنصة</p>
+      </div>
+
+      <div class="tab-switch">
+        <button type="button" id="tab-login" class="active" onclick="switchTab('login')">تسجيل الدخول</button>
+        <button type="button" id="tab-register" onclick="switchTab('register')">إنشاء حساب</button>
+      </div>
+
+      <!-- Login Form -->
+      <form id="login-form" class="auth-form active" novalidate>
+        <div id="login-alert" class="form-alert error"></div>
+
+        <div class="field-group">
+          <label for="login-phone">رقم الهاتف</label>
+          <input type="text" id="login-phone" inputmode="numeric" placeholder="01xxxxxxxxx" autocomplete="off" />
+          <div class="field-error" id="login-phone-error">يرجى إدخال رقم هاتف صحيح</div>
         </div>
 
-        <div id="step-networks" class="hidden">
-            <div class="section-title">أهلاً بك، اختر شبكة الشحن:</div>
-            <div class="grid-networks">
-                <div class="net-card vf" onclick="chooseNetwork('فودافون')"><i class="fa-solid fa-square-phone company-icon"></i><span>فودافون</span></div>
-                <div class="net-card we" onclick="chooseNetwork('وي WE')"><i class="fa-solid fa-circle-nodes company-icon"></i><span>المصرية وي</span></div>
-                <div class="net-card or" onclick="chooseNetwork('أورانج')"><i class="fa-solid fa-cube company-icon"></i><span>أورانج</span></div>
-                <div class="net-card et" onclick="chooseNetwork('اتصالات')"><i class="fa-solid fa-tower-broadcast company-icon"></i><span>اتصالات</span></div>
-            </div>
-            <button class="btn-back" onclick="logout()">خروج</button>
+        <div class="field-group">
+          <label for="login-password">كلمة المرور</label>
+          <input type="password" id="login-password" placeholder="••••••••" autocomplete="off" />
+          <div class="field-error" id="login-password-error">كلمة المرور غير صحيحة</div>
         </div>
 
-        <div id="step-details" class="hidden">
-            <div class="section-title">إتمام عملية الشحن لـ (<span id="selected-net" style="color:var(--gold-glow)"></span>)</div>
-            <div class="box">
-                <div class="cash-box">
-                    <label style="color: #fff;">ابعت على رقم الكاش وارفع الاسكرين:</label>
-                    <div class="cash-num" onclick="copyCashNumber('01030982295')">01030982295</div>
-                    <div style="font-size: 11px; color: #86c232; margin-top: 5px;">(اضغط على الرقم لنسخه تلقائياً)</div>
-                </div>
+        <button type="submit" class="submit-btn">تسجيل الدخول</button>
+      </form>
 
-                <div id="company-notes" class="notes-box hidden"></div>
+      <!-- Register Form -->
+      <form id="register-form" class="auth-form" novalidate>
+        <div id="register-alert" class="form-alert error"></div>
 
-                <div id="package-container">
-                    <label>اختر الباقة المطلوبة:</label>
-                    <select id="package-select"></select>
-                    <label>رقم الموبايل المراد شحنه:</label>
-                    <input type="text" id="user-phone" placeholder="01xxxxxxxxx">
-                    <label>ارفع لقطة شاشة تأكيد الدفع:</label>
-                    <input type="file" id="payment-img" accept="image/*">
-                    <button class="btn-main" onclick="sendOrder()">تأكيد وإرسال الطلب الملكي 👑</button>
-                </div>
-                
-                <div id="coming-soon-container" class="hidden" style="text-align: center; padding: 20px 0;">
-                    <h2 style="color: var(--gold-glow); font-size: 26px;">قريباً...</h2>
-                    <p style="color: #aaa; margin-top: 10px;">باقات فودافون سيتم إضافتها في القريب العاجل.</p>
-                </div>
-                <button class="btn-back" onclick="goBackToNetworks()">تغيير الشركة</button>
-            </div>
+        <div class="field-group">
+          <label for="register-phone">رقم الهاتف</label>
+          <input type="text" id="register-phone" inputmode="numeric" placeholder="01xxxxxxxxx" autocomplete="off" />
+          <div class="field-hint">لا يُسمح بالمسافات، ويجب أن يتكون الرقم من 11 رقمًا</div>
+          <div class="field-error" id="register-phone-error">رقم الهاتف غير صالح</div>
         </div>
+
+        <div class="field-group">
+          <label for="register-password">كلمة المرور</label>
+          <input type="password" id="register-password" placeholder="••••••••" autocomplete="off" />
+          <div class="field-hint">8 أحرف على الأقل، تتضمن حروفًا وأرقامًا، بدون مسافات</div>
+          <div class="field-error" id="register-password-error">كلمة المرور لا تحقق الشروط المطلوبة</div>
+        </div>
+
+        <div class="field-group">
+          <label for="register-password-confirm">تأكيد كلمة المرور</label>
+          <input type="password" id="register-password-confirm" placeholder="••••••••" autocomplete="off" />
+          <div class="field-error" id="register-password-confirm-error">كلمتا المرور غير متطابقتين</div>
+        </div>
+
+        <button type="submit" class="submit-btn">إنشاء الحساب</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ================= DASHBOARD SECTION ================= -->
+  <section id="dashboard-section">
+    <div class="dash-header">
+      <div class="dash-welcome">
+        <h2>مرحبًا بعودتك</h2>
+        <p id="dash-phone-display">رقم الحساب: —</p>
+      </div>
+      <button type="button" class="logout-btn" onclick="handleLogout()">تسجيل الخروج</button>
     </div>
 
-    <script>
-        const BOT_TOKENS = [
-            '8981096815:AAGla-W1OHp38pcMP9rLxrQ5tPNAhG5BTug',
-            '8495228264:AAHxsa_rxvlaacbxpkrzOlLXkcC2aBiUDGo'
-        ];
-        const ADMIN_IDS = ['6539479322', '8701348489'];
+    <div class="section-heading">
+      <h3>شركات الاتصالات المعتمدة</h3>
+      <span>يتم تحديث الشعارات تلقائيًا عند رفعها من لوحة الإدارة</span>
+    </div>
 
-        // داتا احتياطية ثابتة عشان لو سيرفر تليجرام اتأخر في الرد والموقع ميهنجش
-        const backupPackages = {
-            'وي WE': ['🔹 20 جيجا + 1000 دقيقة — 270 جنيه 🔥', '🔹 30 جيجا + 1500 دقيقة — 335 جنيه 🔥'],
-            'فودافون': [],
-            'أورانج': ['🍊 10جيجا & 2000دقيقة بــ250💥', '🍊 14جيجا & 2000دقيقة بــ300💥'],
-            'اتصالات': ['متاح 3750ميكس اتصالات بـ95 جنيه فلوس', 'متاح 5100ميكس اتصالات بـ140ج فلوس']
-        };
+    <div class="telecom-grid">
 
-        const companyNotesData = {
-            'وي WE': '📅 شروط الباقة: صالحة لمدة شهر (التفعيل يوم 1 ويوم 16)<br>📞 نظام المحاسبة: الدقيقة بدقيقة لكل الشبكات',
-            'أورانج': '🚧 شروط الباقة: صالحة لمدة شهر، التفعيل يوم 1💥',
-            'اتصالات': '💡 ملحوظة: كل الباقات السابقة تنفع لو مستلف شهر كامل.'
-        };
+      <div class="telecom-card">
+        <div class="telecom-logo">
+          <img src="assets/logos/we.png" alt="شعار شركة WE" onerror="this.src='https://placehold.co/240x240/ffffff/0b1220?text=WE'" />
+        </div>
+        <div class="telecom-name">WE</div>
+        <div class="telecom-desc">باقات إنترنت وشحن رصيد لعملاء شركة المصرية للاتصالات</div>
+        <div class="telecom-tag">متاح الآن</div>
+      </div>
 
-        let currentNet = '', clientName = '', clientPhone = '';
+      <div class="telecom-card">
+        <div class="telecom-logo">
+          <img src="assets/logos/orange.png" alt="شعار شركة Orange" onerror="this.src='https://placehold.co/240x240/ffffff/0b1220?text=Orange'" />
+        </div>
+        <div class="telecom-name">Orange</div>
+        <div class="telecom-desc">باقات بيانات وشحن رصيد لعملاء شركة أورانج مصر</div>
+        <div class="telecom-tag">متاح الآن</div>
+      </div>
 
-        function copyCashNumber(num) {
-            navigator.clipboard.writeText(num).then(() => { alert('👑 تم نسخ رقم كاش EL KING بنجاح: ' + num); });
-        }
+      <div class="telecom-card">
+        <div class="telecom-logo">
+          <img src="assets/logos/etisalat.png" alt="شعار شركة Etisalat" onerror="this.src='https://placehold.co/240x240/ffffff/0b1220?text=Etisalat'" />
+        </div>
+        <div class="telecom-name">Etisalat</div>
+        <div class="telecom-desc">باقات ميكس وشحن رصيد لعملاء شركة اتصالات مصر</div>
+        <div class="telecom-tag">متاح الآن</div>
+      </div>
 
-        function handleLogin() {
-            const name = document.getElementById('login-name').value.trim();
-            const phone = document.getElementById('login-phone').value.trim();
-            if(!name || !phone) { alert('من فضلك ادخل البيانات أولاً!'); return; }
-            clientName = name; clientPhone = phone;
-            document.getElementById('step-login').classList.add('hidden');
-            document.getElementById('step-networks').classList.remove('hidden');
-        }
+      <div class="telecom-card">
+        <div class="telecom-logo">
+          <img src="assets/logos/vodafone.png" alt="شعار شركة Vodafone" onerror="this.src='https://placehold.co/240x240/ffffff/0b1220?text=Vodafone'" />
+        </div>
+        <div class="telecom-name">Vodafone</div>
+        <div class="telecom-desc">باقات إنترنت وشحن رصيد لعملاء شركة فودافون مصر</div>
+        <div class="telecom-tag">متاح الآن</div>
+      </div>
 
-        function chooseNetwork(net) {
-            currentNet = net;
-            document.getElementById('selected-net').innerText = net;
-            let notesBox = document.getElementById('company-notes');
-            if(companyNotesData[net]) { notesBox.innerHTML = companyNotesData[net]; notesBox.classList.remove('hidden'); } else { notesBox.classList.add('hidden'); }
+    </div>
 
-            if(net === 'فودافون') {
-                document.getElementById('package-container').classList.add('hidden');
-                document.getElementById('coming-soon-container').classList.remove('hidden');
-            } else {
-                document.getElementById('coming-soon-container').classList.add('hidden');
-                document.getElementById('package-container').classList.remove('hidden');
-                let select = document.getElementById('package-select'); select.innerHTML = '';
-                backupPackages[net].forEach(p => {
-                    let opt = document.createElement('option'); opt.value = p; opt.innerText = p; select.appendChild(opt);
-                });
-            }
-            document.getElementById('step-networks').classList.add('hidden');
-            document.getElementById('step-details').classList.remove('hidden');
-        }
+    <div class="section-heading">
+      <h3>معلومات الحساب والدعم</h3>
+      <span></span>
+    </div>
 
-        function goBackToNetworks() { document.getElementById('step-details').classList.add('hidden'); document.getElementById('step-networks').classList.remove('hidden'); }
-        function logout() { location.reload(); }
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>طرق الدفع المعتمدة</h4>
+        <p>يمكن إتمام عمليات الشحن عبر المحافظ الإلكترونية الرسمية المعتمدة من المنصة. يرجى رفع إيصال الدفع فور إتمام التحويل لمتابعة تنفيذ الطلب.</p>
+      </div>
+      <div class="info-card">
+        <h4>الدعم الفني</h4>
+        <p>فريق الدعم الفني متاح لمساعدتكم في أي استفسار متعلق بالطلبات أو عمليات الدفع عبر قنوات التواصل الرسمية للمنصة.</p>
+      </div>
+      <div class="info-card">
+        <h4>سياسة الاستخدام</h4>
+        <p>يلتزم جميع المستخدمين بإدخال بيانات صحيحة عند التسجيل، وتُعد المنصة غير مسؤولة عن أي خطأ ناتج عن بيانات غير دقيقة يقدمها المستخدم.</p>
+      </div>
+    </div>
+  </section>
 
-        async function sendOrder() {
-            const pkg = document.getElementById('package-select').value;
-            const phone = document.getElementById('user-phone').value;
-            const imgFile = document.getElementById('payment-img').files[0];
-            if(!phone || !imgFile) { alert('اكمل البيانات أولاً!'); return; }
+</main>
 
-            alert('جاري إرسال طلبك الفخم لـ EL KING...');
-            const message = `👑 طلب شحن ملكي جديد 👑\n\n👤 العميل: ${clientName}\n📱 حساب العميل: ${clientPhone}\n\n⚙️ التفاصيل:\n🔹 الشركة: ${currentNet}\n🔹 الباقة: ${pkg}\n🔹 الرقم المراد شحنه: ${phone}`;
-            
-            const replyMarkup = {
-                inline_keyboard: [
-                    [{ text: '✅ تم الشحن بنجاح', callback_data: 'done' }],
-                    [{ text: '❌ تم الرفض (الأسكرين غلط)', callback_data: 'reject' }]
-                ]
-            };
+<footer>
+  &copy; <span id="year"></span> منصة الشحن الموحدة — جميع الحقوق محفوظة
+</footer>
 
-            for (let token of BOT_TOKENS) {
-                for (let adminId of ADMIN_IDS) {
-                    const formData = new FormData();
-                    formData.append('chat_id', adminId);
-                    formData.append('photo', imgFile);
-                    formData.append('caption', message);
-                    formData.append('reply_markup', JSON.stringify(replyMarkup));
-                    try { await fetch(`https://api.telegram.org/bot${token}/sendPhoto`, { method: 'POST', body: formData }); } catch (e) {}
-                }
-            }
-            alert('تم إرسال طلبك بنجاح! سيقوم الآدمن بمراجعته فوراً.');
-            location.reload();
-        }
-    </script>
+<script>
+  // ============================================================
+  // Configuration
+  // ============================================================
+  const STORAGE_USERS_KEY = "ek_platform_users";
+  const STORAGE_SESSION_KEY = "ek_platform_session";
+
+  // Egyptian mobile format: starts with 01, 11 digits total, digits only.
+  const PHONE_REGEX = /^01\d{9}$/;
+  // At least 8 characters, at least one letter, at least one digit, no whitespace.
+  const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)\S{8,}$/;
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  // ============================================================
+  // Storage helpers
+  // ============================================================
+  function getUsers() {
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_USERS_KEY)) || {};
+    } catch (e) {
+      return {};
+    }
+  }
+
+  function saveUsers(users) {
+    localStorage.setItem(STORAGE_USERS_KEY, JSON.stringify(users));
+  }
+
+  function setSession(phone) {
+    localStorage.setItem(STORAGE_SESSION_KEY, phone);
+  }
+
+  function clearSession() {
+    localStorage.removeItem(STORAGE_SESSION_KEY);
+  }
+
+  function getSession() {
+    return localStorage.getItem(STORAGE_SESSION_KEY);
+  }
+
+  // ============================================================
+  // Tab switching
+  // ============================================================
+  function switchTab(tab) {
+    const loginTab = document.getElementById("tab-login");
+    const registerTab = document.getElementById("tab-register");
+    const loginForm = document.getElementById("login-form");
+    const registerForm = document.getElementById("register-form");
+
+    if (tab === "login") {
+      loginTab.classList.add("active");
+      registerTab.classList.remove("active");
+      loginForm.classList.add("active");
+      registerForm.classList.remove("active");
+    } else {
+      registerTab.classList.add("active");
+      loginTab.classList.remove("active");
+      registerForm.classList.add("active");
+      loginForm.classList.remove("active");
+    }
+
+    hideAlert("login-alert");
+    hideAlert("register-alert");
+  }
+
+  // ============================================================
+  // Validation helpers
+  // ============================================================
+  function showFieldError(inputId, errorId) {
+    document.getElementById(inputId).classList.add("invalid");
+    document.getElementById(errorId).classList.add("visible");
+  }
+
+  function clearFieldError(inputId, errorId) {
+    document.getElementById(inputId).classList.remove("invalid");
+    document.getElementById(errorId).classList.remove("visible");
+  }
+
+  function showAlert(alertId, message, type) {
+    const el = document.getElementById(alertId);
+    el.textContent = message;
+    el.classList.remove("error", "success");
+    el.classList.add(type, "visible");
+  }
+
+  function hideAlert(alertId) {
+    const el = document.getElementById(alertId);
+    el.classList.remove("visible");
+    el.textContent = "";
+  }
+
+  function isPhoneValid(phone) {
+    return PHONE_REGEX.test(phone) && !/\s/.test(phone);
+  }
+
+  function isPasswordValid(password) {
+    return PASSWORD_REGEX.test(password) && !/\s/.test(password);
+  }
+
+  // ============================================================
+  // Register
+  // ============================================================
+  document.getElementById("register-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    hideAlert("register-alert");
+
+    const phoneInput = document.getElementById("register-phone");
+    const passwordInput = document.getElementById("register-password");
+    const confirmInput = document.getElementById("register-password-confirm");
+
+    const phone = phoneInput.value.trim();
+    const password = passwordInput.value;
+    const confirmPassword = confirmInput.value;
+
+    clearFieldError("register-phone", "register-phone-error");
+    clearFieldError("register-password", "register-password-error");
+    clearFieldError("register-password-confirm", "register-password-confirm-error");
+
+    let hasError = false;
+
+    if (/\s/.test(phone) || !isPhoneValid(phone)) {
+      showFieldError("register-phone", "register-phone-error");
+      hasError = true;
+    }
+
+    if (/\s/.test(password) || !isPasswordValid(password)) {
+      showFieldError("register-password", "register-password-error");
+      hasError = true;
+    }
+
+    if (password !== confirmPassword) {
+      showFieldError("register-password-confirm", "register-password-confirm-error");
+      hasError = true;
+    }
+
+    if (hasError) {
+      showAlert("register-alert", "يرجى تصحيح البيانات المدخلة قبل المتابعة", "error");
+      return;
+    }
+
+    const users = getUsers();
+
+    if (users[phone]) {
+      showAlert("register-alert", "يوجد حساب مسجل بالفعل بهذا الرقم", "error");
+      return;
+    }
+
+    users[phone] = { password: password };
+    saveUsers(users);
+    setSession(phone);
+
+    showAlert("register-alert", "تم إنشاء الحساب بنجاح، جارٍ تحويلك إلى لوحة الحساب...", "success");
+
+    setTimeout(function () {
+      revealDashboard(phone);
+    }, 700);
+  });
+
+  // ============================================================
+  // Login
+  // ============================================================
+  document.getElementById("login-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    hideAlert("login-alert");
+
+    const phoneInput = document.getElementById("login-phone");
+    const passwordInput = document.getElementById("login-password");
+
+    const phone = phoneInput.value.trim();
+    const password = passwordInput.value;
+
+    clearFieldError("login-phone", "login-phone-error");
+    clearFieldError("login-password", "login-password-error");
+
+    let hasError = false;
+
+    if (/\s/.test(phone) || !isPhoneValid(phone)) {
+      showFieldError("login-phone", "login-phone-error");
+      hasError = true;
+    }
+
+    if (/\s/.test(password) || password.length === 0) {
+      showFieldError("login-password", "login-password-error");
+      hasError = true;
+    }
+
+    if (hasError) {
+      showAlert("login-alert", "يرجى تصحيح البيانات المدخلة قبل المتابعة", "error");
+      return;
+    }
+
+    const users = getUsers();
+    const account = users[phone];
+
+    if (!account || account.password !== password) {
+      showAlert("login-alert", "رقم الهاتف أو كلمة المرور غير صحيحة", "error");
+      return;
+    }
+
+    setSession(phone);
+    revealDashboard(phone);
+  });
+
+  // ============================================================
+  // Dashboard reveal / logout
+  // ============================================================
+  function revealDashboard(phone) {
+    const authSection = document.getElementById("auth-section");
+    const dashboardSection = document.getElementById("dashboard-section");
+    const sessionPill = document.getElementById("session-pill");
+
+    authSection.classList.add("hidden-fade");
+
+    dashboardSection.style.display = "block";
+    requestAnimationFrame(function () {
+      dashboardSection.classList.add("revealed");
+    });
+
+    document.getElementById("dash-phone-display").textContent = "رقم الحساب: " + phone;
+    sessionPill.classList.add("visible");
+  }
+
+  function handleLogout() {
+    clearSession();
+
+    const authSection = document.getElementById("auth-section");
+    const dashboardSection = document.getElementById("dashboard-section");
+    const sessionPill = document.getElementById("session-pill");
+
+    dashboardSection.classList.remove("revealed");
+    sessionPill.classList.remove("visible");
+
+    setTimeout(function () {
+      dashboardSection.style.display = "none";
+      authSection.classList.remove("hidden-fade");
+
+      document.getElementById("login-form").reset();
+      document.getElementById("register-form").reset();
+      hideAlert("login-alert");
+      hideAlert("register-alert");
+      switchTab("login");
+    }, 350);
+  }
+
+  // ============================================================
+  // Restore existing session on page load
+  // ============================================================
+  (function initSession() {
+    const existingPhone = getSession();
+    const users = getUsers();
+
+    if (existingPhone && users[existingPhone]) {
+      revealDashboard(existingPhone);
+    }
+  })();
+</script>
+
 </body>
 </html>
