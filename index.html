@@ -61,22 +61,17 @@
     </header>
 
     <div class="container">
-        
-        <!-- خطوة 0: تسجيل الدخول السريع للزبون -->
         <div id="step-login">
             <div class="section-title">تسجيل دخول للمنصة:</div>
             <div class="box">
                 <label>الاسم بالكامل:</label>
                 <input type="text" id="login-name" placeholder="اكتب اسمك هنا">
-                
                 <label>رقم الموبايل:</label>
                 <input type="text" id="login-phone" placeholder="01xxxxxxxxx">
-                
                 <button class="btn-main" onclick="handleLogin()">دخول المنصة</button>
             </div>
         </div>
 
-        <!-- خطوة 1: اختيار الشبكة -->
         <div id="step-networks" class="hidden">
             <div class="section-title">أهلاً بك، اختر شبكة الشحن:</div>
             <div class="grid-networks">
@@ -88,11 +83,9 @@
             <button class="btn-back" onclick="logout()">خروج</button>
         </div>
 
-        <!-- خطوة 2: تفاصيل الطلب والملاحظات المنفصلة -->
         <div id="step-details" class="hidden">
             <div class="section-title">إتمام عملية الشحن لـ (<span id="selected-net" style="color:var(--gold-glow)"></span>)</div>
             <div class="box">
-                
                 <div class="cash-box">
                     <label style="color: #fff;">ابعت على رقم الكاش وارفع الاسكرين:</label>
                     <div class="cash-num" onclick="copyCashNumber('01030982295')">01030982295</div>
@@ -103,14 +96,11 @@
 
                 <div id="package-container">
                     <label>اختر الباقة المطلوبة:</label>
-                    <select id="package-select"><option>جاري سحب الباقات لايف...</option></select>
-
+                    <select id="package-select"></select>
                     <label>رقم الموبايل المراد شحنه:</label>
                     <input type="text" id="user-phone" placeholder="01xxxxxxxxx">
-
                     <label>ارفع لقطة شاشة تأكيد الدفع:</label>
                     <input type="file" id="payment-img" accept="image/*">
-
                     <button class="btn-main" onclick="sendOrder()">تأكيد وإرسال الطلب الملكي 👑</button>
                 </div>
                 
@@ -118,55 +108,31 @@
                     <h2 style="color: var(--gold-glow); font-size: 26px;">قريباً...</h2>
                     <p style="color: #aaa; margin-top: 10px;">باقات فودافون سيتم إضافتها في القريب العاجل.</p>
                 </div>
-
                 <button class="btn-back" onclick="goBackToNetworks()">تغيير الشركة</button>
             </div>
         </div>
-
     </div>
 
-    <footer>
-        بإشراف وتطوير الحساب الرسمي لـ <a href="https://wa.me/201030982295" target="_blank">EL KING 👑</a>
-    </footer>
-
     <script>
-        // دمج البوتات والآدمنز في مصفوفات للعمل المتوازي
         const BOT_TOKENS = [
-            '8981096815:AAGla-W1OHp38pcMP9rLxrQ5tPNAhG5BTug', // البوت الأول
-            '8495228264:AAHxsa_rxvlaacbxpkrzOlLXkcC2aBiUDGo'  // البوت الثاني الجديد
+            '8981096815:AAGla-W1OHp38pcMP9rLxrQ5tPNAhG5BTug',
+            '8495228264:AAHxsa_rxvlaacbxpkrzOlLXkcC2aBiUDGo'
         ];
-        
-        const ADMIN_IDS = [
-            '6539479322', // الآدمن الأول
-            '8701348489'  // الآدمن الثاني الجديد
-        ];
+        const ADMIN_IDS = ['6539479322', '8701348489'];
 
-        const CHANNEL_USER = 'elkingOne11'; // قناتك السحابية
-
-        let globalPackages = { 'وي WE': [], 'فودافون': [], 'أورانج': [], 'اتصالات': [] };
-
-        const companyNotesData = {
-            'وي WE': '📅 شروط الباقة: صالحة لمدة شهر (التفعيل يوم 1 ويوم 16)<br>📞 نظام المحاسبة: الدقيقة بدقيقة لكل الشبكات 🌐 الميجا بميجا لكل المواقع',
-            'أورانج': '🚧 شروط الباقة: صالحة لمدة شهر، التفعيل يوم 1💥<br>🤩 نظام المحاسبة: الدقيقة بدقيقة لكل الشبكات & والميجا بميجا لكل المواقع💎',
-            'اتصالات': '💡 ملحوظة: كل الباقات السابقة تنفع لو مستلف شهر كامل.'
+        // داتا احتياطية ثابتة عشان لو سيرفر تليجرام اتأخر في الرد والموقع ميهنجش
+        const backupPackages = {
+            'وي WE': ['🔹 20 جيجا + 1000 دقيقة — 270 جنيه 🔥', '🔹 30 جيجا + 1500 دقيقة — 335 جنيه 🔥'],
+            'فودافون': [],
+            'أورانج': ['🍊 10جيجا & 2000دقيقة بــ250💥', '🍊 14جيجا & 2000دقيقة بــ300💥'],
+            'اتصالات': ['متاح 3750ميكس اتصالات بـ95 جنيه فلوس', 'متاح 5100ميكس اتصالات بـ140ج فلوس']
         };
 
-        // جلب الباقات تلقائياً لايف من رسائل القناة
-        async function fetchLivePackages() {
-            try {
-                let response = await fetch(`https://api.telegram.org/bot${BOT_TOKENS[0]}/getChat?chat_id=@${CHANNEL_USER}`);
-                let data = await response.json();
-                // هنا نقوم بوضع باقات افتراضية احتياطية في حال لم تكن الرسالة المثبتة جاهزة
-                globalPackages = {
-                    'وي WE': ['🔹 20 جيجا + 1000 دقيقة — 270 جنيه 🔥', '🔹 30 جيجا + 1500 دقيقة — 335 جنيه 🔥', '🔹 40 جيجا + 2000 دقيقة — 410 جنيه 🔥'],
-                    'فودافون': [],
-                    'أورانج': ['🍊 10جيجا & 2000دقيقة بــ250💥', '🍊 14جيجا & 2000دقيقة بــ300💥'],
-                    'اتصالات': ['متاح 3750ميكس اتصالات بـ95 جنيه فلوس', 'متاح 5100ميكس اتصالات بـ140ج فلوس']
-                };
-            } catch(e) { console.log("جاري القراءة من السحابة..."); }
-        }
-
-        fetchLivePackages();
+        const companyNotesData = {
+            'وي WE': '📅 شروط الباقة: صالحة لمدة شهر (التفعيل يوم 1 ويوم 16)<br>📞 نظام المحاسبة: الدقيقة بدقيقة لكل الشبكات',
+            'أورانج': '🚧 شروط الباقة: صالحة لمدة شهر، التفعيل يوم 1💥',
+            'اتصالات': '💡 ملحوظة: كل الباقات السابقة تنفع لو مستلف شهر كامل.'
+        };
 
         let currentNet = '', clientName = '', clientPhone = '';
 
@@ -177,7 +143,7 @@
         function handleLogin() {
             const name = document.getElementById('login-name').value.trim();
             const phone = document.getElementById('login-phone').value.trim();
-            if(!name || !phone) { alert('من فضلك ادخل الاسم والرقم!'); return; }
+            if(!name || !phone) { alert('من فضلك ادخل البيانات أولاً!'); return; }
             clientName = name; clientPhone = phone;
             document.getElementById('step-login').classList.add('hidden');
             document.getElementById('step-networks').classList.remove('hidden');
@@ -187,52 +153,35 @@
             currentNet = net;
             document.getElementById('selected-net').innerText = net;
             let notesBox = document.getElementById('company-notes');
-            
-            if(companyNotesData[net]) {
-                notesBox.innerHTML = companyNotesData[net]; notesBox.classList.remove('hidden');
-            } else { notesBox.classList.add('hidden'); }
+            if(companyNotesData[net]) { notesBox.innerHTML = companyNotesData[net]; notesBox.classList.remove('hidden'); } else { notesBox.classList.add('hidden'); }
 
             if(net === 'فودافون') {
                 document.getElementById('package-container').classList.add('hidden');
                 document.getElementById('coming-soon-container').classList.remove('hidden');
-                notesBox.classList.add('hidden');
             } else {
                 document.getElementById('coming-soon-container').classList.add('hidden');
                 document.getElementById('package-container').classList.remove('hidden');
-                
-                let select = document.getElementById('package-select');
-                select.innerHTML = '';
-                
-                globalPackages[net].forEach(p => {
-                    let opt = document.createElement('option');
-                    opt.value = p; opt.innerText = p;
-                    select.appendChild(opt);
+                let select = document.getElementById('package-select'); select.innerHTML = '';
+                backupPackages[net].forEach(p => {
+                    let opt = document.createElement('option'); opt.value = p; opt.innerText = p; select.appendChild(opt);
                 });
             }
             document.getElementById('step-networks').classList.add('hidden');
             document.getElementById('step-details').classList.remove('hidden');
         }
 
-        function goBackToNetworks() {
-            document.getElementById('step-details').classList.add('hidden');
-            document.getElementById('step-networks').classList.remove('hidden');
-        }
-
+        function goBackToNetworks() { document.getElementById('step-details').classList.add('hidden'); document.getElementById('step-networks').classList.remove('hidden'); }
         function logout() { location.reload(); }
 
-        // الإرسال المتوازي للبوتين والـ 2 آدمنز مع أزرار التحكم التفاعلية
         async function sendOrder() {
             const pkg = document.getElementById('package-select').value;
             const phone = document.getElementById('user-phone').value;
             const imgFile = document.getElementById('payment-img').files[0];
+            if(!phone || !imgFile) { alert('اكمل البيانات أولاً!'); return; }
 
-            if(!phone || !imgFile) { alert('من فضلك اكتب الرقم وارفع الأسكرين!'); return; }
-
-            alert('جاري إرسال طلبك الفخم للبوتات والآدمنز... 👑');
-
+            alert('جاري إرسال طلبك الفخم لـ EL KING...');
             const message = `👑 طلب شحن ملكي جديد 👑\n\n👤 العميل: ${clientName}\n📱 حساب العميل: ${clientPhone}\n\n⚙️ التفاصيل:\n🔹 الشركة: ${currentNet}\n🔹 الباقة: ${pkg}\n🔹 الرقم المراد شحنه: ${phone}`;
-
-            // تجهيز أزرار التحكم لتظهر للآدمنز في تليجرام
+            
             const replyMarkup = {
                 inline_keyboard: [
                     [{ text: '✅ تم الشحن بنجاح', callback_data: 'done' }],
@@ -240,7 +189,6 @@
                 ]
             };
 
-            // الإرسال لكل بوت ولكل آدمن في نفس اللحظة
             for (let token of BOT_TOKENS) {
                 for (let adminId of ADMIN_IDS) {
                     const formData = new FormData();
@@ -248,14 +196,10 @@
                     formData.append('photo', imgFile);
                     formData.append('caption', message);
                     formData.append('reply_markup', JSON.stringify(replyMarkup));
-
-                    try {
-                        await fetch(`https://api.telegram.org/bot${token}/sendPhoto`, { method: 'POST', body: formData });
-                    } catch (err) { console.error("خطأ في إرسال أحد البوتات"); }
+                    try { await fetch(`https://api.telegram.org/bot${token}/sendPhoto`, { method: 'POST', body: formData }); } catch (e) {}
                 }
             }
-
-            alert('تم إرسال الطلب بنجاح لكلا البوتين والآدمنز! 👑');
+            alert('تم إرسال طلبك بنجاح! سيقوم الآدمن بمراجعته فوراً.');
             location.reload();
         }
     </script>
