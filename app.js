@@ -3,12 +3,20 @@
 
     document.getElementById("year").textContent = new Date().getFullYear();
 
+    // تشغيل وإخفاء كلمة السر (العين)
+    window.togglePassword = function(id) {
+        const input = document.getElementById(id);
+        if (input.type === "password") {
+            input.type = "text";
+        } else {
+            input.type = "password";
+        }
+    };
+
     function getSession() {
         try {
             return JSON.parse(localStorage.getItem("elking_session") || "null");
-        } catch (e) {
-            return null;
-        }
+        } catch (e) { return null; }
     }
 
     function setSession(session) {
@@ -36,10 +44,7 @@
     }
 
     function escapeHtml(str) {
-        return String(str)
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;");
+        return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
 
     function switchTab(tab) {
@@ -82,10 +87,7 @@
 
     function hideAlert(alertId) {
         const el = document.getElementById(alertId);
-        if (el) {
-            el.classList.remove("visible");
-            el.textContent = "";
-        }
+        if (el) { el.classList.remove("visible"); el.textContent = ""; }
     }
 
     async function loadPackages() {
@@ -93,7 +95,6 @@
         try {
             const res = await fetch(`${API_BASE_URL}/packages`);
             const data = await res.json();
-
             if (!data || data.length === 0) return;
 
             grid.innerHTML = data.map(pkg => {
@@ -113,11 +114,10 @@
                     </div>
                 `;
             }).join("");
-        } catch (e) {
-            console.log("استخدام العرض الافتراضي.");
-        }
+        } catch (e) { console.log("عرض افتراضي."); }
     }
 
+    // إنشاء الحساب المبسط
     document.getElementById("register-form").addEventListener("submit", async (e) => {
         e.preventDefault();
         const alertBox = document.getElementById("register-alert");
@@ -125,6 +125,26 @@
 
         const phone = document.getElementById("register-phone").value.trim();
         const password = document.getElementById("register-password").value;
+        const confirmPassword = document.getElementById("register-password-confirm").value;
+
+        clearFieldError("register-phone", "register-phone-error");
+        clearFieldError("register-password", "register-password-error");
+        clearFieldError("register-password-confirm", "register-password-confirm-error");
+
+        let hasError = false;
+        if (!/^01\d{9}$/.test(phone)) { showFieldError("register-phone", "register-phone-error"); hasError = true; }
+        
+        // تسهيل الشرط: كلمة السر متقلش عن 4 خانات وخلاص
+        if (password.length < 4 || password === "123456") { 
+            showFieldError("register-password", "register-password-error"); 
+            hasError = true; 
+        }
+        if (password !== confirmPassword) { 
+            showFieldError("register-password-confirm", "register-password-confirm-error"); 
+            hasError = true; 
+        }
+
+        if (hasError) return;
 
         try {
             const res = await fetch(`${API_BASE_URL}/register`, {
@@ -143,12 +163,9 @@
             setSession({ token: data.token, phone: data.user.phone, balance: data.user.balance });
             alertBox.textContent = "✅ تم إنشاء الحساب بنجاح!";
             alertBox.className = "form-alert success visible";
-            
-            setTimeout(() => {
-                revealDashboard(data.user.phone, data.user.balance);
-            }, 700);
+            setTimeout(() => { revealDashboard(data.user.phone, data.user.balance); }, 700);
         } catch (err) {
-            alertBox.textContent = "تعذر الاتصال بالسيرفر. حاول مجدداً.";
+            alertBox.textContent = "تعذر الاتصال بالسيرفر.";
             alertBox.className = "form-alert error visible";
         }
     });
@@ -178,7 +195,7 @@
             setSession({ token: data.token, phone: data.user.phone, balance: data.user.balance });
             revealDashboard(data.user.phone, data.user.balance);
         } catch (err) {
-            alertBox.textContent = "تعذر الاتصال بالسيرفر. حاول مجدداً.";
+            alertBox.textContent = "تعذر الاتصال بالسيرفر.";
             alertBox.className = "form-alert error visible";
         }
     });
@@ -215,10 +232,7 @@
         }, 350);
     }
 
-    // تصدير الوظيفة للـ HTML بشكل رسمي ومضمون
     window.switchTab = switchTab;
-
     renderAuthStatus();
     loadPackages();
 })();
-
