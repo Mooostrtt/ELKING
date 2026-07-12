@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>باقات VIP – خدمة الإنترنت المتميزة</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -12,27 +12,18 @@
       --bg-dark:   #0f1929;
       --bg-card:   #121d30;
       --bg-card-h: #172840;
-      --bg-input:  #0c1624;
       --gold:      #c9a24b;
       --gold-lt:   #ddbd6f;
       --gold-dim:  #9e7a30;
-      --glow:      rgba(201,162,75,.25);
       --gborder:   rgba(201,162,75,.22);
-      --gborder-h: rgba(201,162,75,.65);
       --text:      #e4e8f0;
       --text2:     #7a8fa6;
       --text3:     #3f5166;
-      --danger:    #e05555;
-      --success:   #4caf50;
       --radius:    13px;
       --radius-sm: 8px;
       --radius-lg: 20px;
-      --ease:      .25s ease;
       --shadow:    0 6px 28px rgba(0,0,0,.45);
-      --sgold:     0 0 22px rgba(201,162,75,.22);
     }
-
-    html { scroll-behavior: smooth; }
 
     body {
       background: var(--bg-deep);
@@ -42,6 +33,7 @@
       direction: rtl;
       font-size: 15px;
       line-height: 1.55;
+      padding-bottom: 60px;
     }
 
     /* ──────────────── NAVBAR ──────────────── */
@@ -49,391 +41,262 @@
       background: rgba(9,15,28,.96);
       backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--gborder);
-      height: 62px;
+      height: 65px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 0 28px;
+      justify-content: center;
       position: sticky;
       top: 0;
       z-index: 100;
       box-shadow: 0 3px 24px rgba(0,0,0,.55);
-      gap: 12px;
     }
-    .nav-brand { display:flex; align-items:center; gap:9px; cursor:pointer; }
-    .nav-brand-icon { font-size:22px; }
-    .nav-brand-name { font-size:17px; font-weight:800; color:var(--gold-lt); letter-spacing:.4px; }
-    .nav-right { display:flex; align-items:center; gap:10px; flex-shrink:0; }
-    .nav-user-name { font-size:14px; color:var(--gold-lt); font-weight:600; }
-
-    /* ──────────────── BUTTONS ──────────────── */
-    .btn {
-      display:inline-flex; align-items:center; justify-content:center; gap:7px;
-      padding:9px 22px; border-radius:var(--radius-sm); font-size:14px; font-weight:700;
-      cursor:pointer; border:none; transition:all var(--ease); font-family:inherit; line-height:1;
-    }
-    .btn:disabled { opacity:.55; cursor:not-allowed; }
-    .btn-gold {
-      background:linear-gradient(135deg, var(--gold) 0%, var(--gold-dim) 100%);
-      color:#0a1220; box-shadow:0 3px 14px rgba(201,162,75,.35);
-    }
-    .btn-gold:hover:not(:disabled) {
-      background:linear-gradient(135deg, var(--gold-lt) 0%, var(--gold) 100%);
-      box-shadow:0 5px 22px rgba(201,162,75,.55); transform:translateY(-1px);
-    }
-    .btn-outline {
-      background:transparent; border:1.5px solid var(--gborder); color:var(--gold-lt);
-    }
-    .btn-outline:hover:not(:disabled) { background:var(--glow); border-color:var(--gold); }
-    .btn-ghost {
-      background:transparent; border:1.5px solid rgba(224,85,85,.35); color:var(--danger);
-      padding:8px 18px;
-    }
-    .btn-ghost:hover { background:rgba(224,85,85,.12); border-color:var(--danger); }
-    .btn-sm { padding:7px 16px; font-size:13px; }
-
-    /* ──────────────── PAGES ──────────────── */
-    .page { display:none; }
-    .page.active { display:block; }
+    .nav-brand { display:flex; align-items:center; gap:9px; }
+    .nav-brand-icon { font-size:24px; }
+    .nav-brand-name { font-size:20px; font-weight:800; color:var(--gold-lt); letter-spacing:.4px; }
 
     /* ──────────────── MAIN CONTAINER ──────────────── */
-    .main-wrap {
-      max-width:1200px; margin:0 auto; padding:36px 22px;
-    }
-
+    .main-wrap { max-width:1200px; margin:0 auto; padding:36px 22px; }
     .page-header { text-align:center; margin-bottom:44px; }
-    .page-title  { font-size:28px; font-weight:800; color:var(--gold-lt); margin-bottom:8px; }
-    .page-sub    { color:var(--text2); font-size:15px; }
+    .page-title  { font-size:32px; font-weight:800; color:var(--gold-lt); margin-bottom:8px; }
+    .page-sub    { color:var(--text2); font-size:16px; }
 
     /* ──────────────── COMPANY SECTION ──────────────── */
-    .co-section { margin-bottom:50px; }
+    .co-section { margin-bottom:40px; }
     .co-header {
       display:flex; align-items:center; gap:14px;
-      padding-bottom:16px; border-bottom:1px solid var(--gborder); margin-bottom:22px;
+      padding-bottom:12px; border-bottom:1px solid var(--gborder); margin-bottom:20px;
     }
     .co-logo {
-      width:50px; height:50px; border-radius:13px;
+      width:45px; height:45px; border-radius:11px;
       display:flex; align-items:center; justify-content:center;
-      font-size:13px; font-weight:900; color:#fff; flex-shrink:0;
-      letter-spacing:.5px; text-transform:uppercase;
+      font-size:16px; font-weight:900; color:#fff; flex-shrink:0;
     }
-    .co-name-en { font-size:20px; font-weight:800; color:var(--text); }
-    .co-name-ar { font-size:13px; color:var(--text2); margin-top:2px; }
+    .co-name { font-size:22px; font-weight:800; color:var(--text); }
 
     /* ──────────────── PACKAGE GRID ──────────────── */
     .pkg-grid {
-      display:grid;
-      grid-template-columns:repeat(auto-fill, minmax(190px, 1fr));
-      gap:15px;
+      display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:18px;
     }
     .pkg-card {
-      background:var(--bg-card);
-      border:1px solid var(--gborder);
-      border-radius:var(--radius);
-      padding:22px 15px 18px;
-      text-align:center;
-      cursor:pointer;
-      transition:all var(--ease);
-      position:relative;
-      overflow:hidden;
+      background:var(--bg-card); border:1px solid var(--gborder); border-radius:var(--radius);
+      padding:24px 16px; text-align:center; cursor:pointer; transition:all .25s ease;
     }
     .pkg-card:hover {
-      border-color:var(--gold); background:var(--bg-card-h);
-      transform:translateY(-4px);
-      box-shadow:var(--sgold), var(--shadow);
+      border-color:var(--gold); background:var(--bg-card-h); transform:translateY(-4px); box-shadow:var(--shadow);
     }
-    .pkg-data   { font-size:24px; font-weight:800; color:var(--gold-lt); line-height:1; margin-bottom:5px; }
-    .pkg-dur    { font-size:12px; color:var(--text2); margin-bottom:15px; }
-    .pkg-price  { font-size:22px; font-weight:800; color:var(--text); margin-bottom:17px; }
-    .pkg-price small { font-size:13px; font-weight:400; color:var(--text2); margin-right:2px; }
+    .pkg-data   { font-size:26px; font-weight:800; color:var(--gold-lt); margin-bottom:6px; }
+    .pkg-dur    { font-size:13px; color:var(--text2); margin-bottom:15px; background:rgba(201,162,75,0.08); display:inline-block; padding:3px 10px; border-radius:20px; }
+    .pkg-price  { font-size:24px; font-weight:800; color:var(--text); margin-bottom:18px; }
+    .pkg-price small { font-size:14px; color:var(--text2); margin-right:2px; }
     .pkg-cta {
-      width:100%; padding:10px; border:none; border-radius:var(--radius-sm);
+      width:100%; padding:11px; border:none; border-radius:var(--radius-sm);
       background:linear-gradient(135deg, var(--gold), var(--gold-dim));
-      color:#0a1220; font-size:14px; font-weight:700; cursor:pointer;
-      font-family:inherit; transition:all var(--ease);
+      color:#0a1220; font-size:15px; font-weight:700; cursor:pointer; transition:all .25s;
     }
-    .pkg-cta:hover { background:linear-gradient(135deg, var(--gold-lt), var(--gold)); box-shadow:0 4px 18px rgba(201,162,75,.45); }
-
-    /* ──────────────── AUTH PAGES ──────────────── */
-    .auth-wrap {
-      min-height:calc(100vh - 62px);
-      display:flex; align-items:center; justify-content:center; padding:28px 18px;
-    }
-    .auth-card {
-      background:var(--bg-card);
-      border:1px solid var(--gborder);
-      border-radius:var(--radius-lg);
-      padding:42px 38px;
-      width:100%; max-width:420px;
-      box-shadow:var(--shadow);
-    }
-    .auth-card-icon { text-align:center; font-size:38px; margin-bottom:14px; }
-    .auth-title  { font-size:24px; font-weight:800; color:var(--gold-lt); text-align:center; margin-bottom:6px; }
-    .auth-sub    { color:var(--text2); text-align:center; font-size:14px; margin-bottom:30px; }
-
-    .form-row    { margin-bottom:18px; }
-    .form-label  { display:block; font-size:13px; color:var(--text2); margin-bottom:7px; font-weight:600; }
-    .form-input  {
-      width:100%; padding:12px 14px;
-      background:var(--bg-input); border:1.5px solid rgba(201,162,75,.2);
-      border-radius:var(--radius-sm); color:var(--text); font-size:15px;
-      font-family:inherit; outline:none; transition:border-color var(--ease), box-shadow var(--ease);
-      direction:ltr; text-align:right;
-    }
-    .form-input:focus { border-color:var(--gold); box-shadow:0 0 0 3px rgba(201,162,75,.15); }
-    .form-input::placeholder { color:var(--text3); direction:rtl; text-align:right; }
-
-    .pw-wrap { position:relative; }
-    .pw-wrap .form-input { padding-left:44px; }
-    .eye-btn {
-      position:absolute; left:11px; top:50%; transform:translateY(-50%);
-      background:none; border:none; cursor:pointer; font-size:18px;
-      color:var(--text3); padding:4px; line-height:1; transition:color var(--ease);
-    }
-    .eye-btn:hover { color:var(--gold); }
-
-    .form-err  { color:var(--danger); font-size:13px; margin-top:5px; min-height:18px; }
-    .form-full { width:100%; margin-top:4px; padding:13px; font-size:15px; }
-    .form-foot { text-align:center; margin-top:22px; color:var(--text2); font-size:14px; }
-    .form-link { color:var(--gold); cursor:pointer; font-weight:700; }
-    .form-link:hover { color:var(--gold-lt); }
+    .pkg-cta:hover { box-shadow:0 4px 18px rgba(201,162,75,.45); }
 
     /* ──────────────── ORDER MODAL ──────────────── */
     .overlay {
-      position:fixed; inset:0;
-      background:rgba(0,0,0,.78); backdrop-filter:blur(7px);
+      position:fixed; inset:0; background:rgba(0,0,0,.85); backdrop-filter:blur(6px);
       z-index:300; display:flex; align-items:center; justify-content:center;
-      padding:18px; opacity:0; pointer-events:none; transition:opacity var(--ease);
+      padding:18px; opacity:0; pointer-events:none; transition:opacity .25s ease;
     }
     .overlay.open { opacity:1; pointer-events:all; }
     .modal {
-      background:var(--bg-card); border:1px solid var(--gborder); border-radius:var(--radius-lg);
-      padding:38px 34px; width:100%; max-width:490px;
-      max-height:92vh; overflow-y:auto;
-      box-shadow:0 24px 70px rgba(0,0,0,.65), var(--sgold);
-      position:relative; transform:translateY(30px); transition:transform var(--ease);
+      background:var(--bg-card); border:1px solid var(--gold); border-radius:var(--radius-lg);
+      padding:35px 25px; width:100%; max-width:480px; box-shadow:var(--shadow); position:relative;
     }
-    .overlay.open .modal { transform:translateY(0); }
     .modal-x {
-      position:absolute; top:15px; left:15px;
-      background:none; border:none; cursor:pointer;
-      font-size:20px; color:var(--text2); width:32px; height:32px;
-      display:flex; align-items:center; justify-content:center;
-      border-radius:6px; transition:all var(--ease); line-height:1;
+      position:absolute; top:15px; left:15px; background:none; border:none; cursor:pointer;
+      font-size:22px; color:var(--text2);
     }
-    .modal-x:hover { color:var(--danger); background:rgba(224,85,85,.12); }
-    .modal-title { font-size:20px; font-weight:800; color:var(--gold-lt); margin-bottom:5px; }
-    .modal-sub   { color:var(--text2); font-size:13px; margin-bottom:24px; }
-
-    .summary-box {
-      background:rgba(201,162,75,.07); border:1px solid var(--gborder);
-      border-radius:var(--radius-sm); padding:14px 16px;
-      display:flex; justify-content:space-between; align-items:center;
-      margin-bottom:22px;
-    }
-    .summary-name { font-weight:700; color:var(--text); font-size:15px; }
-    .summary-co   { font-size:12px; color:var(--text2); margin-top:2px; }
-    .summary-price{ font-size:22px; font-weight:800; color:var(--gold-lt); }
+    .modal-title { font-size:22px; font-weight:800; color:var(--gold-lt); margin-bottom:5px; text-align:center; }
+    .modal-sub   { color:var(--text2); font-size:13px; margin-bottom:20px; text-align:center; }
 
     .wallet-box {
-      background:var(--bg-input); border:1.5px solid var(--gborder-h);
-      border-radius:var(--radius-sm); padding:16px; text-align:center; margin-bottom:22px;
+      background:#0c1624; border:1.5px solid var(--gold); border-radius:var(--radius-sm);
+      padding:14px; text-align:center; margin-bottom:20px;
     }
-    .wallet-lbl  { font-size:12px; color:var(--text2); margin-bottom:7px; font-weight:600; }
-    .wallet-num  { font-size:24px; font-weight:900; color:var(--gold-lt); letter-spacing:2px; direction:ltr; display:inline-block; }
-    .wallet-note { font-size:12px; color:var(--text2); margin-top:7px; }
+    .wallet-num  { font-size:24px; font-weight:900; color:var(--gold-lt); letter-spacing:1px; }
 
-    .upload-zone {
-      border:2px dashed rgba(201,162,75,.35); border-radius:var(--radius-sm);
-      padding:26px 16px; text-align:center; cursor:pointer;
-      transition:all var(--ease); background:rgba(201,162,75,.03); position:relative;
+    .form-row    { margin-bottom:16px; }
+    .form-label  { display:block; font-size:14px; color:var(--text2); margin-bottom:6px; font-weight:600; }
+    .form-input  {
+      width:100%; padding:12px; background:#0c1624; border:1px solid var(--gborder);
+      border-radius:var(--radius-sm); color:var(--text); font-size:15px; outline:none;
     }
-    .upload-zone:hover  { border-color:var(--gold); background:rgba(201,162,75,.07); }
-    .upload-zone.filled { border-color:var(--success); border-style:solid; background:rgba(76,175,80,.06); }
-    #fileInput { display:none; }
-    .upload-ico  { font-size:30px; margin-bottom:8px; }
-    .upload-txt  { font-size:14px; color:var(--text2); }
-    .upload-txt b { color:var(--gold); }
-    .preview-img {
-      max-width:100%; max-height:160px; border-radius:var(--radius-sm);
-      object-fit:contain; margin-top:12px; display:none;
+    .form-input:focus { border-color:var(--gold); }
+
+    .btn-full {
+      width:100%; padding:14px; font-size:16px; font-weight:700; border:none;
+      background:linear-gradient(135deg, var(--gold), var(--gold-dim));
+      color:#0a1220; border-radius:var(--radius-sm); cursor:pointer;
     }
 
-    /* ──────────────── TOAST ──────────────── */
-    #toast {
-      position:fixed; bottom:30px; left:50%; z-index:9999;
-      transform:translateX(-50%) translateY(80px);
-      background:#182030; border:1px solid var(--gborder); color:var(--text);
-      padding:13px 26px; border-radius:50px; font-size:14px; font-weight:600;
-      opacity:0; transition:transform .35s ease, opacity .35s ease;
-      white-space:nowrap; max-width:90vw; pointer-events:none;
-      box-shadow:0 8px 30px rgba(0,0,0,.45); text-align:center;
-    }
-    #toast.show   { transform:translateX(-50%) translateY(0); opacity:1; }
-    #toast.show.ok     { border-color:rgba(76,175,80,.5); }
-    #toast.show.bad    { border-color:rgba(224,85,85,.5); color:#ff9999; }
-
-    /* ──────────────── LOADER ──────────────── */
-    .loader { text-align:center; padding:70px 20px; color:var(--text2); }
-    .spin {
-      width:40px; height:40px;
-      border:3px solid rgba(201,162,75,.18); border-top-color:var(--gold);
-      border-radius:50%; animation:rotate .75s linear infinite;
-      margin:0 auto 16px;
-    }
-    @keyframes rotate { to { transform:rotate(360deg); } }
-
-    /* ──────────────── RESPONSIVE ──────────────── */
     @media(max-width:600px) {
-      .navbar { padding:0 14px; height:56px; }
-      .btn { padding:8px 14px; font-size:13px; }
-      .btn-sm { padding:7px 12px; }
-      .auth-card { padding:28px 20px; }
-      .modal { padding:28px 18px; }
-      .main-wrap { padding:22px 14px; }
       .pkg-grid { grid-template-columns:repeat(2,1fr); gap:12px; }
-      .pkg-card { padding:16px 11px 14px; }
-      .pkg-data { font-size:20px; }
-      .pkg-price { font-size:18px; }
-      .page-title{ font-size:22px; }
-      .wallet-num{ font-size:19px; letter-spacing:1px; }
-      .summary-price { font-size:18px; }
-      .nav-brand-name { font-size:15px; }
+      .page-title { font-size:24px; }
     }
-    ::-webkit-scrollbar { width:5px; }
-    ::-webkit-scrollbar-track { background:var(--bg-deep); }
-    ::-webkit-scrollbar-thumb { background:rgba(201,162,75,.25); border-radius:3px; }
   </style>
 </head>
 <body>
 
   <nav class="navbar">
-    <div class="nav-brand" onclick="App.goPackages()">
+    <div class="nav-brand">
       <span class="nav-brand-icon">💎</span>
-      <span class="nav-brand-name">باقات VIP</span>
+      <span class="nav-brand-name">EL KING VIP</span>
     </div>
-    <div class="nav-right" id="navRight"></div>
   </nav>
 
-  <div class="page active" id="page-packages">
-    <div class="main-wrap">
-      <div class="page-header">
-        <div class="page-title">⚡ الباقات المتاحة</div>
-        <div class="page-sub">اختر شركتك وباقتك المفضلة وأرسل طلبك بسهولة</div>
+  <div class="main-wrap">
+    <div class="page-header">
+      <div class="page-title">👑 منصة الملك للشحن الفوري</div>
+      <div class="page-sub">اختر باقتك المفضلة، حوّل كاش، وأرسل طلبك مباشرة للبوت</div>
+    </div>
+
+    <div class="co-section">
+      <div class="co-header">
+        <div class="co-logo" style="background:#1a56db">WE</div>
+        <div class="co-name">شبكة وي (WE)</div>
       </div>
-      <div id="pkgContainer">
-        <div class="loader"><div class="spin"></div>جاري تحميل الباقات...</div>
+      <div class="pkg-grid">
+        <div class="pkg-card" onclick="openOrder('وي (WE)', 'باقة تفعيل يومي', '10')">
+          <div class="pkg-data">تفعيل يومي</div>
+          <div class="pkg-dur">صلاحية يوم واحد</div>
+          <div class="pkg-price">10<small>جنيه</small></div>
+          <button class="pkg-cta">اطلب الآن</button>
+        </div>
+        <div class="pkg-card" onclick="openOrder('وي (WE)', 'باقة 16 يوم المتميزة', '50')">
+          <div class="pkg-data">باقة 16 يوم</div>
+          <div class="pkg-dur">صلاحية 16 يوم</div>
+          <div class="pkg-price">50<small>جنيه</small></div>
+          <button class="pkg-cta">اطلب الآن</button>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="page" id="page-login">
-    <div class="auth-wrap">
-      <div class="auth-card">
-        <div class="auth-card-icon">🔑</div>
-        <div class="auth-title">تسجيل الدخول</div>
-        <div class="auth-sub">أدخل بياناتك للمتابعة</div>
-        <form id="loginForm" novalidate>
-          <div class="form-row">
-            <label class="form-label">رقم الهاتف</label>
-            <input class="form-input" type="tel" id="l-phone" placeholder="01XXXXXXXXX" maxlength="11" autocomplete="tel" />
-            <div class="form-err" id="l-phone-err"></div>
-          </div>
-          <div class="form-row">
-            <label class="form-label">كلمة المرور</label>
-            <div class="pw-wrap">
-              <input class="form-input" type="password" id="l-pass" placeholder="كلمة المرور" autocomplete="current-password" />
-              <button type="button" class="eye-btn" data-target="l-pass">👁️</button>
-            </div>
-            <div class="form-err" id="l-pass-err"></div>
-          </div>
-          <div class="form-err" id="l-global-err" style="margin-bottom:10px"></div>
-          <button type="submit" class="btn btn-gold form-full" id="l-submit">دخول</button>
-        </form>
-        <div class="form-foot">
-          ليس لديك حساب؟ <span class="form-link" onclick="App.show('register')">إنشاء حساب جديد</span>
+    <div class="co-section">
+      <div class="co-header">
+        <div class="co-logo" style="background:#ea580c">OR</div>
+        <div class="co-name">شبكة أورانج (Orange)</div>
+      </div>
+      <div class="pkg-grid">
+        <div class="pkg-card" onclick="openOrder('أورانج', 'باقة تفعيل يومي', '10')">
+          <div class="pkg-data">تفعيل يومي</div>
+          <div class="pkg-dur">صلاحية يوم واحد</div>
+          <div class="pkg-price">10<small>جنيه</small></div>
+          <button class="pkg-cta">اطلب الآن</button>
+        </div>
+        <div class="pkg-card" onclick="openOrder('أورانج', 'باقة 16 يوم الفخمة', '50')">
+          <div class="pkg-data">باقة 16 يوم</div>
+          <div class="pkg-dur">صلاحية 16 يوم</div>
+          <div class="pkg-price">50<small>جنيه</small></div>
+          <button class="pkg-cta">اطلب الآن</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="co-section">
+      <div class="co-header">
+        <div class="co-logo" style="background:#16a34a">ET</div>
+        <div class="co-name">شبكة اتصالات (Etisalat)</div>
+      </div>
+      <div class="pkg-grid">
+        <div class="pkg-card" onclick="openOrder('اتصالات', 'باقة تفعيل يومي', '10')">
+          <div class="pkg-data">تفعيل يومي</div>
+          <div class="pkg-dur">صلاحية يوم واحد</div>
+          <div class="pkg-price">10<small>جنيه</small></div>
+          <button class="pkg-cta">اطلب الآن</button>
+        </div>
+        <div class="pkg-card" onclick="openOrder('اتصالات', 'باقة 16 يوم الخاصة', '50')">
+          <div class="pkg-data">باقة 16 يوم</div>
+          <div class="pkg-dur">صلاحية 16 يوم</div>
+          <div class="pkg-price">50<small>جنيه</small></div>
+          <button class="pkg-cta">اطلب الآن</button>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="page" id="page-register">
-    <div class="auth-wrap">
-      <div class="auth-card">
-        <div class="auth-card-icon">✨</div>
-        <div class="auth-title">إنشاء حساب جديد</div>
-        <div class="auth-sub">سجّل للاستمتاع بخدمتنا المتميزة</div>
-        <form id="regForm" novalidate>
-          <div class="form-row">
-            <label class="form-label">الاسم الكامل</label>
-            <input class="form-input" type="text" id="r-name" placeholder="اسمك الكامل" autocomplete="name" />
-            <div class="form-err" id="r-name-err"></div>
-          </div>
-          <div class="form-row">
-            <label class="form-label">رقم الهاتف</label>
-            <input class="form-input" type="tel" id="r-phone" placeholder="01XXXXXXXXX" maxlength="11" autocomplete="tel" />
-            <div class="form-err" id="r-phone-err"></div>
-          </div>
-          <div class="form-row">
-            <label class="form-label">كلمة المرور <small style="color:var(--text3)">(4 أحرف على الأقل)</small></label>
-            <div class="pw-wrap">
-              <input class="form-input" type="password" id="r-pass" placeholder="اختر كلمة مرور" autocomplete="new-password" />
-              <button type="button" class="eye-btn" data-target="r-pass">👁️</button>
-            </div>
-            <div class="form-err" id="r-pass-err"></div>
-          </div>
-          <div class="form-err" id="r-global-err" style="margin-bottom:10px"></div>
-          <button type="submit" class="btn btn-gold form-full" id="r-submit">إنشاء الحساب</button>
-        </form>
-        <div class="form-foot">
-          لديك حساب بالفعل؟ <span class="form-link" onclick="App.show('login')">تسجيل الدخول</span>
-        </div>
-      </div>
-    </div>
-  </div>
+  <div class="overlay" id="modalOverlay">
+    <div class="modal">
+      <button class="modal-x" onclick="closeModal()">✕</button>
+      <div class="modal-title">📦 طلب شحن الباقة</div>
+      <div class="modal-sub" id="modalSubTitle">املأ بياناتك لإرسال الطلب تلقائياً للبوت</div>
 
-  <div class="overlay" id="modalOverlay" onclick="App.closeModal(event)">
-    <div class="modal" id="modalBox">
-      <button class="modal-x" onclick="App.closeModal()">✕</button>
-      <div class="modal-title">📦 تأكيد الطلب</div>
-      <div class="modal-sub">أكمل البيانات ورفع صورة التحويل لإتمام عملية الشراء</div>
-      <div class="summary-box">
-        <div>
-          <div class="summary-name" id="m-pkg-name">—</div>
-          <div class="summary-co"   id="m-co-name">—</div>
-        </div>
-        <div class="summary-price" id="m-price">—</div>
-      </div>
       <div class="wallet-box">
-        <div class="wallet-lbl">💳 حوّل المبلغ على المحفظة التالية</div>
-        <div class="wallet-num" id="m-wallet">01030982295</div>
-        <div class="wallet-note">Vodafone Cash / Orange Money / WE Pay / Etisalat Cash</div>
+        <div style="font-size:12px; color:var(--text2); margin-bottom:5px;">💳 حوّل قيمة الباقة كاش على الرقم التالي:</div>
+        <div class="wallet-num">01030982295</div>
       </div>
-      <form id="orderForm" novalidate>
+
+      <form id="directOrderForm">
         <div class="form-row">
-          <label class="form-label">📱 رقم الهاتف الذي سيستقبل الباقة</label>
-          <input class="form-input" type="tel" id="o-target" placeholder="01XXXXXXXXX" maxlength="11" autocomplete="tel" />
-          <div class="form-err" id="o-target-err"></div>
+          <label class="form-label">الاسم بالكامل</label>
+          <input class="form-input" type="text" id="custName" placeholder="اكتب اسمك هنا" required />
         </div>
         <div class="form-row">
-          <label class="form-label">📸 صورة إيصال التحويل</label>
-          <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
-            <input type="file" id="fileInput" accept="image/*" />
-            <div class="upload-ico">🖼️</div>
-            <div class="upload-txt">اضغط لرفع صورة الإيصال</div>
-            <div class="upload-txt" style="margin-top:5px; font-size:12px; color:var(--text3)">PNG / JPG / WEBP – حتى 10MB</div>
-            <img class="preview-img" id="previewImg" alt="معاينة الإيصال" />
-          </div>
-          <div class="form-err" id="o-file-err"></div>
+          <label class="form-label">📱 الرقم المراد شحن الباقة له</label>
+          <input class="form-input" type="tel" id="targetPhone" placeholder="01XXXXXXXXX" maxlength="11" required />
         </div>
-        <div class="form-err" id="o-global-err" style="margin-bottom:10px"></div>
-        <button type="submit" class="btn btn-gold form-full" id="o-submit" style="font-size:16px; padding:14px">
-          ✅ إرسال الطلب
-        </button>
+        <div class="form-row">
+          <label class="form-label">📸 ارفع صورة الإيصال (اختياري لتأكيد طلبك)</label>
+          <input type="file" id="screenshotFile" accept="image/*" style="color:#fff;" />
+        </div>
+        <button type="submit" class="btn-full">🚀 إرسال الطلب للبوت مباشرة</button>
       </form>
     </div>
   </div>
 
-  <div id="toast"></div>
+  <script>
+    let currentCo = '';
+    let currentPkg = '';
+    let currentPrice = '';
+
+    // يوزر البوت بتاعك على التليجرام (غيره باسم بوتك الحقيقي بدون علامة @)
+    const BOT_USERNAME = 'OrderDispatcherBot'; 
+
+    function openOrder(co, pkg, price) {
+      currentCo = co;
+      currentPkg = pkg;
+      currentPrice = price;
+      document.getElementById('modalSubTitle').textContent = `طلب شحن: ${pkg} من شبكة ${co} بسعر ${price} جنيه`;
+      document.getElementById('modalOverlay').classList.add('open');
+    }
+
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.remove('open');
+      document.getElementById('directOrderForm').reset();
+    }
+
+    document.getElementById('directOrderForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const name = document.getElementById('custName').value.trim();
+      const phone = document.getElementById('targetPhone').value.trim();
+
+      if(!/^0[0-9]{10}$/.test(phone)) {
+        alert('يرجى إدخال رقم هاتف صحيح مكون من 11 رقم يبدأ بـ 0');
+        return;
+      }
+
+      // تجهيز الرسالة اللي هتروح للبوت تلقائياً ومكتوبة نضافة
+      const textMessage = `👑 *طلب شحن جديد يا كينج* 👑\n\n` +
+                          `👤 *اسم العميل:* ${name}\n` +
+                          `📱 *رقم الشحن:* ${phone}\n` +
+                          `🏢 *الشبكة:* ${currentCo}\n` +
+                          `📦 *الباقة:* ${currentPkg}\n` +
+                          `💰 *السعر:* ${currentPrice} جنيه\n\n` +
+                          `📌 _العميل أرسل الطلب من الموقع ومستني تأكيدك_`;
+
+      // تحويل النص لرابط تليجرام آمن
+      const encodedMessage = encodeURIComponent(textMessage);
+      const telegramUrl = `https://t.me/${BOT_USERNAME}?start=${encodedMessage}`;
+
+      // فتح التليجرام للزبون والبيانات مكتوبة جاهزة
+      window.open(telegramUrl, '_blank');
+      closeModal();
+    });
+  </script>
 </body>
 </html>
+
