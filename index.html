@@ -3,299 +3,89 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>باقات VIP – خدمة الإنترنت المتميزة</title>
+  <title>باقات الملك VIP</title>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg-deep:   #0b1220;
-      --bg-dark:   #0f1929;
-      --bg-card:   #121d30;
-      --bg-card-h: #172840;
-      --gold:      #c9a24b;
-      --gold-lt:   #ddbd6f;
-      --gold-dim:  #9e7a30;
-      --gborder:   rgba(201,162,75,.22);
-      --text:      #e4e8f0;
-      --text2:     #7a8fa6;
-      --text3:     #3f5166;
-      --radius:    13px;
-      --radius-sm: 8px;
-      --radius-lg: 20px;
-      --shadow:    0 6px 28px rgba(0,0,0,.45);
-    }
-
-    body {
-      background: var(--bg-deep);
-      color: var(--text);
-      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
-      min-height: 100vh;
-      direction: rtl;
-      font-size: 15px;
-      line-height: 1.55;
-      padding-bottom: 60px;
-    }
-
-    /* ──────────────── NAVBAR ──────────────── */
-    .navbar {
-      background: rgba(9,15,28,.96);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--gborder);
-      height: 65px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: 0 3px 24px rgba(0,0,0,.55);
-    }
-    .nav-brand { display:flex; align-items:center; gap:9px; }
-    .nav-brand-icon { font-size:24px; }
-    .nav-brand-name { font-size:20px; font-weight:800; color:var(--gold-lt); letter-spacing:.4px; }
-
-    /* ──────────────── MAIN CONTAINER ──────────────── */
-    .main-wrap { max-width:1200px; margin:0 auto; padding:36px 22px; }
-    .page-header { text-align:center; margin-bottom:44px; }
-    .page-title  { font-size:32px; font-weight:800; color:var(--gold-lt); margin-bottom:8px; }
-    .page-sub    { color:var(--text2); font-size:16px; }
-
-    /* ──────────────── COMPANY SECTION ──────────────── */
-    .co-section { margin-bottom:40px; }
-    .co-header {
-      display:flex; align-items:center; gap:14px;
-      padding-bottom:12px; border-bottom:1px solid var(--gborder); margin-bottom:20px;
-    }
-    .co-logo {
-      width:45px; height:45px; border-radius:11px;
-      display:flex; align-items:center; justify-content:center;
-      font-size:16px; font-weight:900; color:#fff; flex-shrink:0;
-    }
-    .co-name { font-size:22px; font-weight:800; color:var(--text); }
-
-    /* ──────────────── PACKAGE GRID ──────────────── */
-    .pkg-grid {
-      display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:18px;
-    }
-    .pkg-card {
-      background:var(--bg-card); border:1px solid var(--gborder); border-radius:var(--radius);
-      padding:24px 16px; text-align:center; cursor:pointer; transition:all .25s ease;
-    }
-    .pkg-card:hover {
-      border-color:var(--gold); background:var(--bg-card-h); transform:translateY(-4px); box-shadow:var(--shadow);
-    }
-    .pkg-data   { font-size:26px; font-weight:800; color:var(--gold-lt); margin-bottom:6px; }
-    .pkg-dur    { font-size:13px; color:var(--text2); margin-bottom:15px; background:rgba(201,162,75,0.08); display:inline-block; padding:3px 10px; border-radius:20px; }
-    .pkg-price  { font-size:24px; font-weight:800; color:var(--text); margin-bottom:18px; }
-    .pkg-price small { font-size:14px; color:var(--text2); margin-right:2px; }
-    .pkg-cta {
-      width:100%; padding:11px; border:none; border-radius:var(--radius-sm);
-      background:linear-gradient(135deg, var(--gold), var(--gold-dim));
-      color:#0a1220; font-size:15px; font-weight:700; cursor:pointer; transition:all .25s;
-    }
-    .pkg-cta:hover { box-shadow:0 4px 18px rgba(201,162,75,.45); }
-
-    /* ──────────────── ORDER MODAL ──────────────── */
-    .overlay {
-      position:fixed; inset:0; background:rgba(0,0,0,.85); backdrop-filter:blur(6px);
-      z-index:300; display:flex; align-items:center; justify-content:center;
-      padding:18px; opacity:0; pointer-events:none; transition:opacity .25s ease;
-    }
-    .overlay.open { opacity:1; pointer-events:all; }
-    .modal {
-      background:var(--bg-card); border:1px solid var(--gold); border-radius:var(--radius-lg);
-      padding:35px 25px; width:100%; max-width:480px; box-shadow:var(--shadow); position:relative;
-    }
-    .modal-x {
-      position:absolute; top:15px; left:15px; background:none; border:none; cursor:pointer;
-      font-size:22px; color:var(--text2);
-    }
-    .modal-title { font-size:22px; font-weight:800; color:var(--gold-lt); margin-bottom:5px; text-align:center; }
-    .modal-sub   { color:var(--text2); font-size:13px; margin-bottom:20px; text-align:center; }
-
-    .wallet-box {
-      background:#0c1624; border:1.5px solid var(--gold); border-radius:var(--radius-sm);
-      padding:14px; text-align:center; margin-bottom:20px;
-    }
-    .wallet-num  { font-size:24px; font-weight:900; color:var(--gold-lt); letter-spacing:1px; }
-
-    .form-row    { margin-bottom:16px; }
-    .form-label  { display:block; font-size:14px; color:var(--text2); margin-bottom:6px; font-weight:600; }
-    .form-input  {
-      width:100%; padding:12px; background:#0c1624; border:1px solid var(--gborder);
-      border-radius:var(--radius-sm); color:var(--text); font-size:15px; outline:none;
-    }
-    .form-input:focus { border-color:var(--gold); }
-
-    .btn-full {
-      width:100%; padding:14px; font-size:16px; font-weight:700; border:none;
-      background:linear-gradient(135deg, var(--gold), var(--gold-dim));
-      color:#0a1220; border-radius:var(--radius-sm); cursor:pointer;
-    }
-
-    @media(max-width:600px) {
-      .pkg-grid { grid-template-columns:repeat(2,1fr); gap:12px; }
-      .page-title { font-size:24px; }
-    }
+    :root { --bg: #0b1220; --card: #121d30; --gold: #c9a24b; --text: #e4e8f0; --text2: #7a8fa6; }
+    body { background: var(--bg); color: var(--text); font-family: Tahoma, sans-serif; margin: 0; padding-bottom: 50px; }
+    .nav { background: #090f1c; padding: 20px; text-align: center; border-bottom: 2px solid var(--gold); }
+    .title { color: var(--gold); font-size: 24px; font-weight: bold; }
+    .main { max-width: 600px; margin: auto; padding: 20px; }
+    .co-title { color: var(--gold); font-size: 20px; margin: 30px 0 15px; border-right: 4px solid var(--gold); padding-right: 10px; }
+    .pkg { background: var(--card); padding: 15px; border-radius: 10px; margin-bottom: 10px; border: 1px solid #222; display: flex; justify-content: space-between; align-items: center; }
+    .pkg-info { font-size: 16px; }
+    .pkg-price { color: var(--gold); font-weight: bold; font-size: 18px; }
+    .btn-buy { background: var(--gold); color: #000; border: none; padding: 8px 15px; border-radius: 5px; font-weight: bold; cursor: pointer; }
+    .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; align-items: center; justify-content: center; padding: 20px; }
+    .modal { background: var(--card); padding: 20px; border-radius: 10px; width: 100%; max-width: 400px; }
+    input { width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; border: 1px solid #444; background: #0b1220; color: white; }
   </style>
 </head>
 <body>
+  <div class="nav"><div class="title">👑 EL KING VIP 👑</div></div>
+  <div class="main">
+    
+    <!-- WE -->
+    <div class="co-title">🩵 باقات وي جولد (تفعيل 1 و 16)</div>
+    <div id="we-pkgs"></div>
 
-  <nav class="navbar">
-    <div class="nav-brand">
-      <span class="nav-brand-icon">💎</span>
-      <span class="nav-brand-name">EL KING VIP</span>
-    </div>
-  </nav>
+    <!-- ORANGE -->
+    <div class="co-title">🧡 باقات أورانج (تفعيل 1)</div>
+    <div id="orange-pkgs"></div>
 
-  <div class="main-wrap">
-    <div class="page-header">
-      <div class="page-title">👑 منصة الملك للشحن الفوري</div>
-      <div class="page-sub">اختر باقتك المفضلة، حوّل كاش، وأرسل طلبك مباشرة للبوت</div>
-    </div>
-
-    <div class="co-section">
-      <div class="co-header">
-        <div class="co-logo" style="background:#1a56db">WE</div>
-        <div class="co-name">شبكة وي (WE)</div>
-      </div>
-      <div class="pkg-grid">
-        <div class="pkg-card" onclick="openOrder('وي (WE)', 'باقة تفعيل يومي', '10')">
-          <div class="pkg-data">تفعيل يومي</div>
-          <div class="pkg-dur">صلاحية يوم واحد</div>
-          <div class="pkg-price">10<small>جنيه</small></div>
-          <button class="pkg-cta">اطلب الآن</button>
-        </div>
-        <div class="pkg-card" onclick="openOrder('وي (WE)', 'باقة 16 يوم المتميزة', '50')">
-          <div class="pkg-data">باقة 16 يوم</div>
-          <div class="pkg-dur">صلاحية 16 يوم</div>
-          <div class="pkg-price">50<small>جنيه</small></div>
-          <button class="pkg-cta">اطلب الآن</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="co-section">
-      <div class="co-header">
-        <div class="co-logo" style="background:#ea580c">OR</div>
-        <div class="co-name">شبكة أورانج (Orange)</div>
-      </div>
-      <div class="pkg-grid">
-        <div class="pkg-card" onclick="openOrder('أورانج', 'باقة تفعيل يومي', '10')">
-          <div class="pkg-data">تفعيل يومي</div>
-          <div class="pkg-dur">صلاحية يوم واحد</div>
-          <div class="pkg-price">10<small>جنيه</small></div>
-          <button class="pkg-cta">اطلب الآن</button>
-        </div>
-        <div class="pkg-card" onclick="openOrder('أورانج', 'باقة 16 يوم الفخمة', '50')">
-          <div class="pkg-data">باقة 16 يوم</div>
-          <div class="pkg-dur">صلاحية 16 يوم</div>
-          <div class="pkg-price">50<small>جنيه</small></div>
-          <button class="pkg-cta">اطلب الآن</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="co-section">
-      <div class="co-header">
-        <div class="co-logo" style="background:#16a34a">ET</div>
-        <div class="co-name">شبكة اتصالات (Etisalat)</div>
-      </div>
-      <div class="pkg-grid">
-        <div class="pkg-card" onclick="openOrder('اتصالات', 'باقة تفعيل يومي', '10')">
-          <div class="pkg-data">تفعيل يومي</div>
-          <div class="pkg-dur">صلاحية يوم واحد</div>
-          <div class="pkg-price">10<small>جنيه</small></div>
-          <button class="pkg-cta">اطلب الآن</button>
-        </div>
-        <div class="pkg-card" onclick="openOrder('اتصالات', 'باقة 16 يوم الخاصة', '50')">
-          <div class="pkg-data">باقة 16 يوم</div>
-          <div class="pkg-dur">صلاحية 16 يوم</div>
-          <div class="pkg-price">50<small>جنيه</small></div>
-          <button class="pkg-cta">اطلب الآن</button>
-        </div>
-      </div>
-    </div>
   </div>
 
-  <div class="overlay" id="modalOverlay">
+  <div class="overlay" id="modal">
     <div class="modal">
-      <button class="modal-x" onclick="closeModal()">✕</button>
-      <div class="modal-title">📦 طلب شحن الباقة</div>
-      <div class="modal-sub" id="modalSubTitle">املأ بياناتك لإرسال الطلب تلقائياً للبوت</div>
-
-      <div class="wallet-box">
-        <div style="font-size:12px; color:var(--text2); margin-bottom:5px;">💳 حوّل قيمة الباقة كاش على الرقم التالي:</div>
-        <div class="wallet-num">01030982295</div>
-      </div>
-
-      <form id="directOrderForm">
-        <div class="form-row">
-          <label class="form-label">الاسم بالكامل</label>
-          <input class="form-input" type="text" id="custName" placeholder="اكتب اسمك هنا" required />
-        </div>
-        <div class="form-row">
-          <label class="form-label">📱 الرقم المراد شحن الباقة له</label>
-          <input class="form-input" type="tel" id="targetPhone" placeholder="01XXXXXXXXX" maxlength="11" required />
-        </div>
-        <div class="form-row">
-          <label class="form-label">📸 ارفع صورة الإيصال (اختياري لتأكيد طلبك)</label>
-          <input type="file" id="screenshotFile" accept="image/*" style="color:#fff;" />
-        </div>
-        <button type="submit" class="btn-full">🚀 إرسال الطلب للبوت مباشرة</button>
-      </form>
+      <h3>طلب شحن الباقة</h3>
+      <input type="text" id="name" placeholder="الاسم بالكامل">
+      <input type="tel" id="phone" placeholder="رقم الموبايل">
+      <button class="btn-buy" style="width:100%" onclick="sendOrder()">إرسال الطلب للبوت</button>
+      <button onclick="document.getElementById('modal').style.display='none'" style="background:none; border:none; color:red; margin-top:10px; width:100%">إلغاء</button>
     </div>
   </div>
 
   <script>
-    let currentCo = '';
-    let currentPkg = '';
-    let currentPrice = '';
+    const we = [
+      { name: "20 جيجا & 1000 دقيقة", price: "270" },
+      { name: "30 جيجا & 1500 دقيقة", price: "335" },
+      { name: "40 جيجا & 2000 دقيقة", price: "410" },
+      { name: "50 جيجا & 2000 دقيقة", price: "490" },
+      { name: "60 جيجا & 2000 دقيقة", price: "570" },
+      { name: "80 جيجا & 2000 دقيقة", price: "730" }
+    ];
+    const orange = [
+      { name: "10 جيجا & 2000 دقيقة", price: "250" },
+      { name: "14 جيجا & 2000 دقيقة", price: "300" },
+      { name: "20 جيجا & 2000 دقيقة", price: "380" },
+      { name: "30 جيجا & 2000 دقيقة", price: "500" },
+      { name: "2000 دقيقة (بدون إنترنت)", price: "140" }
+    ];
 
-    // يوزر البوت بتاعك على التليجرام (غيره باسم بوتك الحقيقي بدون علامة @)
-    const BOT_USERNAME = 'OrderDispatcherBot'; 
+    let selectedPkg = "";
 
-    function openOrder(co, pkg, price) {
-      currentCo = co;
-      currentPkg = pkg;
-      currentPrice = price;
-      document.getElementById('modalSubTitle').textContent = `طلب شحن: ${pkg} من شبكة ${co} بسعر ${price} جنيه`;
-      document.getElementById('modalOverlay').classList.add('open');
+    function render(list, id) {
+      document.getElementById(id).innerHTML = list.map(p => `
+        <div class="pkg">
+          <div class="pkg-info"><b>${p.name}</b><br><span class="pkg-price">${p.price} جنيه</span></div>
+          <button class="btn-buy" onclick="openModal('${p.name}', '${p.price}')">اطلب</button>
+        </div>
+      `).join('');
     }
 
-    function closeModal() {
-      document.getElementById('modalOverlay').classList.remove('open');
-      document.getElementById('directOrderForm').reset();
+    function openModal(name, price) {
+      selectedPkg = `${name} بسعر ${price}`;
+      document.getElementById('modal').style.display = 'flex';
     }
 
-    document.getElementById('directOrderForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      const name = document.getElementById('custName').value.trim();
-      const phone = document.getElementById('targetPhone').value.trim();
+    function sendOrder() {
+      const name = document.getElementById('name').value;
+      const phone = document.getElementById('phone').value;
+      const msg = encodeURIComponent(`👑 طلب جديد:\nالعميل: ${name}\nالرقم: ${phone}\nالباقة: ${selectedPkg}`);
+      window.open(`https://t.me/OrderDispatcherBot?start=${msg}`, '_blank');
+    }
 
-      if(!/^0[0-9]{10}$/.test(phone)) {
-        alert('يرجى إدخال رقم هاتف صحيح مكون من 11 رقم يبدأ بـ 0');
-        return;
-      }
-
-      // تجهيز الرسالة اللي هتروح للبوت تلقائياً ومكتوبة نضافة
-      const textMessage = `👑 *طلب شحن جديد يا كينج* 👑\n\n` +
-                          `👤 *اسم العميل:* ${name}\n` +
-                          `📱 *رقم الشحن:* ${phone}\n` +
-                          `🏢 *الشبكة:* ${currentCo}\n` +
-                          `📦 *الباقة:* ${currentPkg}\n` +
-                          `💰 *السعر:* ${currentPrice} جنيه\n\n` +
-                          `📌 _العميل أرسل الطلب من الموقع ومستني تأكيدك_`;
-
-      // تحويل النص لرابط تليجرام آمن
-      const encodedMessage = encodeURIComponent(textMessage);
-      const telegramUrl = `https://t.me/${BOT_USERNAME}?start=${encodedMessage}`;
-
-      // فتح التليجرام للزبون والبيانات مكتوبة جاهزة
-      window.open(telegramUrl, '_blank');
-      closeModal();
-    });
+    render(we, 'we-pkgs');
+    render(orange, 'orange-pkgs');
   </script>
 </body>
 </html>
