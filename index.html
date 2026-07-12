@@ -5,25 +5,87 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>باقات الملك VIP</title>
   <style>
-    :root { --bg: #0b1220; --card: #121d30; --gold: #c9a24b; --text: #e4e8f0; --text2: #7a8fa6; }
-    body { background: var(--bg); color: var(--text); font-family: Tahoma, sans-serif; margin: 0; padding-bottom: 50px; }
-    .nav { background: #090f1c; padding: 20px; text-align: center; border-bottom: 2px solid var(--gold); }
+    :root { 
+      --bg: #0b1220; 
+      --card: #121d30; 
+      --gold: #c9a24b; 
+      --text: #e4e8f0; 
+    }
+    body { 
+      background: var(--bg); 
+      color: var(--text); 
+      font-family: Tahoma, sans-serif; 
+      margin: 0; 
+      padding-bottom: 50px; 
+    }
+    .nav { 
+      background: #090f1c; 
+      padding: 20px; 
+      text-align: center; 
+      border-bottom: 2px solid var(--gold); 
+    }
     .title { color: var(--gold); font-size: 24px; font-weight: bold; }
     .main { max-width: 600px; margin: auto; padding: 20px; }
-    .co-title { color: var(--gold); font-size: 20px; margin: 30px 0 15px; border-right: 4px solid var(--gold); padding-right: 10px; }
-    .pkg { background: var(--card); padding: 15px; border-radius: 10px; margin-bottom: 10px; border: 1px solid #222; display: flex; justify-content: space-between; align-items: center; }
+    .co-title { 
+      color: var(--gold); 
+      font-size: 20px; 
+      margin: 30px 0 15px; 
+      border-right: 4px solid var(--gold); 
+      padding-right: 10px; 
+    }
+    .pkg { 
+      background: var(--card); 
+      padding: 15px; 
+      border-radius: 10px; 
+      margin-bottom: 10px; 
+      border: 1px solid #222; 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+    }
     .pkg-info { font-size: 16px; }
     .pkg-price { color: var(--gold); font-weight: bold; font-size: 18px; }
-    .btn-buy { background: var(--gold); color: #000; border: none; padding: 8px 15px; border-radius: 5px; font-weight: bold; cursor: pointer; }
-    .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; align-items: center; justify-content: center; padding: 20px; }
-    .modal { background: var(--card); padding: 20px; border-radius: 10px; width: 100%; max-width: 400px; }
-    input { width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; border: 1px solid #444; background: #0b1220; color: white; }
+    .btn-buy { 
+      background: var(--gold); 
+      color: #000; 
+      border: none; 
+      padding: 8px 15px; 
+      border-radius: 5px; 
+      font-weight: bold; 
+      cursor: pointer; 
+    }
+    .overlay { 
+      position: fixed; 
+      inset: 0; 
+      background: rgba(0,0,0,0.9); 
+      display: none; 
+      align-items: center; 
+      justify-content: center; 
+      padding: 20px; 
+    }
+    .modal { 
+      background: var(--card); 
+      padding: 20px; 
+      border-radius: 10px; 
+      width: 100%; 
+      max-width: 400px; 
+    }
+    input { 
+      width: 100%; 
+      padding: 10px; 
+      margin: 10px 0; 
+      border-radius: 5px; 
+      border: 1px solid #444; 
+      background: #0b1220; 
+      color: white; 
+    }
   </style>
 </head>
 <body>
+
   <div class="nav"><div class="title">👑 EL KING VIP 👑</div></div>
+  
   <div class="main">
-    
     <!-- WE -->
     <div class="co-title">🩵 باقات وي جولد (تفعيل 1 و 16)</div>
     <div id="we-pkgs"></div>
@@ -31,20 +93,35 @@
     <!-- ORANGE -->
     <div class="co-title">🧡 باقات أورانج (تفعيل 1)</div>
     <div id="orange-pkgs"></div>
-
   </div>
 
+  <!-- ORDER MODAL -->
   <div class="overlay" id="modal">
     <div class="modal">
-      <h3>طلب شحن الباقة</h3>
-      <input type="text" id="name" placeholder="الاسم بالكامل">
-      <input type="tel" id="phone" placeholder="رقم الموبايل">
-      <button class="btn-buy" style="width:100%" onclick="sendOrder()">إرسال الطلب للبوت</button>
-      <button onclick="document.getElementById('modal').style.display='none'" style="background:none; border:none; color:red; margin-top:10px; width:100%">إلغاء</button>
+      <h3 style="text-align: center; color: var(--gold);">طلب شحن الباقة</h3>
+      <p id="target-pkg-name" style="text-align: center; font-size: 14px; margin-top: 5px;"></p>
+      
+      <div style="background:#090f1c; padding:10px; text-align:center; border-radius:5px; margin: 15px 0; border: 1px dashed var(--gold);">
+        <span style="font-size:12px; color:#7a8fa6;">💳 حوّل المبلغ كاش على المحفظة:</span><br>
+        <b style="font-size:20px; color:var(--gold);">01030982295</b>
+      </div>
+
+      <input type="text" id="custName" placeholder="الاسم بالكامل" required>
+      <input type="tel" id="targetPhone" placeholder="رقم الموبايل المراد شحنه (11 رقم)" maxlength="11" required>
+      
+      <label style="font-size: 13px; color: #7a8fa6; display: block; margin-top: 10px;">📸 ارفع صورة إيصال التحويل:</label>
+      <input type="file" id="screenshotFile" accept="image/*" required>
+      
+      <button class="btn-buy" id="submitBtn" style="width:100%; margin-top: 15px; padding: 12px;" onclick="sendOrderDirect()">إرسال الطلب الآن</button>
+      <button onclick="closeModal()" style="background:none; border:none; color:red; margin-top:15px; width:100%; cursor:pointer;">إلغاء</button>
     </div>
   </div>
 
   <script>
+    // توكن البوت والآي دي بتوعك ثابتين جوه الكود
+    const BOT_TOKEN = '7326442111:AAEvZ690L85N8gLdFidb9A4_Wicg9U-WpxI';
+    const CHAT_ID = '6245350367';
+
     const we = [
       { name: "20 جيجا & 1000 دقيقة", price: "270" },
       { name: "30 جيجا & 1500 دقيقة", price: "335" },
@@ -62,31 +139,91 @@
     ];
 
     let selectedPkg = "";
+    let selectedCo = "";
 
-    function render(list, id) {
+    function render(list, id, coName) {
       document.getElementById(id).innerHTML = list.map(p => `
         <div class="pkg">
           <div class="pkg-info"><b>${p.name}</b><br><span class="pkg-price">${p.price} جنيه</span></div>
-          <button class="btn-buy" onclick="openModal('${p.name}', '${p.price}')">اطلب</button>
+          <button class="btn-buy" onclick="openModal('${coName}', '${p.name}', '${p.price}')">اطلب</button>
         </div>
       `).join('');
     }
 
-    function openModal(name, price) {
-      selectedPkg = `${name} بسعر ${price}`;
+    function openModal(co, name, price) {
+      selectedCo = co;
+      selectedPkg = name;
+      document.getElementById('target-pkg-name').textContent = `شبكة ${co} - ${name} (${price} جنيه)`;
       document.getElementById('modal').style.display = 'flex';
     }
 
-    function sendOrder() {
-      const name = document.getElementById('name').value;
-      const phone = document.getElementById('phone').value;
-      const msg = encodeURIComponent(`👑 طلب جديد:\nالعميل: ${name}\nالرقم: ${phone}\nالباقة: ${selectedPkg}`);
-      window.open(`https://t.me/OrderDispatcherBot?start=${msg}`, '_blank');
+    function closeModal() {
+      document.getElementById('modal').style.display = 'none';
+      document.getElementById('custName').value = '';
+      document.getElementById('targetPhone').value = '';
+      document.getElementById('screenshotFile').value = '';
     }
 
-    render(we, 'we-pkgs');
-    render(orange, 'orange-pkgs');
+    async function sendOrderDirect() {
+      const name = document.getElementById('custName').value.trim();
+      const phone = document.getElementById('targetPhone').value.trim();
+      const fileInput = document.getElementById('screenshotFile');
+      const btn = document.getElementById('submitBtn');
+
+      if (!name || !phone) {
+        alert('يرجى كتابة الاسم ورقم الشحن أولاً!');
+        return;
+      }
+      if (!/^0[0-9]{10}$/.test(phone)) {
+        alert('رقم الهاتف غير صحيح! يجب أن يتكون من 11 رقم ويبدأ بـ 0');
+        return;
+      }
+      if (fileInput.files.length === 0) {
+        alert('يرجى رفع صورة إيصال التحويل كاش لتأكيد الطلب!');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = '⏳ جاري إرسال طلبك للبوت...';
+
+      const file = fileInput.files[0];
+      
+      // نص الرسالة الفخم اللي هيجيلك في البوت
+      const captionText = `👑 طلب شحن جديد يا كينج 👑\n\n` +
+                          `👤 الاسم: ${name}\n` +
+                          `📱 رقم الشحن: ${phone}\n` +
+                          `🏢 الشبكة: ${selectedCo}\n` +
+                          `📦 الباقة: ${selectedPkg}\n\n` +
+                          `✅ الموقع أرسل الصورة والبيانات أوتوماتيك ومستني تفعيلك.`;
+
+      // تجهيز البيانات لإرسالها للتليجرام مباشرة
+      const formData = new FormData();
+      formData.append('chat_id', CHAT_ID);
+      formData.append('photo', file);
+      formData.append('caption', captionText);
+
+      try {
+        const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
+          method: 'POST',
+          body: formData
+        });
+
+        if (response.ok) {
+          alert('تم إرسال طلبك وصورة الإيصال بنجاح يا ملك! البوت استلمها حالا ✅');
+          closeModal();
+        } else {
+          alert('فشل إرسال الصورة للبوت، تأكد من توكن البوت والـ Chat ID');
+        }
+      } catch (err) {
+        alert('حدث خطأ في الاتصال، يرجى المحاولة مرة أخرى.');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'إرسال الطلب الآن';
+      }
+    }
+
+    render(we, 'we-pkgs', 'وي (WE)');
+    render(orange, 'orange-pkgs', 'أورانج (Orange)');
   </script>
 </body>
 </html>
-
