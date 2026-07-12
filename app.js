@@ -1,10 +1,8 @@
 (function () {
-    // رابط السيرفر الموحد المشفر والآمن
     const API_BASE_URL = "https://c6e230aa-2288-4e21-aa21-91d5b1c79976-00-14cdwdyu5mipe.janeway.replit.dev/api";
 
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // ---- إدارة الجلسات (التوكن المشفر) ----
     function getSession() {
         try {
             return JSON.parse(localStorage.getItem("elking_session") || "null");
@@ -31,7 +29,6 @@
         if (session && session.token) {
             pillText.textContent = `مرحبًا: ${escapeHtml(session.phone)}`;
             pill.classList.add("visible");
-            // تحويل المستخدم للوحة التحكم تلقائياً لو مسجل دخول
             revealDashboard(session.phone, session.balance || 0);
         } else {
             pill.classList.remove("visible");
@@ -45,18 +42,60 @@
             .replace(/>/g, "&gt;");
     }
 
-    // ---- سحب الباقات الحية من التليجرام وعرضها في الموقع ----
+    function switchTab(tab) {
+        const loginTab = document.getElementById("tab-login");
+        const registerTab = document.getElementById("tab-register");
+        const loginForm = document.getElementById("login-form");
+        const registerForm = document.getElementById("register-form");
+
+        if (tab === "login") {
+            loginTab.classList.add("active");
+            registerTab.classList.remove("active");
+            loginForm.classList.add("active");
+            registerForm.classList.remove("active");
+        } else {
+            registerTab.classList.add("active");
+            loginTab.classList.remove("active");
+            registerForm.classList.add("active");
+            loginForm.classList.remove("active");
+        }
+        hideAlert("login-alert");
+        hideAlert("register-alert");
+    }
+
+    function showFieldError(inputId, errorId) {
+        document.getElementById(inputId).classList.add("invalid");
+        document.getElementById(errorId).classList.add("visible");
+    }
+
+    function clearFieldError(inputId, errorId) {
+        document.getElementById(inputId).classList.remove("invalid");
+        document.getElementById(errorId).classList.remove("visible");
+    }
+
+    function showAlert(alertId, message, type) {
+        const el = document.getElementById(alertId);
+        el.textContent = message;
+        el.classList.remove("error", "success");
+        el.classList.add(type, "visible");
+    }
+
+    function hideAlert(alertId) {
+        const el = document.getElementById(alertId);
+        if (el) {
+            el.classList.remove("visible");
+            el.textContent = "";
+        }
+    }
+
     async function loadPackages() {
         const grid = document.querySelector(".telecom-grid");
         try {
             const res = await fetch(`${API_BASE_URL}/packages`);
             const data = await res.json();
 
-            if (!data || data.length === 0) {
-                return; // لو مفيش باقات سيب التصميم الافتراضي الشيك شغال
-            }
+            if (!data || data.length === 0) return;
 
-            // تحديث الكروت بناءً على البيانات القادمة من ريبليت والذكاء الاصطناعي
             grid.innerHTML = data.map(pkg => {
                 let logoImg = "we.png";
                 if(pkg.company.toLowerCase() === "vodafone") logoImg = "vodafone.png";
@@ -75,11 +114,10 @@
                 `;
             }).join("");
         } catch (e) {
-            console.log("جاري استخدام العرض الافتراضي للباقات.");
+            console.log("استخدام العرض الافتراضي.");
         }
     }
 
-    // ---- إنشاء الحساب (Register) ----
     document.getElementById("register-form").addEventListener("submit", async (e) => {
         e.preventDefault();
         const alertBox = document.getElementById("register-alert");
@@ -115,7 +153,6 @@
         }
     });
 
-    // ---- تسجيل الدخول (Login) ----
     document.getElementById("login-form").addEventListener("submit", async (e) => {
         e.preventDefault();
         const alertBox = document.getElementById("login-alert");
@@ -153,7 +190,6 @@
         requestAnimationFrame(() => dash.classList.add("revealed"));
         document.getElementById("dash-phone-display").textContent = "رقم الحساب: " + phone;
         
-        // إظهار الرصيد الفعلي القادم من السيرفر في كارت معلومات الحساب
         const infoGrid = document.querySelector(".info-grid");
         if (!document.getElementById("user-balance-card")) {
             const balanceCard = document.createElement("div");
@@ -179,7 +215,10 @@
         }, 350);
     }
 
-    // تشغيل الفحص الأولي للبيانات
+    // تصدير الوظيفة للـ HTML بشكل رسمي ومضمون
+    window.switchTab = switchTab;
+
     renderAuthStatus();
     loadPackages();
 })();
+
