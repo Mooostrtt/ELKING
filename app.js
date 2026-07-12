@@ -1,6 +1,6 @@
 (function () {
-    // الرابط العام الصحيح والجديد الواصل بسيرفر ريبليت حالاً
-    const API_BASE_URL = "https://node-index--asdfghjklsoftnx.janeway.replit.app/api";
+    // الرابط الفعلي والشغال 100% من واقع الصورة الأخيرة لريبليت
+    const API_BASE_URL = "https://c6e230aa-2288-4e21-aa21-91d5b1c79976-00-14cdwdyu5mipe.janeway.replit.dev/api";
 
     document.getElementById("year").textContent = new Date().getFullYear();
 
@@ -118,7 +118,7 @@
         } catch (e) { console.log("عرض افتراضي للباقات."); }
     }
 
-    // إنشاء الحساب المبسط والمربوط بالسيرفر
+    // إنشاء الحساب المريح والسريع
     document.getElementById("register-form").addEventListener("submit", async (e) => {
         e.preventDefault();
         const alertBox = document.getElementById("register-alert");
@@ -135,7 +135,7 @@
         let hasError = false;
         if (!/^01\d{9}$/.test(phone)) { showFieldError("register-phone", "register-phone-error"); hasError = true; }
         
-        // شرط مريح جداً: كلمة السر متقلش عن 4 خانات وخلاص
+        // الشروط المريحة للزبون: كلمة المرور لا تقل عن 4 خانات
         if (password.length < 4 || password === "123456") { 
             showFieldError("register-password", "register-password-error"); 
             hasError = true; 
@@ -220,7 +220,6 @@
             `;
             infoGrid.insertBefore(balanceCard, infoGrid.firstChild);
         } else {
-            // لو الكارت موجود بالفعل، حدث الرصيد جواه بس
             document.querySelector("#user-balance-card p").textContent = `${balance} جنيه مِصري`;
         }
     }
