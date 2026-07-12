@@ -1,23 +1,48 @@
 (function () {
-    // الرابط الفعلي والشغال 100% من واقع الصورة الأخيرة لريبليت
+    // Public API base URL — the Replit "API Server" artifact, the only
+    // publicly reachable service in this project. CORS is enabled there,
+    // so this GitHub Pages site can call it directly.
     const API_BASE_URL = "https://c6e230aa-2288-4e21-aa21-91d5b1c79976-00-14cdwdyu5mipe.janeway.replit.dev/api";
 
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // تشغيل وإخفاء كلمة السر (العين)
-    window.togglePassword = function(id) {
-        const input = document.getElementById(id);
-        if (input.type === "password") {
-            input.type = "text";
-        } else {
-            input.type = "password";
-        }
-    };
+    const tabs = document.querySelectorAll("nav.tabs button");
+    const views = document.querySelectorAll(".view");
 
+    function showView(name) {
+        tabs.forEach(b => b.classList.toggle("active", b.dataset.view === name));
+        views.forEach(v => v.classList.toggle("active", v.id === "view-" + name));
+        if (name === "profile") renderProfile();
+    }
+
+    tabs.forEach(btn => {
+        btn.addEventListener("click", () => showView(btn.dataset.view));
+    });
+
+    // ---- Password visibility toggle (eye icon) ----
+    document.querySelectorAll(".toggle-password").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const targetId = btn.dataset.target;
+            const input = document.getElementById(targetId);
+            if (!input) return;
+
+            if (input.type === "password") {
+                input.type = "text";
+                btn.textContent = "🙈";
+            } else {
+                input.type = "password";
+                btn.textContent = "👁️";
+            }
+        });
+    });
+
+    // ---- Session helpers (server-issued token, not raw passwords) ----
     function getSession() {
         try {
             return JSON.parse(localStorage.getItem("elking_session") || "null");
-        } catch (e) { return null; }
+        } catch (e) {
+            return null;
+        }
     }
 
     function setSession(session) {
@@ -32,212 +57,156 @@
 
     function renderAuthStatus() {
         const session = getSession();
-        const pill = document.getElementById("session-pill");
-        const pillText = document.getElementById("session-pill-text");
-        
+        const box = document.getElementById("authStatus");
         if (session && session.token) {
-            pillText.textContent = `مرحبًا: ${escapeHtml(session.phone)}`;
-            pill.classList.add("visible");
-            revealDashboard(session.phone, session.balance || 0);
+            box.innerHTML = `<span>👋 مرحبًا، ${escapeHtml(session.name || session.phone)}</span>`;
+            const btn = document.createElement("button");
+            btn.textContent = "تسجيل الخروج";
+            btn.addEventListener("click", () => {
+                clearSession();
+                showView("home");
+            });
+            box.appendChild(btn);
         } else {
-            pill.classList.remove("visible");
+            box.innerHTML = "";
+        }
+    }
+
+    function renderProfile() {
+        const session = getSession();
+        const box = document.getElementById("profileBox");
+        if (session && session.token) {
+            box.innerHTML = `
+                <div class="name">${escapeHtml(session.name || "—")}</div>
+                <p>📱 ${escapeHtml(session.phone)}</p>
+                <p>💰 الرصيد الحالي: ${escapeHtml(String(session.balance ?? 0))} جنيه</p>
+                <p class="empty-note">تم تسجيل الدخول بنجاح عبر الخادم.</p>
+            `;
+        } else {
+            box.innerHTML = `<p class="empty-note">يرجى تسجيل الدخول لعرض بيانات حسابك.</p>`;
         }
     }
 
     function escapeHtml(str) {
-        return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        return String(str)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;");
     }
 
-    function switchTab(tab) {
-        const loginTab = document.getElementById("tab-login");
-        const registerTab = document.getElementById("tab-register");
-        const loginForm = document.getElementById("login-form");
-        const registerForm = document.getElementById("register-form");
-
-        if (tab === "login") {
-            loginTab.classList.add("active");
-            registerTab.classList.remove("active");
-            loginForm.classList.add("active");
-            registerForm.classList.remove("active");
-        } else {
-            registerTab.classList.add("active");
-            loginTab.classList.remove("active");
-            registerForm.classList.add("active");
-            loginForm.classList.remove("active");
-        }
-        hideAlert("login-alert");
-        hideAlert("register-alert");
-    }
-
-    function showFieldError(inputId, errorId) {
-        document.getElementById(inputId).classList.add("invalid");
-        document.getElementById(errorId).classList.add("visible");
-    }
-
-    function clearFieldError(inputId, errorId) {
-        document.getElementById(inputId).classList.remove("invalid");
-        document.getElementById(errorId).classList.remove("visible");
-    }
-
-    function showAlert(alertId, message, type) {
-        const el = document.getElementById(alertId);
-        el.textContent = message;
-        el.classList.remove("error", "success");
-        el.classList.add(type, "visible");
-    }
-
-    function hideAlert(alertId) {
-        const el = document.getElementById(alertId);
-        if (el) { el.classList.remove("visible"); el.textContent = ""; }
-    }
-
+    // ---- Live packages from the server (reflects Telegram admin edits) ----
     async function loadPackages() {
-        const grid = document.querySelector(".telecom-grid");
+        const grid = document.getElementById("companyGrid");
         try {
             const res = await fetch(`${API_BASE_URL}/packages`);
             const data = await res.json();
-            if (!data || data.length === 0) return;
 
-            grid.innerHTML = data.map(pkg => {
-                let logoImg = "we.png";
-                if(pkg.company.toLowerCase() === "vodafone") logoImg = "vodafone.png";
-                if(pkg.company.toLowerCase() === "orange") logoImg = "orange.png";
-                if(pkg.company.toLowerCase() === "etisalat") logoImg = "etisalat.png";
+            document.getElementById("walletNumber").textContent = data.walletNumber || "—";
 
+            if (!data.companies || data.companies.length === 0) {
+                grid.innerHTML = `<p class="empty-note">لا توجد باقات متاحة حاليًا.</p>`;
+                return;
+            }
+
+            grid.innerHTML = data.companies.map(c => {
+                const items = c.items.length
+                    ? c.items.map(p => `<li>${escapeHtml(p.text)}</li>`).join("")
+                    : `<li class="empty-note">لا توجد باقات مضافة حاليًا</li>`;
                 return `
-                    <div class="telecom-card">
-                        <div class="telecom-logo">
-                            <img src="assets/logos/${logoImg}" alt="شعار ${pkg.company}" onerror="this.src='https://placehold.co/240x240/ffffff/0b1220?text=${pkg.company}'" />
-                        </div>
-                        <div class="telecom-name">${escapeHtml(pkg.company)}</div>
-                        <div class="telecom-desc">${escapeHtml(pkg.name)}</div>
-                        <div class="telecom-tag">${escapeHtml(pkg.price)} جنيه</div>
+                    <div class="company-card">
+                        <h3>${escapeHtml(c.company)}</h3>
+                        <ul>${items}</ul>
                     </div>
                 `;
             }).join("");
-        } catch (e) { console.log("عرض افتراضي للباقات."); }
+        } catch (e) {
+            grid.innerHTML = `<p class="empty-note">تعذر تحميل الباقات حاليًا. حاول تحديث الصفحة.</p>`;
+        }
     }
 
-    // إنشاء الحساب المريح والسريع
-    document.getElementById("register-form").addEventListener("submit", async (e) => {
+    // ---- Register ----
+    document.getElementById("registerForm").addEventListener("submit", async (e) => {
         e.preventDefault();
-        const alertBox = document.getElementById("register-alert");
-        alertBox.classList.remove("visible");
+        const form = e.target;
+        const messageBox = document.getElementById("registerMessage");
+        messageBox.textContent = "";
+        messageBox.className = "form-message";
 
-        const phone = document.getElementById("register-phone").value.trim();
-        const password = document.getElementById("register-password").value;
-        const confirmPassword = document.getElementById("register-password-confirm").value;
+        const payload = {
+            name: form.name.value.trim(),
+            phone: form.phone.value.trim(),
+            password: form.password.value
+        };
 
-        clearFieldError("register-phone", "register-phone-error");
-        clearFieldError("register-password", "register-password-error");
-        clearFieldError("register-password-confirm", "register-password-confirm-error");
-
-        let hasError = false;
-        if (!/^01\d{9}$/.test(phone)) { showFieldError("register-phone", "register-phone-error"); hasError = true; }
-        
-        // الشروط المريحة للزبون: كلمة المرور لا تقل عن 4 خانات
-        if (password.length < 4 || password === "123456") { 
-            showFieldError("register-password", "register-password-error"); 
-            hasError = true; 
+        if (payload.password.length < 4) {
+            messageBox.textContent = "كلمة المرور يجب ألا تقل عن 4 أحرف.";
+            messageBox.classList.add("error");
+            return;
         }
-        if (password !== confirmPassword) { 
-            showFieldError("register-password-confirm", "register-password-confirm-error"); 
-            hasError = true; 
-        }
-
-        if (hasError) return;
 
         try {
             const res = await fetch(`${API_BASE_URL}/register`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ phone, password })
+                body: JSON.stringify(payload)
             });
             const data = await res.json();
 
             if (!res.ok || !data.success) {
-                alertBox.textContent = data.message || "حدث خطأ أثناء إنشاء الحساب.";
-                alertBox.className = "form-alert error visible";
+                messageBox.textContent = data.message || "حدث خطأ أثناء إنشاء الحساب.";
+                messageBox.classList.add("error");
                 return;
             }
 
-            setSession({ token: data.token, phone: data.user.phone, balance: data.user.balance });
-            alertBox.textContent = "✅ تم إنشاء الحساب بنجاح!";
-            alertBox.className = "form-alert success visible";
-            setTimeout(() => { revealDashboard(data.user.phone, data.user.balance); }, 700);
+            setSession({ token: data.token, phone: data.user.phone, name: data.user.name, balance: data.user.balance });
+            messageBox.textContent = "✅ تم إنشاء الحساب بنجاح!";
+            messageBox.classList.add("success");
+            form.reset();
+            showView("profile");
         } catch (err) {
-            alertBox.textContent = "تعذر الاتصال بالسيرفر. يرجى التأكد من تشغيل Replit.";
-            alertBox.className = "form-alert error visible";
+            messageBox.textContent = "تعذر الاتصال بالخادم. حاول مرة أخرى.";
+            messageBox.classList.add("error");
         }
     });
 
-    // تسجيل الدخول
-    document.getElementById("login-form").addEventListener("submit", async (e) => {
+    // ---- Login ----
+    document.getElementById("loginForm").addEventListener("submit", async (e) => {
         e.preventDefault();
-        const alertBox = document.getElementById("login-alert");
-        alertBox.classList.remove("visible");
+        const form = e.target;
+        const messageBox = document.getElementById("loginMessage");
+        messageBox.textContent = "";
+        messageBox.className = "form-message";
 
-        const phone = document.getElementById("login-phone").value.trim();
-        const password = document.getElementById("login-password").value;
+        const payload = {
+            phone: form.phone.value.trim(),
+            password: form.password.value
+        };
 
         try {
             const res = await fetch(`${API_BASE_URL}/login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ phone, password })
+                body: JSON.stringify(payload)
             });
             const data = await res.json();
 
             if (!res.ok || !data.success) {
-                alertBox.textContent = data.message || "رقم الهاتف أو كلمة المرور غير صحيحة.";
-                alertBox.className = "form-alert error visible";
+                messageBox.textContent = data.message || "رقم الهاتف أو كلمة المرور غير صحيحة.";
+                messageBox.classList.add("error");
                 return;
             }
 
-            setSession({ token: data.token, phone: data.user.phone, balance: data.user.balance });
-            revealDashboard(data.user.phone, data.user.balance);
+            setSession({ token: data.token, phone: data.user.phone, name: data.user.name, balance: data.user.balance });
+            messageBox.textContent = "✅ تم تسجيل الدخول بنجاح!";
+            messageBox.classList.add("success");
+            form.reset();
+            showView("profile");
         } catch (err) {
-            alertBox.textContent = "تعذر الاتصال بالسيرفر. يرجى التأكد من تشغيل Replit.";
-            alertBox.className = "form-alert error visible";
+            messageBox.textContent = "تعذر الاتصال بالخادم. حاول مرة أخرى.";
+            messageBox.classList.add("error");
         }
     });
 
-    function revealDashboard(phone, balance) {
-        document.getElementById("auth-section").classList.add("hidden-fade");
-        const dash = document.getElementById("dashboard-section");
-        dash.style.display = "block";
-        requestAnimationFrame(() => dash.classList.add("revealed"));
-        document.getElementById("dash-phone-display").textContent = "رقم الحساب: " + phone;
-        
-        const infoGrid = document.querySelector(".info-grid");
-        if (!document.getElementById("user-balance-card")) {
-            const balanceCard = document.createElement("div");
-            balanceCard.className = "info-card";
-            balanceCard.id = "user-balance-card";
-            balanceCard.innerHTML = `
-                <h4 style="color: var(--gold-400)">💰 رصيدك الحالي</h4>
-                <p style="font-size: 20px; font-weight: bold; color: #fff;">${balance} جنيه مِصري</p>
-            `;
-            infoGrid.insertBefore(balanceCard, infoGrid.firstChild);
-        } else {
-            document.querySelector("#user-balance-card p").textContent = `${balance} جنيه مِصري`;
-        }
-    }
-
-    window.handleLogout = function() {
-        clearSession();
-        document.getElementById("dashboard-section").classList.remove("revealed");
-        setTimeout(() => {
-            document.getElementById("dashboard-section").style.display = "none";
-            document.getElementById("auth-section").classList.remove("hidden-fade");
-            document.getElementById("login-form").reset();
-            document.getElementById("register-form").reset();
-            window.switchTab("login");
-        }, 350);
-    }
-
-    window.switchTab = switchTab;
     renderAuthStatus();
     loadPackages();
 })();
-
