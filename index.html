@@ -1,368 +1,101 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>منصة الشحن الموحدة</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --navy-950: #0b1220;
-    --navy-900: #0f1b2e;
-    --navy-800: #16243b;
-    --navy-700: #1e3050;
-    --gold-500: #c9a24b;
-    --gold-400: #ddbd6f;
-    --text-primary: #eef2f7;
-    --text-muted: #9fb0c3;
-    --danger: #e2555a;
-    --success: #3fae6b;
-    --radius-lg: 18px;
-    --radius-md: 12px;
-    --shadow-elevated: 0 20px 45px rgba(0, 0, 0, 0.35);
-  }
-
-  * { box-sizing: border-box; }
-
-  html, body {
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
-    background: radial-gradient(circle at top, var(--navy-800), var(--navy-950) 65%);
-    color: var(--text-primary);
-  }
-
-  .top-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 22px 6vw;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-  }
-
-  .brand {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .brand-mark {
-    width: 42px;
-    height: 42px;
-    border-radius: 10px;
-    background: linear-gradient(135deg, var(--gold-500), var(--gold-400));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 800;
-    color: var(--navy-950);
-    font-size: 18px;
-  }
-
-  .brand-title { font-weight: 800; font-size: 19px; letter-spacing: 0.2px; }
-  .brand-subtitle { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
-
-  .status-pill {
-    width: fit-content;
-    font-size: 12.5px;
-    color: var(--success);
-    background: rgba(63, 174, 107, 0.12);
-    border: 1px solid rgba(63, 174, 107, 0.35);
-    padding: 6px 14px;
-    border-radius: 999px;
-    display: none;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .status-pill.visible { display: inline-flex; }
-  .status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--success); }
-
-  main { max-width: 1180px; margin: 0 auto; padding: 48px 6vw 90px; }
-
-  /* ---------- AUTH SECTION ---------- */
-  #auth-section {
-    display: flex;
-    justify-content: center;
-    padding-top: 4vh;
-    transition: opacity 0.45s ease, transform 0.45s ease;
-  }
-
-  #auth-section.hidden-fade {
-    opacity: 0;
-    transform: translateY(-16px) scale(0.98);
-    pointer-events: none;
-    position: absolute;
-    inset: 0;
-    height: 0;
-    overflow: hidden;
-  }
-
-  .auth-card {
-    width: 100%;
-    max-width: 440px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.015));
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: var(--radius-lg);
-    padding: 38px 34px 32px;
-    box-shadow: var(--shadow-elevated);
-    backdrop-filter: blur(6px);
-  }
-
-  .auth-heading { text-align: center; margin-bottom: 26px; }
-  .auth-heading h1 { font-size: 21px; margin: 0 0 6px; font-weight: 800; }
-  .auth-heading p { margin: 0; color: var(--text-muted); font-size: 13.5px; }
-
-  .tab-switch { display: flex; background: rgba(255,255,255,0.05); border-radius: 999px; padding: 4px; margin-bottom: 26px; }
-  .tab-switch button {
-    flex: 1; border: none; background: transparent; color: var(--text-muted);
-    font-family: inherit; font-weight: 700; font-size: 14px; padding: 10px 0;
-    border-radius: 999px; cursor: pointer; transition: background 0.25s ease, color 0.25s ease;
-  }
-  .tab-switch button.active { background: linear-gradient(135deg, var(--gold-500), var(--gold-400)); color: var(--navy-950); }
-
-  .field-group { margin-bottom: 18px; }
-  .field-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px; color: var(--text-muted); }
-
-  /* ستايل العين الاحترافي بدون تدمير التصميم */
-  .password-wrapper { position: relative; display: flex; align-items: center; }
-  .password-wrapper input { padding-left: 45px; }
-  .toggle-password-btn {
-    position: absolute; left: 12px; background: none; border: none;
-    color: var(--text-muted); cursor: pointer; font-size: 16px; outline: none;
-    padding: 4px; display: flex; align-items: center; justify-content: center;
-  }
-
-  .field-group input {
-    width: 100%; padding: 13px 15px; border-radius: var(--radius-md);
-    border: 1px solid rgba(255,255,255,0.12); background: rgba(6, 12, 22, 0.55);
-    color: var(--text-primary); font-family: inherit; font-size: 14.5px; outline: none;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  }
-  .field-group input::placeholder { color: rgba(159, 176, 195, 0.55); }
-  .field-group input:focus { border-color: var(--gold-500); box-shadow: 0 0 0 3px rgba(201, 162, 75, 0.18); }
-  .field-group input.invalid { border-color: var(--danger); box-shadow: 0 0 0 3px rgba(226, 85, 90, 0.15); }
-
-  .field-hint { font-size: 12px; color: var(--text-muted); margin-top: 6px; }
-  .field-error { font-size: 12.5px; color: var(--danger); margin-top: 6px; display: none; }
-  .field-error.visible { display: block; }
-
-  .form-alert { font-size: 13px; padding: 11px 14px; border-radius: var(--radius-md); margin-bottom: 18px; display: none; }
-  .form-alert.error { background: rgba(226, 85, 90, 0.12); border: 1px solid rgba(226, 85, 90, 0.35); color: #ff9a9d; }
-  .form-alert.success { background: rgba(63, 174, 107, 0.12); border: 1px solid rgba(63, 174, 107, 0.35); color: #7fe0a5; }
-  .form-alert.visible { display: block; }
-
-  .submit-btn {
-    width: 100%; padding: 14px 0; border: none; border-radius: var(--radius-md);
-    background: linear-gradient(135deg, var(--gold-500), var(--gold-400)); color: var(--navy-950);
-    font-family: inherit; font-weight: 800; font-size: 15px; cursor: pointer;
-    transition: filter 0.2s ease, transform 0.15s ease; margin-top: 4px;
-  }
-  .submit-btn:hover { filter: brightness(1.06); }
-  .submit-btn:active { transform: translateY(1px); }
-
-  .auth-form { display: none; }
-  .auth-form.active { display: block; }
-
-  /* ---------- DASHBOARD SECTION ---------- */
-  #dashboard-section { display: none; opacity: 0; transform: translateY(14px); transition: opacity 0.5s ease, transform 0.5s ease; }
-  #dashboard-section.revealed { display: block; opacity: 1; transform: translateY(0); }
-
-  .dash-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 36px; }
-  .dash-welcome h2 { margin: 0 0 6px; font-size: 24px; font-weight: 800; }
-  .dash-welcome p { margin: 0; color: var(--text-muted); font-size: 14px; }
-
-  .logout-btn {
-    border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.04);
-    color: var(--text-primary); font-family: inherit; font-weight: 700; font-size: 13.5px;
-    padding: 10px 20px; border-radius: 999px; cursor: pointer; transition: background 0.2s ease, border-color 0.2s ease;
-  }
-  .logout-btn:hover { background: rgba(226, 85, 90, 0.12); border-color: rgba(226, 85, 90, 0.4); }
-
-  .section-heading { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 20px; }
-  .section-heading h3 { font-size: 17px; font-weight: 800; margin: 0; }
-  .section-heading span { font-size: 12.5px; color: var(--text-muted); }
-
-  .telecom-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; margin-bottom: 46px; }
-  .telecom-card {
-    background: linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.015));
-    border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius-lg); padding: 24px 20px;
-    display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center;
-    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-  }
-  .telecom-card:hover { transform: translateY(-4px); border-color: rgba(201, 162, 75, 0.4); box-shadow: 0 16px 32px rgba(0,0,0,0.3); }
-
-  .telecom-logo {
-    width: 120px; height: 120px; border-radius: 50%; overflow: hidden; background: #ffffff;
-    border: 3px solid rgba(201, 162, 75, 0.35); display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-  }
-  .telecom-logo img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .telecom-name { font-weight: 800; font-size: 15.5px; }
-  .telecom-desc { font-size: 12.5px; color: var(--text-muted); line-height: 1.6; }
-  .telecom-tag {
-    font-size: 11.5px; font-weight: 700; padding: 4px 12px; border-radius: 999px;
-    background: rgba(201, 162, 75, 0.12); color: var(--gold-400); border: 1px solid rgba(201, 162, 75, 0.3);
-  }
-
-  .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
-  .info-card { background: linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.015)); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius-lg); padding: 22px; }
-  .info-card h4 { margin: 0 0 10px; font-size: 14.5px; font-weight: 800; }
-  .info-card p { margin: 0; font-size: 13px; color: var(--text-muted); line-height: 1.8; }
-
-  footer { text-align: center; padding: 26px 0 10px; color: var(--text-muted); font-size: 12.5px; }
-
-  @media (max-width: 560px) {
-    .auth-card { padding: 30px 22px 26px; }
-    .top-bar { padding: 18px 5vw; }
-  }
-</style>
+<title>منصة الشحن الموحدة - EL KING</title>
+<link rel="stylesheet" href="/style.css" />
 </head>
 <body>
 
-<div class="top-bar">
-  <div class="brand">
-    <div class="brand-mark">EK</div>
+<header class="topbar">
     <div>
-      <div class="brand-title">منصة الشحن الموحدة</div>
-      <div class="brand-subtitle">EL KING Unified Recharge Platform</div>
+        <h1>🏢 منصة الشحن الموحدة</h1>
+        <div class="tagline">شحن رصيد وباقات WE / Orange / Etisalat / Vodafone في مكان واحد</div>
     </div>
-  </div>
-  <div id="session-pill" class="status-pill">
-    <span class="status-dot"></span>
-    <span id="session-pill-text">متصل الآن</span>
-  </div>
-</div>
+    <div class="auth-status" id="authStatus"></div>
+</header>
+
+<nav class="tabs">
+    <button data-view="home" class="active">📦 الباقات</button>
+    <button data-view="login">🔐 تسجيل الدخول</button>
+    <button data-view="register">🆕 حساب جديد</button>
+    <button data-view="profile">👤 حسابي</button>
+</nav>
 
 <main>
-  <section id="auth-section">
-    <div class="auth-card">
-      <div class="auth-heading">
-        <h1>الوصول إلى حسابك</h1>
-        <p>يرجى تسجيل الدخول أو إنشاء حساب جديد لمتابعة استخدام المنصة</p>
-      </div>
 
-      <div class="tab-switch">
-        <button type="button" id="tab-login" class="active" onclick="switchTab('login')">تسجيل الدخول</button>
-        <button type="button" id="tab-register" onclick="switchTab('register')">إنشاء حساب</button>
-      </div>
-
-      <form id="login-form" class="auth-form active" novalidate>
-        <div id="login-alert" class="form-alert error"></div>
-        <div class="field-group">
-          <label for="login-phone">رقم الهاتف</label>
-          <input type="text" id="login-phone" inputmode="numeric" placeholder="01xxxxxxxxx" autocomplete="off" />
-          <div class="field-error" id="login-phone-error">يرجى إدخال رقم هاتف صحيح</div>
+    <section class="view active" id="view-home">
+        <div class="wallet-banner">
+            <div>
+                💳 حوّل قيمة الطلب على محفظة <strong>Vodafone Cash / Etisalat Cash / Orange Cash</strong>
+            </div>
+            <div class="num" id="walletNumber">—</div>
         </div>
-        <div class="field-group">
-          <label for="login-password">كلمة المرور</label>
-          <div class="password-wrapper">
-            <input type="password" id="login-password" placeholder="••••••••" autocomplete="off" />
-            <button type="button" class="toggle-password-btn" onclick="togglePassword('login-password')">👁️</button>
-          </div>
-          <div class="field-error" id="login-password-error">كلمة المرور غير صحيحة</div>
+
+        <div class="company-grid" id="companyGrid">
+            <p class="empty-note">جارِ تحميل الباقات...</p>
         </div>
-        <button type="submit" class="submit-btn">تسجيل الدخول</button>
-      </form>
+    </section>
 
-      <form id="register-form" class="auth-form" novalidate>
-        <div id="register-alert" class="form-alert error"></div>
-        <div class="field-group">
-          <label for="register-phone">رقم الهاتف</label>
-          <input type="text" id="register-phone" inputmode="numeric" placeholder="01xxxxxxxxx" autocomplete="off" />
-          <div class="field-error" id="register-phone-error">رقم الهاتف غير صالح</div>
+    <section class="view" id="view-login">
+        <div class="card">
+            <h2>🔐 تسجيل الدخول</h2>
+            <form id="loginForm">
+                <div class="field">
+                    <label>رقم الهاتف</label>
+                    <input type="tel" name="phone" required placeholder="01xxxxxxxxx" />
+                </div>
+                <div class="field">
+                    <label>كلمة المرور</label>
+                    <div class="password-wrap">
+                        <input type="password" name="password" id="loginPassword" required minlength="4" />
+                        <button type="button" class="toggle-password" data-target="loginPassword" aria-label="إظهار/إخفاء كلمة المرور">👁️</button>
+                    </div>
+                </div>
+                <button type="submit" class="submit">دخول</button>
+            </form>
+            <div class="form-message" id="loginMessage"></div>
         </div>
-        <div class="field-group">
-          <label for="register-password">كلمة المرور</label>
-          <div class="password-wrapper">
-            <input type="password" id="register-password" placeholder="••••••••" autocomplete="off" />
-            <button type="button" class="toggle-password-btn" onclick="togglePassword('register-password')">👁️</button>
-          </div>
-          <div class="field-error" id="register-password-error">يجب أن تكون كلمة المرور 4 خانات على الأقل</div>
+    </section>
+
+    <section class="view" id="view-register">
+        <div class="card">
+            <h2>🆕 إنشاء حساب جديد</h2>
+            <form id="registerForm">
+                <div class="field">
+                    <label>الاسم</label>
+                    <input type="text" name="name" required />
+                </div>
+                <div class="field">
+                    <label>رقم الهاتف</label>
+                    <input type="tel" name="phone" required placeholder="01xxxxxxxxx" />
+                </div>
+                <div class="field">
+                    <label>كلمة المرور</label>
+                    <div class="password-wrap">
+                        <input type="password" name="password" id="registerPassword" required minlength="4" />
+                        <button type="button" class="toggle-password" data-target="registerPassword" aria-label="إظهار/إخفاء كلمة المرور">👁️</button>
+                    </div>
+                </div>
+                <button type="submit" class="submit">تسجيل</button>
+            </form>
+            <div class="form-message" id="registerMessage"></div>
         </div>
-        <div class="field-group">
-          <label for="register-password-confirm">تأكيد كلمة المرور</label>
-          <div class="password-wrapper">
-            <input type="password" id="register-password-confirm" placeholder="••••••••" autocomplete="off" />
-            <button type="button" class="toggle-password-btn" onclick="togglePassword('register-password-confirm')">👁️</button>
-          </div>
-          <div class="field-error" id="register-password-confirm-error">كلمتا المرور غير متطابقتين</div>
+    </section>
+
+    <section class="view" id="view-profile">
+        <div class="card profile-box" id="profileBox">
+            <p class="empty-note">يرجى تسجيل الدخول لعرض بيانات حسابك.</p>
         </div>
-        <button type="submit" class="submit-btn">إنشاء الحساب</button>
-      </form>
-    </div>
-  </section>
+    </section>
 
-  <section id="dashboard-section">
-    <div class="dash-header">
-      <div class="dash-welcome">
-        <h2>مرحبًا بعودتك</h2>
-        <p id="dash-phone-display">رقم الحساب: —</p>
-      </div>
-      <button type="button" class="logout-btn" onclick="handleLogout()">تسجيل الخروج</button>
-    </div>
-
-    <div class="section-heading">
-      <h3>شركات الاتصالات المعتمدة</h3>
-      <span>يتم تحديث الشعارات تلقائيًا عند رفعها من لوحة الإدارة</span>
-    </div>
-
-    <div class="telecom-grid">
-      <div class="telecom-card">
-        <div class="telecom-logo"><img src="assets/logos/we.png" alt="شعار WE" onerror="this.src='https://placehold.co/240x240/ffffff/0b1220?text=WE'" /></div>
-        <div class="telecom-name">WE</div>
-        <div class="telecom-desc">باقات إنترنت وشحن رصيد لعملاء شركة المصرية للاتصالات</div>
-        <div class="telecom-tag">متاح الآن</div>
-      </div>
-      <div class="telecom-card">
-        <div class="telecom-logo"><img src="assets/logos/orange.png" alt="شعار Orange" onerror="this.src='https://placehold.co/240x240/ffffff/0b1220?text=Orange'" /></div>
-        <div class="telecom-name">Orange</div>
-        <div class="telecom-desc">باقات بيانات وشحن رصيد لعملاء شركة أورانج مصر</div>
-        <div class="telecom-tag">متاح الآن</div>
-      </div>
-      <div class="telecom-card">
-        <div class="telecom-logo"><img src="assets/logos/etisalat.png" alt="شعار Etisalat" onerror="this.src='https://placehold.co/240x240/ffffff/0b1220?text=Etisalat'" /></div>
-        <div class="telecom-name">Etisalat</div>
-        <div class="telecom-desc">باقات ميكس وشحن رصيد لعملاء شركة اتصالات مصر</div>
-        <div class="telecom-tag">متاح الآن</div>
-      </div>
-      <div class="telecom-card">
-        <div class="telecom-logo"><img src="assets/logos/vodafone.png" alt="شعار Vodafone" onerror="this.src='https://placehold.co/240x240/ffffff/0b1220?text=Vodafone'" /></div>
-        <div class="telecom-name">Vodafone</div>
-        <div class="telecom-desc">باقات إنترنت وشحن رصيد لعملاء شركة فودافون مصر</div>
-        <div class="telecom-tag">متاح الآن</div>
-      </div>
-    </div>
-
-    <div class="section-heading">
-      <h3>معلومات الحساب والدعم</h3>
-      <span></span>
-    </div>
-
-    <div class="info-grid">
-      <div class="info-card">
-        <h4>طرق الدفع المعتمدة</h4>
-        <p>يمكن إتمام عمليات الشحن عبر المحافظ الإلكترونية الرسمية المعتمدة من المنصة. يرجى رفع إيصال الدفع فور إتمام التحويل لمتابعة تنفيذ الطلب.</p>
-      </div>
-      <div class="info-card">
-        <h4>الدعم الفني</h4>
-        <p>فريق الدعم الفني متاح لمساعدتكم في أي استفسار متعلق بالطلبات أو عمليات الدفع عبر قنوات التواصل الرسمية للمنصة.</p>
-      </div>
-      <div class="info-card">
-        <h4>سياسة الاستخدام</h4>
-        <p>يلتزم جميع المستخدمين بإدخال بيانات صحيحة عند التسجيل، وتُعد المنصة غير مسؤولة عن أي خطأ ناتج عن بيانات غير دقيقة يقدمها المستخدم.</p>
-      </div>
-    </div>
-  </section>
 </main>
 
 <footer>
-  &copy; <span id="year"></span> منصة الشحن الموحدة — جميع الحقوق محفوظة
+    &copy; <span id="year"></span> منصة الشحن الموحدة — جميع الحقوق محفوظة
 </footer>
 
-<script src="app.js"></script>
+<script src="/app.js"></script>
 </body>
 </html>
-
