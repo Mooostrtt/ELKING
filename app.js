@@ -2,8 +2,8 @@
 //  VIP Packages  –  app.js  (Vanilla ES Module)
 // ─────────────────────────────────────────────
 
-// تم وضع رابط الـ API الجديد للحساب الجديد بالملي 🚀
-const BASE = 'https://data-packages-frontend.asdfghjklsoftnx.repl.co/api';
+// تم وضع الرابط الحقيقي والنهائي لـ Replit الخاص بك 🚀
+const BASE = 'https://data-packages-frontend.asdfghjklsoftnx.replit.dev/api';
 
 // ──────────── STATE ────────────
 let currentUser  = null;
@@ -23,6 +23,7 @@ try {
 let toastTimer = null;
 function toast(msg, type = 'ok') {
   const el = document.getElementById('toast');
+  if (!el) return;
   el.textContent = msg;
   el.className   = `show ${type}`;
   clearTimeout(toastTimer);
@@ -88,6 +89,7 @@ const CO_COLORS = {
 // ──────────── RENDER PACKAGES ────────────
 function renderPackages() {
   const container = document.getElementById('pkgContainer');
+  if (!container) return;
   if (!packages.length) {
     container.innerHTML = `<div class="loader">لا توجد باقات متاحة حالياً</div>`;
     return;
@@ -137,37 +139,41 @@ function openModal(companyId, pkgId) {
   selPkg       = pkg;
   selectedFile = null;
 
-  // Populate modal fields
   document.getElementById('m-pkg-name').textContent = pkg.name;
   document.getElementById('m-co-name').textContent  = `${co.name} – ${co.nameAr}`;
   document.getElementById('m-price').textContent    = `${pkg.price} جنيه`;
   document.getElementById('m-wallet').textContent   = adminWallet;
 
-  // Reset form state
   document.getElementById('orderForm').reset();
   ['o-target-err', 'o-file-err', 'o-global-err'].forEach(id => {
-    document.getElementById(id).textContent = '';
+    const el = document.getElementById(id);
+    if (el) el.textContent = '';
   });
   const btn = document.getElementById('o-submit');
-  btn.disabled    = false;
-  btn.textContent = '✅ إرسال الطلب';
+  if (btn) {
+    btn.disabled    = false;
+    btn.textContent = '✅ إرسال الطلب';
+  }
 
-  // Reset upload zone
   const zone = document.getElementById('uploadZone');
-  zone.classList.remove('filled');
-  zone.querySelector('.upload-ico').style.display = '';
-  zone.querySelectorAll('.upload-txt').forEach(el => el.style.display = '');
+  if (zone) {
+    zone.classList.remove('filled');
+    const ico = zone.querySelector('.upload-ico');
+    if (ico) ico.style.display = '';
+    zone.querySelectorAll('.upload-txt').forEach(el => el.style.display = '');
+  }
   const prev = document.getElementById('previewImg');
-  prev.style.display = 'none'; prev.src = '';
+  if (prev) { prev.style.display = 'none'; prev.src = ''; }
 
-  // Open overlay
-  document.getElementById('modalOverlay').classList.add('open');
+  const overlay = document.getElementById('modalOverlay');
+  if (overlay) overlay.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
 
 function closeModal(e) {
   if (e && e.target !== document.getElementById('modalOverlay')) return;
-  document.getElementById('modalOverlay').classList.remove('open');
+  const overlay = document.getElementById('modalOverlay');
+  if (overlay) overlay.classList.remove('open');
   document.body.style.overflow = '';
   selCompany = null; selPkg = null; selectedFile = null;
 }
@@ -177,26 +183,32 @@ function onFileChange(e) {
   const file = e.target.files[0];
   if (!file) return;
 
+  const fileErr = document.getElementById('o-file-err');
   if (!file.type.startsWith('image/')) {
-    document.getElementById('o-file-err').textContent = 'يجب رفع ملف صورة فقط (PNG, JPG, WEBP)';
+    if (fileErr) fileErr.textContent = 'يجب رفع ملف صورة فقط (PNG, JPG, WEBP)';
     return;
   }
   if (file.size > 10 * 1024 * 1024) {
-    document.getElementById('o-file-err').textContent = 'حجم الصورة يجب ألا يتجاوز 10MB';
+    if (fileErr) fileErr.textContent = 'حجم الصورة يجب ألا يتجاوز 10MB';
     return;
   }
 
   selectedFile = file;
-  document.getElementById('o-file-err').textContent = '';
+  if (fileErr) fileErr.textContent = '';
 
   const zone = document.getElementById('uploadZone');
-  zone.classList.add('filled');
-  zone.querySelector('.upload-ico').style.display = 'none';
-  zone.querySelectorAll('.upload-txt').forEach(el => el.style.display = 'none');
+  if (zone) {
+    zone.classList.add('filled');
+    const ico = zone.querySelector('.upload-ico');
+    if (ico) ico.style.display = 'none';
+    zone.querySelectorAll('.upload-txt').forEach(el => el.style.display = 'none');
+  }
 
   const prev = document.getElementById('previewImg');
-  prev.src   = URL.createObjectURL(file);
-  prev.style.display = 'block';
+  if (prev) {
+    prev.src   = URL.createObjectURL(file);
+    prev.style.display = 'block';
+  }
 }
 
 // ──────────── SUBMIT ORDER ────────────
@@ -206,7 +218,8 @@ async function handleOrderSubmit(e) {
 
   const targetPhone = document.getElementById('o-target').value.trim();
   ['o-target-err', 'o-file-err', 'o-global-err'].forEach(id => {
-    document.getElementById(id).textContent = '';
+    const el = document.getElementById(id);
+    if (el) el.textContent = '';
   });
 
   if (!targetPhone) {
@@ -225,8 +238,10 @@ async function handleOrderSubmit(e) {
   if (!valid) return;
 
   const btn = document.getElementById('o-submit');
-  btn.disabled    = true;
-  btn.textContent = '⏳ جاري الإرسال...';
+  if (btn) {
+    btn.disabled    = true;
+    btn.textContent = '⏳ جاري الإرسال...';
+  }
 
   try {
     const fd = new FormData();
@@ -243,20 +258,19 @@ async function handleOrderSubmit(e) {
 
     if (!res.ok) {
       document.getElementById('o-global-err').textContent = data.error || 'حدث خطأ، حاول مرة أخرى';
-      btn.disabled    = false;
-      btn.textContent = '✅ إرسال الطلب';
+      if (btn) { btn.disabled = false; btn.textContent = '✅ إرسال الطلب'; }
       return;
     }
 
-    document.getElementById('modalOverlay').classList.remove('open');
+    const overlay = document.getElementById('modalOverlay');
+    if (overlay) overlay.classList.remove('open');
     document.body.style.overflow = '';
     toast(data.message || 'تم إرسال طلبك بنجاح! ✅', 'ok');
     selCompany = null; selPkg = null; selectedFile = null;
 
   } catch {
     document.getElementById('o-global-err').textContent = 'تعذر الاتصال بالخادم، تحقق من اتصالك بالإنترنت';
-    btn.disabled    = false;
-    btn.textContent = '✅ إرسال الطلب';
+    if (btn) { btn.disabled = false; btn.textContent = '✅ إرسال الطلب'; }
   }
 }
 
@@ -274,8 +288,7 @@ async function handleLogin(e) {
   if (!valid) return;
 
   const btn = document.getElementById('l-submit');
-  btn.disabled    = true;
-  btn.textContent = '⏳ جاري التحقق...';
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ جاري التحقق...'; }
 
   try {
     const data = await api('/login', {
@@ -290,8 +303,7 @@ async function handleLogin(e) {
   } catch (err) {
     setErr('l-global-err', err.message || 'خطأ في تسجيل الدخول');
   } finally {
-    btn.disabled    = false;
-    btn.textContent = 'دخول';
+    if (btn) { btn.disabled = false; btn.textContent = 'دخول'; }
   }
 }
 
@@ -315,8 +327,7 @@ async function handleRegister(e) {
   if (!valid) return;
 
   const btn = document.getElementById('r-submit');
-  btn.disabled    = true;
-  btn.textContent = '⏳ جاري التسجيل...';
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ جاري التسجيل...'; }
 
   try {
     const data = await api('/register', {
@@ -331,8 +342,7 @@ async function handleRegister(e) {
   } catch (err) {
     setErr('r-global-err', err.message || 'خطأ في التسجيل');
   } finally {
-    btn.disabled    = false;
-    btn.textContent = 'إنشاء الحساب';
+    if (btn) { btn.disabled = false; btn.textContent = 'إنشاء الحساب'; }
   }
 }
 
@@ -385,10 +395,17 @@ document.addEventListener('DOMContentLoaded', () => {
   updateNav();
   show('packages');
 
-  document.getElementById('loginForm').addEventListener('submit', handleLogin);
-  document.getElementById('regForm').addEventListener('submit', handleRegister);
-  document.getElementById('orderForm').addEventListener('submit', handleOrderSubmit);
-  document.getElementById('fileInput').addEventListener('change', onFileChange);
+  const loginForm = document.getElementById('loginForm');
+  if (loginForm) loginForm.addEventListener('submit', handleLogin);
+  
+  const regForm = document.getElementById('regForm');
+  if (regForm) regForm.addEventListener('submit', handleRegister);
+  
+  const orderForm = document.getElementById('orderForm');
+  if (orderForm) orderForm.addEventListener('submit', handleOrderSubmit);
+  
+  const fileInput = document.getElementById('fileInput');
+  if (fileInput) fileInput.addEventListener('change', onFileChange);
 
   bindEyeToggles();
 
@@ -398,3 +415,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
   loadPackages();
 });
+
