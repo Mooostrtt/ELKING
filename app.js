@@ -1,7 +1,5 @@
 (function () {
-    // Public API base URL — the Replit "API Server" artifact, the only
-    // publicly reachable service in this project. CORS is enabled there,
-    // so this GitHub Pages site can call it directly.
+    // الرابط الفعلي والمباشر المقفل بالملي مع السيرفر حالياً
     const API_BASE_URL = "https://c6e230aa-2288-4e21-aa21-91d5b1c79976-00-14cdwdyu5mipe.janeway.replit.dev/api";
 
     document.getElementById("year").textContent = new Date().getFullYear();
@@ -9,6 +7,7 @@
     const tabs = document.querySelectorAll("nav.tabs button");
     const views = document.querySelectorAll(".view");
 
+    // التنقل بين الصفحات
     function showView(name) {
         tabs.forEach(b => b.classList.toggle("active", b.dataset.view === name));
         views.forEach(v => v.classList.toggle("active", v.id === "view-" + name));
@@ -19,7 +18,7 @@
         btn.addEventListener("click", () => showView(btn.dataset.view));
     });
 
-    // ---- Password visibility toggle (eye icon) ----
+    // تشغيل وإخفاء كلمة السر (زرار العين)
     document.querySelectorAll(".toggle-password").forEach(btn => {
         btn.addEventListener("click", () => {
             const targetId = btn.dataset.target;
@@ -36,7 +35,7 @@
         });
     });
 
-    // ---- Session helpers (server-issued token, not raw passwords) ----
+    // إدارة الجلسة (Session)
     function getSession() {
         try {
             return JSON.parse(localStorage.getItem("elking_session") || "null");
@@ -94,7 +93,7 @@
             .replace(/>/g, "&gt;");
     }
 
-    // ---- Live packages from the server (reflects Telegram admin edits) ----
+    // تحميل الباقات المباشرة من السيرفر وعرضها في مربعات فخمة
     async function loadPackages() {
         const grid = document.getElementById("companyGrid");
         try {
@@ -124,7 +123,7 @@
         }
     }
 
-    // ---- Register ----
+    // إنشاء حساب جديد (مريح وبدون تعقيد)
     document.getElementById("registerForm").addEventListener("submit", async (e) => {
         e.preventDefault();
         const form = e.target;
@@ -169,7 +168,7 @@
         }
     });
 
-    // ---- Login ----
+    // تسجيل الدخول
     document.getElementById("loginForm").addEventListener("submit", async (e) => {
         e.preventDefault();
         const form = e.target;
