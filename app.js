@@ -1,5 +1,6 @@
 (function () {
-    const API_BASE_URL = "https://c6e230aa-2288-4e21-aa21-91d5b1c79976-00-14cdwdyu5mipe.janeway.replit.dev/api";
+    // الرابط العام الصحيح والجديد الواصل بسيرفر ريبليت حالاً
+    const API_BASE_URL = "https://node-index--asdfghjklsoftnx.janeway.replit.app/api";
 
     document.getElementById("year").textContent = new Date().getFullYear();
 
@@ -114,10 +115,10 @@
                     </div>
                 `;
             }).join("");
-        } catch (e) { console.log("عرض افتراضي."); }
+        } catch (e) { console.log("عرض افتراضي للباقات."); }
     }
 
-    // إنشاء الحساب المبسط
+    // إنشاء الحساب المبسط والمربوط بالسيرفر
     document.getElementById("register-form").addEventListener("submit", async (e) => {
         e.preventDefault();
         const alertBox = document.getElementById("register-alert");
@@ -134,7 +135,7 @@
         let hasError = false;
         if (!/^01\d{9}$/.test(phone)) { showFieldError("register-phone", "register-phone-error"); hasError = true; }
         
-        // تسهيل الشرط: كلمة السر متقلش عن 4 خانات وخلاص
+        // شرط مريح جداً: كلمة السر متقلش عن 4 خانات وخلاص
         if (password.length < 4 || password === "123456") { 
             showFieldError("register-password", "register-password-error"); 
             hasError = true; 
@@ -165,11 +166,12 @@
             alertBox.className = "form-alert success visible";
             setTimeout(() => { revealDashboard(data.user.phone, data.user.balance); }, 700);
         } catch (err) {
-            alertBox.textContent = "تعذر الاتصال بالسيرفر.";
+            alertBox.textContent = "تعذر الاتصال بالسيرفر. يرجى التأكد من تشغيل Replit.";
             alertBox.className = "form-alert error visible";
         }
     });
 
+    // تسجيل الدخول
     document.getElementById("login-form").addEventListener("submit", async (e) => {
         e.preventDefault();
         const alertBox = document.getElementById("login-alert");
@@ -195,7 +197,7 @@
             setSession({ token: data.token, phone: data.user.phone, balance: data.user.balance });
             revealDashboard(data.user.phone, data.user.balance);
         } catch (err) {
-            alertBox.textContent = "تعذر الاتصال بالسيرفر.";
+            alertBox.textContent = "تعذر الاتصال بالسيرفر. يرجى التأكد من تشغيل Replit.";
             alertBox.className = "form-alert error visible";
         }
     });
@@ -217,6 +219,9 @@
                 <p style="font-size: 20px; font-weight: bold; color: #fff;">${balance} جنيه مِصري</p>
             `;
             infoGrid.insertBefore(balanceCard, infoGrid.firstChild);
+        } else {
+            // لو الكارت موجود بالفعل، حدث الرصيد جواه بس
+            document.querySelector("#user-balance-card p").textContent = `${balance} جنيه مِصري`;
         }
     }
 
@@ -236,3 +241,4 @@
     renderAuthStatus();
     loadPackages();
 })();
+
